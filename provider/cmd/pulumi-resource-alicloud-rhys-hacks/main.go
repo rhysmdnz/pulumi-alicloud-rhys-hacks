@@ -12,15 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//go:generate go run ./generate.go
+
 package main
 
 import (
-	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfgen"
-	alicloud "github.com/rhysmdnz/pulumi-alicloud/provider"
-	"github.com/rhysmdnz/pulumi-alicloud/provider/pkg/version"
+	_ "embed"
+
+	"github.com/pulumi/pulumi-terraform-bridge/v3/pkg/tfbridge"
+	alicloud "github.com/rhysmdnz/pulumi-alicloud-rhys-hacks/provider"
+	"github.com/rhysmdnz/pulumi-alicloud-rhys-hacks/provider/pkg/version"
 )
+
+//go:embed schema-embed.json
+var pulumiSchema []byte
 
 func main() {
 	// Modify the path to point to the new provider
-	tfgen.Main("alicloud", version.Version, alicloud.Provider())
+	tfbridge.Main("alicloud", version.Version, alicloud.Provider(), pulumiSchema)
 }

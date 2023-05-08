@@ -1,7 +1,7 @@
 PROJECT_NAME := alicloud Package
 
 SHELL            := bash
-PACK             := alicloud
+PACK             := alicloud-rhys-hacks
 ORG              := rhysmdnz
 PROJECT          := github.com/${ORG}/pulumi-${PACK}
 NODE_MODULE_NAME := ${PACK}

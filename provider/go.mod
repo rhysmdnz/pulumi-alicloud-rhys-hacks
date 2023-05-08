@@ -1,4 +1,4 @@
-module github.com/rhysmdnz/pulumi-alicloud/provider
+module github.com/rhysmdnz/pulumi-alicloud-rhys-hacks/provider
 
 go 1.18
 
