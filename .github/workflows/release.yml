@@ -53,13 +53,13 @@ jobs:
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v4
       with:
-        args: -p 3 release --rm-dist --debug
+        args: -p 3 release --clean --debug
         version: latest
     strategy:
       fail-fast: true
       matrix:
         goversion:
-        - 1.17.x
+        - 1.20.x
   publish_sdk:
     name: Publish SDKs
     runs-on: ubuntu-latest
@@ -127,7 +127,7 @@ jobs:
         dotnetversion:
           - 3.1.301
         goversion:
-          - 1.17.x
+          - 1.20.x
         language:
           - nodejs
           - python
