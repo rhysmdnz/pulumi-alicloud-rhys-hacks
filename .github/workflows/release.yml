@@ -53,7 +53,7 @@ jobs:
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v4
       with:
-        args: -p 3 release --clean --debug
+        args: -p 3 release --clean --timeout 60m
         version: latest
     strategy:
       fail-fast: true
