@@ -17,8 +17,6 @@ import (
 //
 // > **NOTE:** Available in v1.128.0+.
 //
-// > **NOTE:** The AMQP Instance is not support to be purchase automatically in the international site.
-//
 // ## Example Usage
 //
 // # Basic Usage

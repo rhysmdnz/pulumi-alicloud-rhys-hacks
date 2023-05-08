@@ -76,6 +76,8 @@ type EipAddress struct {
 	DeletionProtection pulumi.BoolOutput `pulumi:"deletionProtection"`
 	// The description of the EIP.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// The status of the EIP. configuring high precision second-by-second monitoring for EIP. Valid values: `ON` and `OFF`.
+	HighDefinitionMonitorLogStatus pulumi.StringOutput `pulumi:"highDefinitionMonitorLogStatus"`
 	// Field `instanceChargeType` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `paymentType` instead.
 	//
 	// Deprecated: Field 'instance_charge_type' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'payment_type' instead.
@@ -85,8 +87,22 @@ type EipAddress struct {
 	InternetChargeType pulumi.StringOutput `pulumi:"internetChargeType"`
 	// The address of the EIP.
 	IpAddress pulumi.StringOutput `pulumi:"ipAddress"`
-	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values: `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China. `BGP_PRO`:  BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values:
+	// - `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China.
+	// - `BGP_PRO`: BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// - `ChinaTelecom`: China Telecom.
+	// - `ChinaUnicom`: China Unicom.
+	// - `ChinaMobile`: China Mobile.
+	// - `ChinaTelecom_L2`: China Telecom L2.
+	// - `ChinaUnicom_L2`: China Unicom L2.
+	// - `ChinaMobile_L2`: China Mobile L2.
+	// - `BGP_FinanceCloud`: If your services are deployed in China East 1 Finance, this parameter is required and you must set the value to `BGP_FinanceCloud`.
+	//   **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp pulumi.StringOutput `pulumi:"isp"`
+	// The Name of the logging service LogProject. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogProject pulumi.StringPtrOutput `pulumi:"logProject"`
+	// The Name of the logging service LogStore. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogStore pulumi.StringPtrOutput `pulumi:"logStore"`
 	// Field `name` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `addressName` instead.
 	//
 	// Deprecated: Field 'name' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'address_name' instead.
@@ -101,7 +117,7 @@ type EipAddress struct {
 	PublicIpAddressPoolId pulumi.StringPtrOutput `pulumi:"publicIpAddressPoolId"`
 	// The ID of the resource group.
 	ResourceGroupId pulumi.StringOutput `pulumi:"resourceGroupId"`
-	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS Origin Basic is used. If you set the value to `AntiDDoS_Enhanced`, Anti-DDoS Pro(Premium) is used.
+	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS is basic level. If you set the value to `AntiDDoS_Enhanced`, High capacity Anti-DDoS Origin is enabled.
 	SecurityProtectionTypes pulumi.StringArrayOutput `pulumi:"securityProtectionTypes"`
 	// The status of the EIP. Valid values:  `Associating`: The EIP is being associated. `Unassociating`: The EIP is being disassociated. `InUse`: The EIP is allocated. `Available`:The EIP is available.
 	Status pulumi.StringOutput `pulumi:"status"`
@@ -151,6 +167,8 @@ type eipAddressState struct {
 	DeletionProtection *bool `pulumi:"deletionProtection"`
 	// The description of the EIP.
 	Description *string `pulumi:"description"`
+	// The status of the EIP. configuring high precision second-by-second monitoring for EIP. Valid values: `ON` and `OFF`.
+	HighDefinitionMonitorLogStatus *string `pulumi:"highDefinitionMonitorLogStatus"`
 	// Field `instanceChargeType` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `paymentType` instead.
 	//
 	// Deprecated: Field 'instance_charge_type' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'payment_type' instead.
@@ -160,8 +178,22 @@ type eipAddressState struct {
 	InternetChargeType *string `pulumi:"internetChargeType"`
 	// The address of the EIP.
 	IpAddress *string `pulumi:"ipAddress"`
-	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values: `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China. `BGP_PRO`:  BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values:
+	// - `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China.
+	// - `BGP_PRO`: BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// - `ChinaTelecom`: China Telecom.
+	// - `ChinaUnicom`: China Unicom.
+	// - `ChinaMobile`: China Mobile.
+	// - `ChinaTelecom_L2`: China Telecom L2.
+	// - `ChinaUnicom_L2`: China Unicom L2.
+	// - `ChinaMobile_L2`: China Mobile L2.
+	// - `BGP_FinanceCloud`: If your services are deployed in China East 1 Finance, this parameter is required and you must set the value to `BGP_FinanceCloud`.
+	//   **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp *string `pulumi:"isp"`
+	// The Name of the logging service LogProject. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogProject *string `pulumi:"logProject"`
+	// The Name of the logging service LogStore. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogStore *string `pulumi:"logStore"`
 	// Field `name` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `addressName` instead.
 	//
 	// Deprecated: Field 'name' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'address_name' instead.
@@ -176,7 +208,7 @@ type eipAddressState struct {
 	PublicIpAddressPoolId *string `pulumi:"publicIpAddressPoolId"`
 	// The ID of the resource group.
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
-	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS Origin Basic is used. If you set the value to `AntiDDoS_Enhanced`, Anti-DDoS Pro(Premium) is used.
+	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS is basic level. If you set the value to `AntiDDoS_Enhanced`, High capacity Anti-DDoS Origin is enabled.
 	SecurityProtectionTypes []string `pulumi:"securityProtectionTypes"`
 	// The status of the EIP. Valid values:  `Associating`: The EIP is being associated. `Unassociating`: The EIP is being disassociated. `InUse`: The EIP is allocated. `Available`:The EIP is available.
 	Status *string `pulumi:"status"`
@@ -197,6 +229,8 @@ type EipAddressState struct {
 	DeletionProtection pulumi.BoolPtrInput
 	// The description of the EIP.
 	Description pulumi.StringPtrInput
+	// The status of the EIP. configuring high precision second-by-second monitoring for EIP. Valid values: `ON` and `OFF`.
+	HighDefinitionMonitorLogStatus pulumi.StringPtrInput
 	// Field `instanceChargeType` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `paymentType` instead.
 	//
 	// Deprecated: Field 'instance_charge_type' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'payment_type' instead.
@@ -206,8 +240,22 @@ type EipAddressState struct {
 	InternetChargeType pulumi.StringPtrInput
 	// The address of the EIP.
 	IpAddress pulumi.StringPtrInput
-	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values: `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China. `BGP_PRO`:  BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values:
+	// - `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China.
+	// - `BGP_PRO`: BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// - `ChinaTelecom`: China Telecom.
+	// - `ChinaUnicom`: China Unicom.
+	// - `ChinaMobile`: China Mobile.
+	// - `ChinaTelecom_L2`: China Telecom L2.
+	// - `ChinaUnicom_L2`: China Unicom L2.
+	// - `ChinaMobile_L2`: China Mobile L2.
+	// - `BGP_FinanceCloud`: If your services are deployed in China East 1 Finance, this parameter is required and you must set the value to `BGP_FinanceCloud`.
+	//   **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp pulumi.StringPtrInput
+	// The Name of the logging service LogProject. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogProject pulumi.StringPtrInput
+	// The Name of the logging service LogStore. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogStore pulumi.StringPtrInput
 	// Field `name` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `addressName` instead.
 	//
 	// Deprecated: Field 'name' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'address_name' instead.
@@ -222,7 +270,7 @@ type EipAddressState struct {
 	PublicIpAddressPoolId pulumi.StringPtrInput
 	// The ID of the resource group.
 	ResourceGroupId pulumi.StringPtrInput
-	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS Origin Basic is used. If you set the value to `AntiDDoS_Enhanced`, Anti-DDoS Pro(Premium) is used.
+	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS is basic level. If you set the value to `AntiDDoS_Enhanced`, High capacity Anti-DDoS Origin is enabled.
 	SecurityProtectionTypes pulumi.StringArrayInput
 	// The status of the EIP. Valid values:  `Associating`: The EIP is being associated. `Unassociating`: The EIP is being disassociated. `InUse`: The EIP is allocated. `Available`:The EIP is available.
 	Status pulumi.StringPtrInput
@@ -247,6 +295,8 @@ type eipAddressArgs struct {
 	DeletionProtection *bool `pulumi:"deletionProtection"`
 	// The description of the EIP.
 	Description *string `pulumi:"description"`
+	// The status of the EIP. configuring high precision second-by-second monitoring for EIP. Valid values: `ON` and `OFF`.
+	HighDefinitionMonitorLogStatus *string `pulumi:"highDefinitionMonitorLogStatus"`
 	// Field `instanceChargeType` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `paymentType` instead.
 	//
 	// Deprecated: Field 'instance_charge_type' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'payment_type' instead.
@@ -254,8 +304,22 @@ type eipAddressArgs struct {
 	// The metering method of the EIP.
 	// Valid values: `PayByDominantTraffic`, `PayByBandwidth` and `PayByTraffic`. Default to `PayByBandwidth`. **NOTE:** It must be set to "PayByBandwidth" when `paymentType` is "Subscription".
 	InternetChargeType *string `pulumi:"internetChargeType"`
-	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values: `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China. `BGP_PRO`:  BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values:
+	// - `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China.
+	// - `BGP_PRO`: BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// - `ChinaTelecom`: China Telecom.
+	// - `ChinaUnicom`: China Unicom.
+	// - `ChinaMobile`: China Mobile.
+	// - `ChinaTelecom_L2`: China Telecom L2.
+	// - `ChinaUnicom_L2`: China Unicom L2.
+	// - `ChinaMobile_L2`: China Mobile L2.
+	// - `BGP_FinanceCloud`: If your services are deployed in China East 1 Finance, this parameter is required and you must set the value to `BGP_FinanceCloud`.
+	//   **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp *string `pulumi:"isp"`
+	// The Name of the logging service LogProject. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogProject *string `pulumi:"logProject"`
+	// The Name of the logging service LogStore. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogStore *string `pulumi:"logStore"`
 	// Field `name` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `addressName` instead.
 	//
 	// Deprecated: Field 'name' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'address_name' instead.
@@ -270,7 +334,7 @@ type eipAddressArgs struct {
 	PublicIpAddressPoolId *string `pulumi:"publicIpAddressPoolId"`
 	// The ID of the resource group.
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
-	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS Origin Basic is used. If you set the value to `AntiDDoS_Enhanced`, Anti-DDoS Pro(Premium) is used.
+	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS is basic level. If you set the value to `AntiDDoS_Enhanced`, High capacity Anti-DDoS Origin is enabled.
 	SecurityProtectionTypes []string `pulumi:"securityProtectionTypes"`
 	// A mapping of tags to assign to the resource.
 	Tags map[string]interface{} `pulumi:"tags"`
@@ -290,6 +354,8 @@ type EipAddressArgs struct {
 	DeletionProtection pulumi.BoolPtrInput
 	// The description of the EIP.
 	Description pulumi.StringPtrInput
+	// The status of the EIP. configuring high precision second-by-second monitoring for EIP. Valid values: `ON` and `OFF`.
+	HighDefinitionMonitorLogStatus pulumi.StringPtrInput
 	// Field `instanceChargeType` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `paymentType` instead.
 	//
 	// Deprecated: Field 'instance_charge_type' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'payment_type' instead.
@@ -297,8 +363,22 @@ type EipAddressArgs struct {
 	// The metering method of the EIP.
 	// Valid values: `PayByDominantTraffic`, `PayByBandwidth` and `PayByTraffic`. Default to `PayByBandwidth`. **NOTE:** It must be set to "PayByBandwidth" when `paymentType` is "Subscription".
 	InternetChargeType pulumi.StringPtrInput
-	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values: `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China. `BGP_PRO`:  BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values:
+	// - `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China.
+	// - `BGP_PRO`: BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+	// - `ChinaTelecom`: China Telecom.
+	// - `ChinaUnicom`: China Unicom.
+	// - `ChinaMobile`: China Mobile.
+	// - `ChinaTelecom_L2`: China Telecom L2.
+	// - `ChinaUnicom_L2`: China Unicom L2.
+	// - `ChinaMobile_L2`: China Mobile L2.
+	// - `BGP_FinanceCloud`: If your services are deployed in China East 1 Finance, this parameter is required and you must set the value to `BGP_FinanceCloud`.
+	//   **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp pulumi.StringPtrInput
+	// The Name of the logging service LogProject. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogProject pulumi.StringPtrInput
+	// The Name of the logging service LogStore. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+	LogStore pulumi.StringPtrInput
 	// Field `name` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `addressName` instead.
 	//
 	// Deprecated: Field 'name' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'address_name' instead.
@@ -313,7 +393,7 @@ type EipAddressArgs struct {
 	PublicIpAddressPoolId pulumi.StringPtrInput
 	// The ID of the resource group.
 	ResourceGroupId pulumi.StringPtrInput
-	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS Origin Basic is used. If you set the value to `AntiDDoS_Enhanced`, Anti-DDoS Pro(Premium) is used.
+	// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS is basic level. If you set the value to `AntiDDoS_Enhanced`, High capacity Anti-DDoS Origin is enabled.
 	SecurityProtectionTypes pulumi.StringArrayInput
 	// A mapping of tags to assign to the resource.
 	Tags pulumi.MapInput
@@ -436,6 +516,11 @@ func (o EipAddressOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *EipAddress) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
 }
 
+// The status of the EIP. configuring high precision second-by-second monitoring for EIP. Valid values: `ON` and `OFF`.
+func (o EipAddressOutput) HighDefinitionMonitorLogStatus() pulumi.StringOutput {
+	return o.ApplyT(func(v *EipAddress) pulumi.StringOutput { return v.HighDefinitionMonitorLogStatus }).(pulumi.StringOutput)
+}
+
 // Field `instanceChargeType` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `paymentType` instead.
 //
 // Deprecated: Field 'instance_charge_type' has been deprecated from provider version 1.126.0 and it will be remove in the future version. Please use the new attribute 'payment_type' instead.
@@ -454,9 +539,29 @@ func (o EipAddressOutput) IpAddress() pulumi.StringOutput {
 	return o.ApplyT(func(v *EipAddress) pulumi.StringOutput { return v.IpAddress }).(pulumi.StringOutput)
 }
 
-// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values: `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China. `BGP_PRO`:  BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+// The line type. You can set this parameter only when you create a `PayAsYouGo` EIP. Valid values:
+//   - `BGP`: BGP (Multi-ISP) lines.Up to 89 high-quality BGP lines are available worldwide. Direct connections with multiple Internet Service Providers (ISPs), including Telecom, Unicom, Mobile, Railcom, Netcom, CERNET, China Broadcast Network, Dr. Peng, and Founder, can be established in all regions in mainland China.
+//   - `BGP_PRO`: BGP (Multi-ISP) Pro lines optimize data transmission to mainland China and improve connection quality for international services. Compared with BGP (Multi-ISP), when BGP (Multi-ISP) Pro provides services to clients in mainland China (excluding data centers), cross-border connections are established without using international ISP services. This reduces network latency.
+//   - `ChinaTelecom`: China Telecom.
+//   - `ChinaUnicom`: China Unicom.
+//   - `ChinaMobile`: China Mobile.
+//   - `ChinaTelecom_L2`: China Telecom L2.
+//   - `ChinaUnicom_L2`: China Unicom L2.
+//   - `ChinaMobile_L2`: China Mobile L2.
+//   - `BGP_FinanceCloud`: If your services are deployed in China East 1 Finance, this parameter is required and you must set the value to `BGP_FinanceCloud`.
+//     **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 func (o EipAddressOutput) Isp() pulumi.StringOutput {
 	return o.ApplyT(func(v *EipAddress) pulumi.StringOutput { return v.Isp }).(pulumi.StringOutput)
+}
+
+// The Name of the logging service LogProject. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+func (o EipAddressOutput) LogProject() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *EipAddress) pulumi.StringPtrOutput { return v.LogProject }).(pulumi.StringPtrOutput)
+}
+
+// The Name of the logging service LogStore. Current parameter is required when configuring high precision second-by-second monitoring for EIP.
+func (o EipAddressOutput) LogStore() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *EipAddress) pulumi.StringPtrOutput { return v.LogStore }).(pulumi.StringPtrOutput)
 }
 
 // Field `name` has been deprecated from provider version 1.126.0, and it will be removed in the future version. Please use the new attribute `addressName` instead.
@@ -491,7 +596,7 @@ func (o EipAddressOutput) ResourceGroupId() pulumi.StringOutput {
 	return o.ApplyT(func(v *EipAddress) pulumi.StringOutput { return v.ResourceGroupId }).(pulumi.StringOutput)
 }
 
-// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS Origin Basic is used. If you set the value to `AntiDDoS_Enhanced`, Anti-DDoS Pro(Premium) is used.
+// The edition of Anti-DDoS. If you do not set this parameter, Anti-DDoS is basic level. If you set the value to `AntiDDoS_Enhanced`, High capacity Anti-DDoS Origin is enabled.
 func (o EipAddressOutput) SecurityProtectionTypes() pulumi.StringArrayOutput {
 	return o.ApplyT(func(v *EipAddress) pulumi.StringArrayOutput { return v.SecurityProtectionTypes }).(pulumi.StringArrayOutput)
 }

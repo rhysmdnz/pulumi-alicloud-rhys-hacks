@@ -50,6 +50,12 @@ namespace Pulumi.AliCloud.Ecs
         public Output<string> AvailabilityZone { get; private set; } = null!;
 
         /// <summary>
+        /// The number of vCPUs.
+        /// </summary>
+        [Output("cpu")]
+        public Output<int> Cpu { get; private set; } = null!;
+
+        /// <summary>
         /// Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
         /// </summary>
         [Output("creditSpecification")]
@@ -60,6 +66,12 @@ namespace Pulumi.AliCloud.Ecs
         /// </summary>
         [Output("dataDisks")]
         public Output<ImmutableArray<Outputs.InstanceDataDisk>> DataDisks { get; private set; } = null!;
+
+        /// <summary>
+        /// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+        /// </summary>
+        [Output("dedicatedHostId")]
+        public Output<string?> DedicatedHostId { get; private set; } = null!;
 
         /// <summary>
         /// Whether enable the deletion protection or not. Default value: `false`.
@@ -241,10 +253,28 @@ namespace Pulumi.AliCloud.Ecs
         public Output<Outputs.InstanceMaintenanceTime?> MaintenanceTime { get; private set; } = null!;
 
         /// <summary>
+        /// The memory size of the instance. Unit: MiB.
+        /// </summary>
+        [Output("memory")]
+        public Output<int> Memory { get; private set; } = null!;
+
+        /// <summary>
         /// The operation type. It is valid when `instance_charge_type` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instance_type` parameter has lower specifications than the current instance type, you must set `operator_type` to `downgrade`.
         /// </summary>
         [Output("operatorType")]
         public Output<string?> OperatorType { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the operating system of the instance.
+        /// </summary>
+        [Output("osName")]
+        public Output<string> OsName { get; private set; } = null!;
+
+        /// <summary>
+        /// The type of the operating system of the instance.
+        /// </summary>
+        [Output("osType")]
+        public Output<string> OsType { get; private set; } = null!;
 
         /// <summary>
         /// Password to an instance is a string of 8 to 30 characters. It must contain uppercase/lowercase letters and numerals, but cannot contain special symbols. When it is changed, the instance will reboot to make the change take effect.
@@ -260,6 +290,12 @@ namespace Pulumi.AliCloud.Ecs
         /// </summary>
         [Output("periodUnit")]
         public Output<string?> PeriodUnit { get; private set; } = null!;
+
+        /// <summary>
+        /// The primary private IP address of the ENI.
+        /// </summary>
+        [Output("primaryIpAddress")]
+        public Output<string> PrimaryIpAddress { get; private set; } = null!;
 
         /// <summary>
         /// Instance private IP address can be specified when you creating new instance. It is valid when `vswitch_id` is specified. When it is changed, the instance will reboot to make the change take effect.
@@ -339,7 +375,7 @@ namespace Pulumi.AliCloud.Ecs
         /// - SpotAsPriceGo: A price that is based on the highest Pay-As-You-Go instance
         /// </summary>
         [Output("spotStrategy")]
-        public Output<string?> SpotStrategy { get; private set; } = null!;
+        public Output<string> SpotStrategy { get; private set; } = null!;
 
         /// <summary>
         /// The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
@@ -348,7 +384,9 @@ namespace Pulumi.AliCloud.Ecs
         public Output<string> Status { get; private set; } = null!;
 
         /// <summary>
-        /// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        /// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        /// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+        /// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         /// </summary>
         [Output("stoppedMode")]
         public Output<string> StoppedMode { get; private set; } = null!;
@@ -427,7 +465,10 @@ namespace Pulumi.AliCloud.Ecs
         public Output<ImmutableDictionary<string, string>?> Tags { get; private set; } = null!;
 
         /// <summary>
-        /// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        /// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+        /// It supports to setting a base64-encoded value, and it is the recommended usage.
+        /// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+        /// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         /// </summary>
         [Output("userData")]
         public Output<string?> UserData { get; private set; } = null!;
@@ -538,6 +579,12 @@ namespace Pulumi.AliCloud.Ecs
             get => _dataDisks ?? (_dataDisks = new InputList<Inputs.InstanceDataDiskArgs>());
             set => _dataDisks = value;
         }
+
+        /// <summary>
+        /// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+        /// </summary>
+        [Input("dedicatedHostId")]
+        public Input<string>? DedicatedHostId { get; set; }
 
         /// <summary>
         /// Whether enable the deletion protection or not. Default value: `false`.
@@ -838,7 +885,9 @@ namespace Pulumi.AliCloud.Ecs
         public Input<string>? Status { get; set; }
 
         /// <summary>
-        /// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        /// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        /// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+        /// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         /// </summary>
         [Input("stoppedMode")]
         public Input<string>? StoppedMode { get; set; }
@@ -923,7 +972,10 @@ namespace Pulumi.AliCloud.Ecs
         }
 
         /// <summary>
-        /// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        /// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+        /// It supports to setting a base64-encoded value, and it is the recommended usage.
+        /// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+        /// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         /// </summary>
         [Input("userData")]
         public Input<string>? UserData { get; set; }
@@ -985,6 +1037,12 @@ namespace Pulumi.AliCloud.Ecs
         public Input<string>? AvailabilityZone { get; set; }
 
         /// <summary>
+        /// The number of vCPUs.
+        /// </summary>
+        [Input("cpu")]
+        public Input<int>? Cpu { get; set; }
+
+        /// <summary>
         /// Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
         /// </summary>
         [Input("creditSpecification")]
@@ -1001,6 +1059,12 @@ namespace Pulumi.AliCloud.Ecs
             get => _dataDisks ?? (_dataDisks = new InputList<Inputs.InstanceDataDiskGetArgs>());
             set => _dataDisks = value;
         }
+
+        /// <summary>
+        /// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+        /// </summary>
+        [Input("dedicatedHostId")]
+        public Input<string>? DedicatedHostId { get; set; }
 
         /// <summary>
         /// Whether enable the deletion protection or not. Default value: `false`.
@@ -1194,10 +1258,28 @@ namespace Pulumi.AliCloud.Ecs
         public Input<Inputs.InstanceMaintenanceTimeGetArgs>? MaintenanceTime { get; set; }
 
         /// <summary>
+        /// The memory size of the instance. Unit: MiB.
+        /// </summary>
+        [Input("memory")]
+        public Input<int>? Memory { get; set; }
+
+        /// <summary>
         /// The operation type. It is valid when `instance_charge_type` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instance_type` parameter has lower specifications than the current instance type, you must set `operator_type` to `downgrade`.
         /// </summary>
         [Input("operatorType")]
         public Input<string>? OperatorType { get; set; }
+
+        /// <summary>
+        /// The name of the operating system of the instance.
+        /// </summary>
+        [Input("osName")]
+        public Input<string>? OsName { get; set; }
+
+        /// <summary>
+        /// The type of the operating system of the instance.
+        /// </summary>
+        [Input("osType")]
+        public Input<string>? OsType { get; set; }
 
         /// <summary>
         /// Password to an instance is a string of 8 to 30 characters. It must contain uppercase/lowercase letters and numerals, but cannot contain special symbols. When it is changed, the instance will reboot to make the change take effect.
@@ -1213,6 +1295,12 @@ namespace Pulumi.AliCloud.Ecs
         /// </summary>
         [Input("periodUnit")]
         public Input<string>? PeriodUnit { get; set; }
+
+        /// <summary>
+        /// The primary private IP address of the ENI.
+        /// </summary>
+        [Input("primaryIpAddress")]
+        public Input<string>? PrimaryIpAddress { get; set; }
 
         /// <summary>
         /// Instance private IP address can be specified when you creating new instance. It is valid when `vswitch_id` is specified. When it is changed, the instance will reboot to make the change take effect.
@@ -1313,7 +1401,9 @@ namespace Pulumi.AliCloud.Ecs
         public Input<string>? Status { get; set; }
 
         /// <summary>
-        /// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        /// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        /// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+        /// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         /// </summary>
         [Input("stoppedMode")]
         public Input<string>? StoppedMode { get; set; }
@@ -1398,7 +1488,10 @@ namespace Pulumi.AliCloud.Ecs
         }
 
         /// <summary>
-        /// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        /// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+        /// It supports to setting a base64-encoded value, and it is the recommended usage.
+        /// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+        /// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         /// </summary>
         [Input("userData")]
         public Input<string>? UserData { get; set; }

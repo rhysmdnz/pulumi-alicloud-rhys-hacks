@@ -988,6 +988,7 @@ class InstanceDataDiskArgs:
                - `cloud_ssd`: The SSD cloud disk.
                - `cloud_essd`: The ESSD cloud disk.
                - `ephemeral_ssd`: The local SSD disk.
+               - `cloud_auto`: The AutoPL cloud disk.
                Default to `cloud_efficiency`.
         :param pulumi.Input[bool] delete_with_instance: Delete this data disk when the instance is destroyed. It only works on cloud, cloud_efficiency, cloud_essd, cloud_ssd disk. If the category of this data disk was ephemeral_ssd, please don't set this param. Default value: `true`.
         :param pulumi.Input[str] description: The description of the data disk.
@@ -1064,6 +1065,7 @@ class InstanceDataDiskArgs:
         - `cloud_ssd`: The SSD cloud disk.
         - `cloud_essd`: The ESSD cloud disk.
         - `ephemeral_ssd`: The local SSD disk.
+        - `cloud_auto`: The AutoPL cloud disk.
         Default to `cloud_efficiency`.
         """
         return pulumi.get(self, "category")

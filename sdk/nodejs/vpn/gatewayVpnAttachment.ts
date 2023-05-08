@@ -114,7 +114,7 @@ export class GatewayVpnAttachment extends pulumi.CustomResource {
      */
     public readonly bgpConfig!: pulumi.Output<outputs.vpn.GatewayVpnAttachmentBgpConfig>;
     /**
-     * The ID of the customer gateway.
+     * The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
      */
     public readonly customerGatewayId!: pulumi.Output<string>;
     /**
@@ -233,7 +233,7 @@ export interface GatewayVpnAttachmentState {
      */
     bgpConfig?: pulumi.Input<inputs.vpn.GatewayVpnAttachmentBgpConfig>;
     /**
-     * The ID of the customer gateway.
+     * The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
      */
     customerGatewayId?: pulumi.Input<string>;
     /**
@@ -295,7 +295,7 @@ export interface GatewayVpnAttachmentArgs {
      */
     bgpConfig?: pulumi.Input<inputs.vpn.GatewayVpnAttachmentBgpConfig>;
     /**
-     * The ID of the customer gateway.
+     * The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
      */
     customerGatewayId: pulumi.Input<string>;
     /**

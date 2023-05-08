@@ -63,6 +63,7 @@ class Endpoints(dict):
                  apigateway: Optional[str] = None,
                  arms: Optional[str] = None,
                  bastionhost: Optional[str] = None,
+                 beebot: Optional[str] = None,
                  bpstudio: Optional[str] = None,
                  brain_industrial: Optional[str] = None,
                  bssopenapi: Optional[str] = None,
@@ -108,6 +109,7 @@ class Endpoints(dict):
                  edas: Optional[str] = None,
                  edasschedulerx: Optional[str] = None,
                  edsuser: Optional[str] = None,
+                 eflo: Optional[str] = None,
                  ehpc: Optional[str] = None,
                  ehs: Optional[str] = None,
                  eipanycast: Optional[str] = None,
@@ -142,6 +144,7 @@ class Endpoints(dict):
                  mse: Optional[str] = None,
                  nas: Optional[str] = None,
                  nlb: Optional[str] = None,
+                 oceanbase: Optional[str] = None,
                  ons: Optional[str] = None,
                  onsproxy: Optional[str] = None,
                  oos: Optional[str] = None,
@@ -168,6 +171,7 @@ class Endpoints(dict):
                  sgw: Optional[str] = None,
                  slb: Optional[str] = None,
                  smartag: Optional[str] = None,
+                 srvcatalog: Optional[str] = None,
                  sts: Optional[str] = None,
                  swas: Optional[str] = None,
                  tag: Optional[str] = None,
@@ -197,6 +201,8 @@ class Endpoints(dict):
             pulumi.set(__self__, "arms", arms)
         if bastionhost is not None:
             pulumi.set(__self__, "bastionhost", bastionhost)
+        if beebot is not None:
+            pulumi.set(__self__, "beebot", beebot)
         if bpstudio is not None:
             pulumi.set(__self__, "bpstudio", bpstudio)
         if brain_industrial is not None:
@@ -287,6 +293,8 @@ class Endpoints(dict):
             pulumi.set(__self__, "edasschedulerx", edasschedulerx)
         if edsuser is not None:
             pulumi.set(__self__, "edsuser", edsuser)
+        if eflo is not None:
+            pulumi.set(__self__, "eflo", eflo)
         if ehpc is not None:
             pulumi.set(__self__, "ehpc", ehpc)
         if ehs is not None:
@@ -355,6 +363,8 @@ class Endpoints(dict):
             pulumi.set(__self__, "nas", nas)
         if nlb is not None:
             pulumi.set(__self__, "nlb", nlb)
+        if oceanbase is not None:
+            pulumi.set(__self__, "oceanbase", oceanbase)
         if ons is not None:
             pulumi.set(__self__, "ons", ons)
         if onsproxy is not None:
@@ -407,6 +417,8 @@ class Endpoints(dict):
             pulumi.set(__self__, "slb", slb)
         if smartag is not None:
             pulumi.set(__self__, "smartag", smartag)
+        if srvcatalog is not None:
+            pulumi.set(__self__, "srvcatalog", srvcatalog)
         if sts is not None:
             pulumi.set(__self__, "sts", sts)
         if swas is not None:
@@ -475,6 +487,11 @@ class Endpoints(dict):
     @pulumi.getter
     def bastionhost(self) -> Optional[str]:
         return pulumi.get(self, "bastionhost")
+
+    @property
+    @pulumi.getter
+    def beebot(self) -> Optional[str]:
+        return pulumi.get(self, "beebot")
 
     @property
     @pulumi.getter
@@ -703,6 +720,11 @@ class Endpoints(dict):
 
     @property
     @pulumi.getter
+    def eflo(self) -> Optional[str]:
+        return pulumi.get(self, "eflo")
+
+    @property
+    @pulumi.getter
     def ehpc(self) -> Optional[str]:
         return pulumi.get(self, "ehpc")
 
@@ -873,6 +895,11 @@ class Endpoints(dict):
 
     @property
     @pulumi.getter
+    def oceanbase(self) -> Optional[str]:
+        return pulumi.get(self, "oceanbase")
+
+    @property
+    @pulumi.getter
     def ons(self) -> Optional[str]:
         return pulumi.get(self, "ons")
 
@@ -1000,6 +1027,11 @@ class Endpoints(dict):
     @pulumi.getter
     def smartag(self) -> Optional[str]:
         return pulumi.get(self, "smartag")
+
+    @property
+    @pulumi.getter
+    def srvcatalog(self) -> Optional[str]:
+        return pulumi.get(self, "srvcatalog")
 
     @property
     @pulumi.getter

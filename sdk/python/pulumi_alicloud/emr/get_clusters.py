@@ -234,10 +234,6 @@ def get_clusters(cluster_name: Optional[str] = None,
                  vpc_id: Optional[str] = None,
                  opts: Optional[pulumi.InvokeOptions] = None) -> AwaitableGetClustersResult:
     """
-    This data source provides the Emr Clusters of the current Alibaba Cloud user.
-
-    > **NOTE:** Available in v1.146.0+.
-
     ## Example Usage
 
     Basic Usage
@@ -428,10 +424,6 @@ def get_clusters_output(cluster_name: Optional[pulumi.Input[Optional[str]]] = No
                         vpc_id: Optional[pulumi.Input[Optional[str]]] = None,
                         opts: Optional[pulumi.InvokeOptions] = None) -> pulumi.Output[GetClustersResult]:
     """
-    This data source provides the Emr Clusters of the current Alibaba Cloud user.
-
-    > **NOTE:** Available in v1.146.0+.
-
     ## Example Usage
 
     Basic Usage

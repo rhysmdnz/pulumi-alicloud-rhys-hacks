@@ -24,6 +24,7 @@ namespace Pulumi.AliCloud.Vpc
     ///     var fooCommonBandwithPackage = new AliCloud.Vpc.CommonBandwithPackage("fooCommonBandwithPackage", new()
     ///     {
     ///         Bandwidth = "2",
+    ///         BandwidthPackageName = "test_common_bandwidth_package",
     ///         Description = "test_common_bandwidth_package",
     ///     });
     /// 
@@ -47,7 +48,7 @@ namespace Pulumi.AliCloud.Vpc
     /// The common bandwidth package attachment can be imported using the id, e.g.
     /// 
     /// ```sh
-    ///  $ pulumi import alicloud:vpc/commonBandwithPackageAttachment:CommonBandwithPackageAttachment foo cbwp-abc123456:eip-abc123456
+    ///  $ pulumi import alicloud:vpc/commonBandwithPackageAttachment:CommonBandwithPackageAttachment foo &lt;bandwidth_package_id&gt;:&lt;instance_id&gt;
     /// ```
     /// </summary>
     [AliCloudResourceType("alicloud:vpc/commonBandwithPackageAttachment:CommonBandwithPackageAttachment")]
@@ -64,6 +65,12 @@ namespace Pulumi.AliCloud.Vpc
         /// </summary>
         [Output("bandwidthPackageId")]
         public Output<string> BandwidthPackageId { get; private set; } = null!;
+
+        /// <summary>
+        /// Whether to cancel the maximum bandwidth configuration for the EIP. Default: false.
+        /// </summary>
+        [Output("cancelCommonBandwidthPackageIpBandwidth")]
+        public Output<bool?> CancelCommonBandwidthPackageIpBandwidth { get; private set; } = null!;
 
         /// <summary>
         /// The instance_id of the common bandwidth package attachment, the field can't be changed.
@@ -131,6 +138,12 @@ namespace Pulumi.AliCloud.Vpc
         public Input<string> BandwidthPackageId { get; set; } = null!;
 
         /// <summary>
+        /// Whether to cancel the maximum bandwidth configuration for the EIP. Default: false.
+        /// </summary>
+        [Input("cancelCommonBandwidthPackageIpBandwidth")]
+        public Input<bool>? CancelCommonBandwidthPackageIpBandwidth { get; set; }
+
+        /// <summary>
         /// The instance_id of the common bandwidth package attachment, the field can't be changed.
         /// </summary>
         [Input("instanceId", required: true)]
@@ -155,6 +168,12 @@ namespace Pulumi.AliCloud.Vpc
         /// </summary>
         [Input("bandwidthPackageId")]
         public Input<string>? BandwidthPackageId { get; set; }
+
+        /// <summary>
+        /// Whether to cancel the maximum bandwidth configuration for the EIP. Default: false.
+        /// </summary>
+        [Input("cancelCommonBandwidthPackageIpBandwidth")]
+        public Input<bool>? CancelCommonBandwidthPackageIpBandwidth { get; set; }
 
         /// <summary>
         /// The instance_id of the common bandwidth package attachment, the field can't be changed.

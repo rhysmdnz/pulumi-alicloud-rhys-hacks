@@ -104,6 +104,12 @@ namespace Pulumi.AliCloud.Vpc
     public partial class HAVipAttachment : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+        /// </summary>
+        [Output("force")]
+        public Output<string?> Force { get; private set; } = null!;
+
+        /// <summary>
         /// The havip_id of the havip attachment, the field can't be changed.
         /// </summary>
         [Output("havipId")]
@@ -114,6 +120,18 @@ namespace Pulumi.AliCloud.Vpc
         /// </summary>
         [Output("instanceId")]
         public Output<string> InstanceId { get; private set; } = null!;
+
+        /// <summary>
+        /// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+        /// </summary>
+        [Output("instanceType")]
+        public Output<string> InstanceType { get; private set; } = null!;
+
+        /// <summary>
+        /// (Available in v1.201.0+) The status of the HaVip instance.
+        /// </summary>
+        [Output("status")]
+        public Output<string> Status { get; private set; } = null!;
 
 
         /// <summary>
@@ -163,6 +181,12 @@ namespace Pulumi.AliCloud.Vpc
     public sealed class HAVipAttachmentArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+        /// </summary>
+        [Input("force")]
+        public Input<string>? Force { get; set; }
+
+        /// <summary>
         /// The havip_id of the havip attachment, the field can't be changed.
         /// </summary>
         [Input("havipId", required: true)]
@@ -174,6 +198,12 @@ namespace Pulumi.AliCloud.Vpc
         [Input("instanceId", required: true)]
         public Input<string> InstanceId { get; set; } = null!;
 
+        /// <summary>
+        /// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+        /// </summary>
+        [Input("instanceType")]
+        public Input<string>? InstanceType { get; set; }
+
         public HAVipAttachmentArgs()
         {
         }
@@ -182,6 +212,12 @@ namespace Pulumi.AliCloud.Vpc
 
     public sealed class HAVipAttachmentState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+        /// </summary>
+        [Input("force")]
+        public Input<string>? Force { get; set; }
+
         /// <summary>
         /// The havip_id of the havip attachment, the field can't be changed.
         /// </summary>
@@ -193,6 +229,18 @@ namespace Pulumi.AliCloud.Vpc
         /// </summary>
         [Input("instanceId")]
         public Input<string>? InstanceId { get; set; }
+
+        /// <summary>
+        /// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+        /// </summary>
+        [Input("instanceType")]
+        public Input<string>? InstanceType { get; set; }
+
+        /// <summary>
+        /// (Available in v1.201.0+) The status of the HaVip instance.
+        /// </summary>
+        [Input("status")]
+        public Input<string>? Status { get; set; }
 
         public HAVipAttachmentState()
         {

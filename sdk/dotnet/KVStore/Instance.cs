@@ -10,122 +10,6 @@ using Pulumi.Serialization;
 namespace Pulumi.AliCloud.KVStore
 {
     /// <summary>
-    /// Provides an ApsaraDB Redis / Memcache instance resource. A DB instance is an isolated database environment in the cloud. It support be associated with IP whitelists and backup configuration which are separate resource providers. For information about Alicloud KVStore DBInstance more and how to use it, see [What is Resource Alicloud KVStore DBInstance](https://www.alibabacloud.com/help/doc-detail/60873.htm).
-    /// 
-    /// ## Example Usage
-    /// 
-    /// Basic Usage
-    /// 
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using Pulumi;
-    /// using AliCloud = Pulumi.AliCloud;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var example = new AliCloud.KVStore.Instance("example", new()
-    ///     {
-    ///         Config = 
-    ///         {
-    ///             { "appendonly", "yes" },
-    ///             { "lazyfree-lazy-eviction", "yes" },
-    ///         },
-    ///         DbInstanceName = "tf-test-basic",
-    ///         EngineVersion = "4.0",
-    ///         InstanceClass = "redis.master.large.default",
-    ///         InstanceType = "Redis",
-    ///         ResourceGroupId = "rg-123456",
-    ///         SecurityIps = new[]
-    ///         {
-    ///             "10.23.12.24",
-    ///         },
-    ///         Tags = 
-    ///         {
-    ///             { "Created", "TF" },
-    ///             { "For", "Test" },
-    ///         },
-    ///         VswitchId = "vsw-123456",
-    ///         ZoneId = "cn-beijing-h",
-    ///     });
-    /// 
-    /// });
-    /// ```
-    /// 
-    /// Transform To PrePaid
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using Pulumi;
-    /// using AliCloud = Pulumi.AliCloud;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var example = new AliCloud.KVStore.Instance("example", new()
-    ///     {
-    ///         Config = 
-    ///         {
-    ///             { "appendonly", "yes" },
-    ///             { "lazyfree-lazy-eviction", "yes" },
-    ///         },
-    ///         DbInstanceName = "tf-test-basic",
-    ///         EngineVersion = "4.0",
-    ///         InstanceClass = "redis.master.large.default",
-    ///         InstanceType = "Redis",
-    ///         PaymentType = "PrePaid",
-    ///         Period = "12",
-    ///         ResourceGroupId = "rg-123456",
-    ///         SecurityIps = new[]
-    ///         {
-    ///             "10.23.12.24",
-    ///         },
-    ///         Tags = 
-    ///         {
-    ///             { "Created", "TF" },
-    ///             { "For", "Test" },
-    ///         },
-    ///         VswitchId = "vsw-123456",
-    ///         ZoneId = "cn-beijing-h",
-    ///     });
-    /// 
-    /// });
-    /// ```
-    /// 
-    /// Modify Private Connection String
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using Pulumi;
-    /// using AliCloud = Pulumi.AliCloud;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var example = new AliCloud.KVStore.Instance("example", new()
-    ///     {
-    ///         Config = 
-    ///         {
-    ///             { "appendonly", "yes" },
-    ///             { "lazyfree-lazy-eviction", "yes" },
-    ///         },
-    ///         DbInstanceName = "tf-test-basic",
-    ///         EngineVersion = "4.0",
-    ///         InstanceClass = "redis.master.large.default",
-    ///         InstanceType = "Redis",
-    ///         PrivateConnectionPrefix = "privateconnectionstringprefix",
-    ///         ResourceGroupId = "rg-123456",
-    ///         SecurityIps = new[]
-    ///         {
-    ///             "10.23.12.24",
-    ///         },
-    ///         Tags = 
-    ///         {
-    ///             { "Created", "TF" },
-    ///             { "For", "Test" },
-    ///         },
-    ///         VswitchId = "vsw-123456",
-    ///         ZoneId = "cn-beijing-h",
-    ///     });
-    /// 
-    /// });
-    /// ```
-    /// 
     /// ## Import
     /// 
     /// KVStore instance can be imported using the id, e.g.
@@ -242,6 +126,15 @@ namespace Pulumi.AliCloud.KVStore
         public Output<bool?> DryRun { get; private set; } = null!;
 
         /// <summary>
+        /// The time when the database is switched after the instance is migrated, 
+        /// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+        /// - Immediately (Default): The configurations are immediately changed.
+        /// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintain_start_time` and `maintain_end_time` to change the maintenance window.
+        /// </summary>
+        [Output("effectiveTime")]
+        public Output<string?> EffectiveTime { get; private set; } = null!;
+
+        /// <summary>
         /// Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
         /// </summary>
         [Output("enableBackupLog")]
@@ -254,13 +147,25 @@ namespace Pulumi.AliCloud.KVStore
         public Output<bool> EnablePublic { get; private set; } = null!;
 
         /// <summary>
+        /// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+        /// </summary>
+        [Output("encryptionKey")]
+        public Output<string> EncryptionKey { get; private set; } = null!;
+
+        /// <summary>
+        /// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+        /// </summary>
+        [Output("encryptionName")]
+        public Output<string> EncryptionName { get; private set; } = null!;
+
+        /// <summary>
         /// The expiration time of the prepaid instance.
         /// </summary>
         [Output("endTime")]
         public Output<string> EndTime { get; private set; } = null!;
 
         /// <summary>
-        /// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+        /// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
         /// **NOTE:** When `instance_type = Memcache`, the `engine_version` only supports "4.0".
         /// </summary>
         [Output("engineVersion")]
@@ -420,6 +325,12 @@ namespace Pulumi.AliCloud.KVStore
         public Output<string?> RestoreTime { get; private set; } = null!;
 
         /// <summary>
+        /// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+        /// </summary>
+        [Output("roleArn")]
+        public Output<string?> RoleArn { get; private set; } = null!;
+
+        /// <summary>
         /// The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
         /// </summary>
         [Output("secondaryZoneId")]
@@ -474,6 +385,12 @@ namespace Pulumi.AliCloud.KVStore
         /// </summary>
         [Output("tags")]
         public Output<ImmutableDictionary<string, object>?> Tags { get; private set; } = null!;
+
+        /// <summary>
+        /// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+        /// </summary>
+        [Output("tdeStatus")]
+        public Output<string> TdeStatus { get; private set; } = null!;
 
         /// <summary>
         /// Only meaningful if instance_type is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.
@@ -645,6 +562,15 @@ namespace Pulumi.AliCloud.KVStore
         public Input<bool>? DryRun { get; set; }
 
         /// <summary>
+        /// The time when the database is switched after the instance is migrated, 
+        /// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+        /// - Immediately (Default): The configurations are immediately changed.
+        /// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintain_start_time` and `maintain_end_time` to change the maintenance window.
+        /// </summary>
+        [Input("effectiveTime")]
+        public Input<string>? EffectiveTime { get; set; }
+
+        /// <summary>
         /// Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
         /// </summary>
         [Input("enableBackupLog")]
@@ -657,7 +583,19 @@ namespace Pulumi.AliCloud.KVStore
         public Input<bool>? EnablePublic { get; set; }
 
         /// <summary>
-        /// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+        /// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+        /// </summary>
+        [Input("encryptionKey")]
+        public Input<string>? EncryptionKey { get; set; }
+
+        /// <summary>
+        /// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+        /// </summary>
+        [Input("encryptionName")]
+        public Input<string>? EncryptionName { get; set; }
+
+        /// <summary>
+        /// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
         /// **NOTE:** When `instance_type = Memcache`, the `engine_version` only supports "4.0".
         /// </summary>
         [Input("engineVersion")]
@@ -824,6 +762,12 @@ namespace Pulumi.AliCloud.KVStore
         public Input<string>? RestoreTime { get; set; }
 
         /// <summary>
+        /// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+        /// </summary>
+        [Input("roleArn")]
+        public Input<string>? RoleArn { get; set; }
+
+        /// <summary>
         /// The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
         /// </summary>
         [Input("secondaryZoneId")]
@@ -883,6 +827,12 @@ namespace Pulumi.AliCloud.KVStore
             get => _tags ?? (_tags = new InputMap<object>());
             set => _tags = value;
         }
+
+        /// <summary>
+        /// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+        /// </summary>
+        [Input("tdeStatus")]
+        public Input<string>? TdeStatus { get; set; }
 
         /// <summary>
         /// Only meaningful if instance_type is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.
@@ -1027,6 +977,15 @@ namespace Pulumi.AliCloud.KVStore
         public Input<bool>? DryRun { get; set; }
 
         /// <summary>
+        /// The time when the database is switched after the instance is migrated, 
+        /// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+        /// - Immediately (Default): The configurations are immediately changed.
+        /// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintain_start_time` and `maintain_end_time` to change the maintenance window.
+        /// </summary>
+        [Input("effectiveTime")]
+        public Input<string>? EffectiveTime { get; set; }
+
+        /// <summary>
         /// Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
         /// </summary>
         [Input("enableBackupLog")]
@@ -1039,13 +998,25 @@ namespace Pulumi.AliCloud.KVStore
         public Input<bool>? EnablePublic { get; set; }
 
         /// <summary>
+        /// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+        /// </summary>
+        [Input("encryptionKey")]
+        public Input<string>? EncryptionKey { get; set; }
+
+        /// <summary>
+        /// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+        /// </summary>
+        [Input("encryptionName")]
+        public Input<string>? EncryptionName { get; set; }
+
+        /// <summary>
         /// The expiration time of the prepaid instance.
         /// </summary>
         [Input("endTime")]
         public Input<string>? EndTime { get; set; }
 
         /// <summary>
-        /// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+        /// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
         /// **NOTE:** When `instance_type = Memcache`, the `engine_version` only supports "4.0".
         /// </summary>
         [Input("engineVersion")]
@@ -1218,6 +1189,12 @@ namespace Pulumi.AliCloud.KVStore
         public Input<string>? RestoreTime { get; set; }
 
         /// <summary>
+        /// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+        /// </summary>
+        [Input("roleArn")]
+        public Input<string>? RoleArn { get; set; }
+
+        /// <summary>
         /// The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
         /// </summary>
         [Input("secondaryZoneId")]
@@ -1284,6 +1261,12 @@ namespace Pulumi.AliCloud.KVStore
             get => _tags ?? (_tags = new InputMap<object>());
             set => _tags = value;
         }
+
+        /// <summary>
+        /// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+        /// </summary>
+        [Input("tdeStatus")]
+        public Input<string>? TdeStatus { get; set; }
 
         /// <summary>
         /// Only meaningful if instance_type is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.

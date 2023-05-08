@@ -55,10 +55,14 @@ func GetInstances(ctx *pulumi.Context, args *GetInstancesArgs, opts ...pulumi.In
 type GetInstancesArgs struct {
 	// Availability zone where instances are located.
 	AvailabilityZone *string `pulumi:"availabilityZone"`
+	// Default to `true`. If false, the attributes `ramRoleName` and `diskDeviceMappings` will not be fetched and output.
+	EnableDetails *bool `pulumi:"enableDetails"`
 	// A list of ECS instance IDs.
 	Ids []string `pulumi:"ids"`
 	// The image ID of some ECS instance used.
 	ImageId *string `pulumi:"imageId"`
+	// The name of the instance. Fuzzy search with the asterisk (*) wildcard characters is supported.
+	InstanceName *string `pulumi:"instanceName"`
 	// A regex string to filter results by instance name.
 	NameRegex  *string `pulumi:"nameRegex"`
 	OutputFile *string `pulumi:"outputFile"`
@@ -66,7 +70,7 @@ type GetInstancesArgs struct {
 	PageSize   *int    `pulumi:"pageSize"`
 	// The RAM role name which the instance attaches.
 	RamRoleName *string `pulumi:"ramRoleName"`
-	// The Id of resource group which the instance belongs.
+	// The ID of resource group which the instance belongs.
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
 	// Instance status. Valid values: "Creating", "Starting", "Running", "Stopping" and "Stopped". If undefined, all statuses are considered.
 	Status *string `pulumi:"status"`
@@ -106,12 +110,14 @@ type GetInstancesArgs struct {
 type GetInstancesResult struct {
 	// Availability zone the instance belongs to.
 	AvailabilityZone *string `pulumi:"availabilityZone"`
+	EnableDetails    *bool   `pulumi:"enableDetails"`
 	// The provider-assigned unique ID for this managed resource.
 	Id string `pulumi:"id"`
 	// A list of ECS instance IDs.
 	Ids []string `pulumi:"ids"`
 	// Image ID the instance is using.
-	ImageId *string `pulumi:"imageId"`
+	ImageId      *string `pulumi:"imageId"`
+	InstanceName *string `pulumi:"instanceName"`
 	// A list of instances. Each element contains the following attributes:
 	Instances []GetInstancesInstance `pulumi:"instances"`
 	NameRegex *string                `pulumi:"nameRegex"`
@@ -152,10 +158,14 @@ func GetInstancesOutput(ctx *pulumi.Context, args GetInstancesOutputArgs, opts .
 type GetInstancesOutputArgs struct {
 	// Availability zone where instances are located.
 	AvailabilityZone pulumi.StringPtrInput `pulumi:"availabilityZone"`
+	// Default to `true`. If false, the attributes `ramRoleName` and `diskDeviceMappings` will not be fetched and output.
+	EnableDetails pulumi.BoolPtrInput `pulumi:"enableDetails"`
 	// A list of ECS instance IDs.
 	Ids pulumi.StringArrayInput `pulumi:"ids"`
 	// The image ID of some ECS instance used.
 	ImageId pulumi.StringPtrInput `pulumi:"imageId"`
+	// The name of the instance. Fuzzy search with the asterisk (*) wildcard characters is supported.
+	InstanceName pulumi.StringPtrInput `pulumi:"instanceName"`
 	// A regex string to filter results by instance name.
 	NameRegex  pulumi.StringPtrInput `pulumi:"nameRegex"`
 	OutputFile pulumi.StringPtrInput `pulumi:"outputFile"`
@@ -163,7 +173,7 @@ type GetInstancesOutputArgs struct {
 	PageSize   pulumi.IntPtrInput    `pulumi:"pageSize"`
 	// The RAM role name which the instance attaches.
 	RamRoleName pulumi.StringPtrInput `pulumi:"ramRoleName"`
-	// The Id of resource group which the instance belongs.
+	// The ID of resource group which the instance belongs.
 	ResourceGroupId pulumi.StringPtrInput `pulumi:"resourceGroupId"`
 	// Instance status. Valid values: "Creating", "Starting", "Running", "Stopping" and "Stopped". If undefined, all statuses are considered.
 	Status pulumi.StringPtrInput `pulumi:"status"`
@@ -223,6 +233,10 @@ func (o GetInstancesResultOutput) AvailabilityZone() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetInstancesResult) *string { return v.AvailabilityZone }).(pulumi.StringPtrOutput)
 }
 
+func (o GetInstancesResultOutput) EnableDetails() pulumi.BoolPtrOutput {
+	return o.ApplyT(func(v GetInstancesResult) *bool { return v.EnableDetails }).(pulumi.BoolPtrOutput)
+}
+
 // The provider-assigned unique ID for this managed resource.
 func (o GetInstancesResultOutput) Id() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesResult) string { return v.Id }).(pulumi.StringOutput)
@@ -236,6 +250,10 @@ func (o GetInstancesResultOutput) Ids() pulumi.StringArrayOutput {
 // Image ID the instance is using.
 func (o GetInstancesResultOutput) ImageId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v GetInstancesResult) *string { return v.ImageId }).(pulumi.StringPtrOutput)
+}
+
+func (o GetInstancesResultOutput) InstanceName() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v GetInstancesResult) *string { return v.InstanceName }).(pulumi.StringPtrOutput)
 }
 
 // A list of instances. Each element contains the following attributes:

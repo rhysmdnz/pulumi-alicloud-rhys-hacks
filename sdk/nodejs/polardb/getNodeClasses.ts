@@ -32,6 +32,7 @@ export function getNodeClasses(args: GetNodeClassesArgs, opts?: pulumi.InvokeOpt
 
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
     return pulumi.runtime.invoke("alicloud:polardb/getNodeClasses:getNodeClasses", {
+        "category": args.category,
         "dbNodeClass": args.dbNodeClass,
         "dbType": args.dbType,
         "dbVersion": args.dbVersion,
@@ -46,6 +47,7 @@ export function getNodeClasses(args: GetNodeClassesArgs, opts?: pulumi.InvokeOpt
  * A collection of arguments for invoking getNodeClasses.
  */
 export interface GetNodeClassesArgs {
+    category?: string;
     /**
      * The PolarDB node class type by the user.
      */
@@ -77,6 +79,7 @@ export interface GetNodeClassesArgs {
  * A collection of values returned by getNodeClasses.
  */
 export interface GetNodeClassesResult {
+    readonly category?: string;
     /**
      * A list of PolarDB node classes. Each element contains the following attributes:
      */
@@ -108,6 +111,7 @@ export function getNodeClassesOutput(args: GetNodeClassesOutputArgs, opts?: pulu
  * A collection of arguments for invoking getNodeClasses.
  */
 export interface GetNodeClassesOutputArgs {
+    category?: pulumi.Input<string>;
     /**
      * The PolarDB node class type by the user.
      */

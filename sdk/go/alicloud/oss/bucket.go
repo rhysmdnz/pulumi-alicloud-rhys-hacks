@@ -486,7 +486,7 @@ type Bucket struct {
 	RefererConfig BucketRefererConfigPtrOutput `pulumi:"refererConfig"`
 	// A configuration of server-side encryption (documented below).
 	ServerSideEncryptionRule BucketServerSideEncryptionRulePtrOutput `pulumi:"serverSideEncryptionRule"`
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass pulumi.StringPtrOutput `pulumi:"storageClass"`
 	// A mapping of tags to assign to the bucket. The items are no more than 10 for a bucket.
 	Tags pulumi.MapOutput `pulumi:"tags"`
@@ -561,7 +561,7 @@ type bucketState struct {
 	RefererConfig *BucketRefererConfig `pulumi:"refererConfig"`
 	// A configuration of server-side encryption (documented below).
 	ServerSideEncryptionRule *BucketServerSideEncryptionRule `pulumi:"serverSideEncryptionRule"`
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass *string `pulumi:"storageClass"`
 	// A mapping of tags to assign to the bucket. The items are no more than 10 for a bucket.
 	Tags map[string]interface{} `pulumi:"tags"`
@@ -607,7 +607,7 @@ type BucketState struct {
 	RefererConfig BucketRefererConfigPtrInput
 	// A configuration of server-side encryption (documented below).
 	ServerSideEncryptionRule BucketServerSideEncryptionRulePtrInput
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass pulumi.StringPtrInput
 	// A mapping of tags to assign to the bucket. The items are no more than 10 for a bucket.
 	Tags pulumi.MapInput
@@ -647,7 +647,7 @@ type bucketArgs struct {
 	RefererConfig *BucketRefererConfig `pulumi:"refererConfig"`
 	// A configuration of server-side encryption (documented below).
 	ServerSideEncryptionRule *BucketServerSideEncryptionRule `pulumi:"serverSideEncryptionRule"`
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass *string `pulumi:"storageClass"`
 	// A mapping of tags to assign to the bucket. The items are no more than 10 for a bucket.
 	Tags map[string]interface{} `pulumi:"tags"`
@@ -684,7 +684,7 @@ type BucketArgs struct {
 	RefererConfig BucketRefererConfigPtrInput
 	// A configuration of server-side encryption (documented below).
 	ServerSideEncryptionRule BucketServerSideEncryptionRulePtrInput
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass pulumi.StringPtrInput
 	// A mapping of tags to assign to the bucket. The items are no more than 10 for a bucket.
 	Tags pulumi.MapInput
@@ -864,7 +864,7 @@ func (o BucketOutput) ServerSideEncryptionRule() BucketServerSideEncryptionRuleP
 	return o.ApplyT(func(v *Bucket) BucketServerSideEncryptionRulePtrOutput { return v.ServerSideEncryptionRule }).(BucketServerSideEncryptionRulePtrOutput)
 }
 
-// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 func (o BucketOutput) StorageClass() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Bucket) pulumi.StringPtrOutput { return v.StorageClass }).(pulumi.StringPtrOutput)
 }

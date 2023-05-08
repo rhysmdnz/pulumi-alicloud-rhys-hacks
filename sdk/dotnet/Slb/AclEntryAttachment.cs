@@ -25,17 +25,14 @@ namespace Pulumi.AliCloud.Slb
     /// 
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
-    ///     var config = new Config();
-    ///     var name = config.Get("name") ?? "terraformslbaclconfig";
-    ///     var ipVersion = config.Get("ipVersion") ?? "ipv4";
-    ///     var defaultAcl = new AliCloud.Slb.Acl("defaultAcl", new()
+    ///     var attachmentAcl = new AliCloud.Slb.Acl("attachmentAcl", new()
     ///     {
-    ///         IpVersion = ipVersion,
+    ///         IpVersion = "ipv4",
     ///     });
     /// 
-    ///     var defaultAclEntryAttachment = new AliCloud.Slb.AclEntryAttachment("defaultAclEntryAttachment", new()
+    ///     var attachmentAclEntryAttachment = new AliCloud.Slb.AclEntryAttachment("attachmentAclEntryAttachment", new()
     ///     {
-    ///         AclId = defaultAcl.Id,
+    ///         AclId = attachmentAcl.Id,
     ///         Entry = "168.10.10.0/24",
     ///         Comment = "second",
     ///     });

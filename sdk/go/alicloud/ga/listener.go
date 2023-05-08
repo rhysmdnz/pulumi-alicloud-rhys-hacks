@@ -102,6 +102,10 @@ type Listener struct {
 	ClientAffinity pulumi.StringPtrOutput `pulumi:"clientAffinity"`
 	// The description of the listener.
 	Description pulumi.StringPtrOutput `pulumi:"description"`
+	// The routing type of the listener. Default Value: `Standard`. Valid values:
+	// - `Standard`: intelligent routing.
+	// - `CustomRouting`: custom routing.
+	ListenerType pulumi.StringOutput `pulumi:"listenerType"`
 	// The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// The portRanges of the listener.
@@ -179,6 +183,10 @@ type listenerState struct {
 	ClientAffinity *string `pulumi:"clientAffinity"`
 	// The description of the listener.
 	Description *string `pulumi:"description"`
+	// The routing type of the listener. Default Value: `Standard`. Valid values:
+	// - `Standard`: intelligent routing.
+	// - `CustomRouting`: custom routing.
+	ListenerType *string `pulumi:"listenerType"`
 	// The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
 	Name *string `pulumi:"name"`
 	// The portRanges of the listener.
@@ -221,6 +229,10 @@ type ListenerState struct {
 	ClientAffinity pulumi.StringPtrInput
 	// The description of the listener.
 	Description pulumi.StringPtrInput
+	// The routing type of the listener. Default Value: `Standard`. Valid values:
+	// - `Standard`: intelligent routing.
+	// - `CustomRouting`: custom routing.
+	ListenerType pulumi.StringPtrInput
 	// The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
 	Name pulumi.StringPtrInput
 	// The portRanges of the listener.
@@ -267,6 +279,10 @@ type listenerArgs struct {
 	ClientAffinity *string `pulumi:"clientAffinity"`
 	// The description of the listener.
 	Description *string `pulumi:"description"`
+	// The routing type of the listener. Default Value: `Standard`. Valid values:
+	// - `Standard`: intelligent routing.
+	// - `CustomRouting`: custom routing.
+	ListenerType *string `pulumi:"listenerType"`
 	// The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
 	Name *string `pulumi:"name"`
 	// The portRanges of the listener.
@@ -308,6 +324,10 @@ type ListenerArgs struct {
 	ClientAffinity pulumi.StringPtrInput
 	// The description of the listener.
 	Description pulumi.StringPtrInput
+	// The routing type of the listener. Default Value: `Standard`. Valid values:
+	// - `Standard`: intelligent routing.
+	// - `CustomRouting`: custom routing.
+	ListenerType pulumi.StringPtrInput
 	// The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
 	Name pulumi.StringPtrInput
 	// The portRanges of the listener.
@@ -444,6 +464,13 @@ func (o ListenerOutput) ClientAffinity() pulumi.StringPtrOutput {
 // The description of the listener.
 func (o ListenerOutput) Description() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Listener) pulumi.StringPtrOutput { return v.Description }).(pulumi.StringPtrOutput)
+}
+
+// The routing type of the listener. Default Value: `Standard`. Valid values:
+// - `Standard`: intelligent routing.
+// - `CustomRouting`: custom routing.
+func (o ListenerOutput) ListenerType() pulumi.StringOutput {
+	return o.ApplyT(func(v *Listener) pulumi.StringOutput { return v.ListenerType }).(pulumi.StringOutput)
 }
 
 // The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.

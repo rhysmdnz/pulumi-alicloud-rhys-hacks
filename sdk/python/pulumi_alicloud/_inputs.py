@@ -79,6 +79,7 @@ class ProviderEndpointArgs:
                  apigateway: Optional[pulumi.Input[str]] = None,
                  arms: Optional[pulumi.Input[str]] = None,
                  bastionhost: Optional[pulumi.Input[str]] = None,
+                 beebot: Optional[pulumi.Input[str]] = None,
                  bpstudio: Optional[pulumi.Input[str]] = None,
                  brain_industrial: Optional[pulumi.Input[str]] = None,
                  bssopenapi: Optional[pulumi.Input[str]] = None,
@@ -124,6 +125,7 @@ class ProviderEndpointArgs:
                  edas: Optional[pulumi.Input[str]] = None,
                  edasschedulerx: Optional[pulumi.Input[str]] = None,
                  edsuser: Optional[pulumi.Input[str]] = None,
+                 eflo: Optional[pulumi.Input[str]] = None,
                  ehpc: Optional[pulumi.Input[str]] = None,
                  ehs: Optional[pulumi.Input[str]] = None,
                  eipanycast: Optional[pulumi.Input[str]] = None,
@@ -158,6 +160,7 @@ class ProviderEndpointArgs:
                  mse: Optional[pulumi.Input[str]] = None,
                  nas: Optional[pulumi.Input[str]] = None,
                  nlb: Optional[pulumi.Input[str]] = None,
+                 oceanbase: Optional[pulumi.Input[str]] = None,
                  ons: Optional[pulumi.Input[str]] = None,
                  onsproxy: Optional[pulumi.Input[str]] = None,
                  oos: Optional[pulumi.Input[str]] = None,
@@ -184,6 +187,7 @@ class ProviderEndpointArgs:
                  sgw: Optional[pulumi.Input[str]] = None,
                  slb: Optional[pulumi.Input[str]] = None,
                  smartag: Optional[pulumi.Input[str]] = None,
+                 srvcatalog: Optional[pulumi.Input[str]] = None,
                  sts: Optional[pulumi.Input[str]] = None,
                  swas: Optional[pulumi.Input[str]] = None,
                  tag: Optional[pulumi.Input[str]] = None,
@@ -213,6 +217,8 @@ class ProviderEndpointArgs:
             pulumi.set(__self__, "arms", arms)
         if bastionhost is not None:
             pulumi.set(__self__, "bastionhost", bastionhost)
+        if beebot is not None:
+            pulumi.set(__self__, "beebot", beebot)
         if bpstudio is not None:
             pulumi.set(__self__, "bpstudio", bpstudio)
         if brain_industrial is not None:
@@ -303,6 +309,8 @@ class ProviderEndpointArgs:
             pulumi.set(__self__, "edasschedulerx", edasschedulerx)
         if edsuser is not None:
             pulumi.set(__self__, "edsuser", edsuser)
+        if eflo is not None:
+            pulumi.set(__self__, "eflo", eflo)
         if ehpc is not None:
             pulumi.set(__self__, "ehpc", ehpc)
         if ehs is not None:
@@ -371,6 +379,8 @@ class ProviderEndpointArgs:
             pulumi.set(__self__, "nas", nas)
         if nlb is not None:
             pulumi.set(__self__, "nlb", nlb)
+        if oceanbase is not None:
+            pulumi.set(__self__, "oceanbase", oceanbase)
         if ons is not None:
             pulumi.set(__self__, "ons", ons)
         if onsproxy is not None:
@@ -423,6 +433,8 @@ class ProviderEndpointArgs:
             pulumi.set(__self__, "slb", slb)
         if smartag is not None:
             pulumi.set(__self__, "smartag", smartag)
+        if srvcatalog is not None:
+            pulumi.set(__self__, "srvcatalog", srvcatalog)
         if sts is not None:
             pulumi.set(__self__, "sts", sts)
         if swas is not None:
@@ -531,6 +543,15 @@ class ProviderEndpointArgs:
     @bastionhost.setter
     def bastionhost(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "bastionhost", value)
+
+    @property
+    @pulumi.getter
+    def beebot(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "beebot")
+
+    @beebot.setter
+    def beebot(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "beebot", value)
 
     @property
     @pulumi.getter
@@ -939,6 +960,15 @@ class ProviderEndpointArgs:
 
     @property
     @pulumi.getter
+    def eflo(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "eflo")
+
+    @eflo.setter
+    def eflo(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "eflo", value)
+
+    @property
+    @pulumi.getter
     def ehpc(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "ehpc")
 
@@ -1245,6 +1275,15 @@ class ProviderEndpointArgs:
 
     @property
     @pulumi.getter
+    def oceanbase(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "oceanbase")
+
+    @oceanbase.setter
+    def oceanbase(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "oceanbase", value)
+
+    @property
+    @pulumi.getter
     def ons(self) -> Optional[pulumi.Input[str]]:
         return pulumi.get(self, "ons")
 
@@ -1476,6 +1515,15 @@ class ProviderEndpointArgs:
     @smartag.setter
     def smartag(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "smartag", value)
+
+    @property
+    @pulumi.getter
+    def srvcatalog(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "srvcatalog")
+
+    @srvcatalog.setter
+    def srvcatalog(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "srvcatalog", value)
 
     @property
     @pulumi.getter

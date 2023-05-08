@@ -14,6 +14,10 @@ namespace Pulumi.AliCloud.Vpn.Outputs
     public sealed class GetGatewaysGatewayResult
     {
         /// <summary>
+        /// Whether to automatically propagate BGP routes to the VPC. Valid values: `true`, `false`.
+        /// </summary>
+        public readonly string AutoPropagate;
+        /// <summary>
         /// Limit search to specific business status - valid value is "Normal", "FinancialLocked".
         /// </summary>
         public readonly string BusinessStatus;
@@ -76,6 +80,8 @@ namespace Pulumi.AliCloud.Vpn.Outputs
 
         [OutputConstructor]
         private GetGatewaysGatewayResult(
+            string autoPropagate,
+
             string businessStatus,
 
             string createTime,
@@ -106,6 +112,7 @@ namespace Pulumi.AliCloud.Vpn.Outputs
 
             string vpcId)
         {
+            AutoPropagate = autoPropagate;
             BusinessStatus = businessStatus;
             CreateTime = createTime;
             Description = description;

@@ -45,15 +45,15 @@ import * as utilities from "../utilities";
  * const defaultTransitRouter = new alicloud.cen.TransitRouter("defaultTransitRouter", {cenId: defaultInstance.id});
  * const defaultTransitRouterVpcAttachment = new alicloud.cen.TransitRouterVpcAttachment("defaultTransitRouterVpcAttachment", {
  *     cenId: defaultInstance.id,
- *     transitRouterId: defaultTransitRouter.id,
+ *     transitRouterId: defaultTransitRouter.transitRouterId,
  *     vpcId: defaultNetwork.id,
  *     zoneMappings: [
  *         {
- *             zoneId: data.alicloud_cen_transit_router_available_resource["default"].zones[0].master_zones[0],
+ *             zoneId: defaultTransitRouterAvailableResources.then(defaultTransitRouterAvailableResources => defaultTransitRouterAvailableResources.resources?[0]?.masterZones?[0]),
  *             vswitchId: defaultMaster.id,
  *         },
  *         {
- *             zoneId: data.alicloud_cen_transit_router_available_resource["default"].zones[0].slave_zones[0],
+ *             zoneId: defaultTransitRouterAvailableResources.then(defaultTransitRouterAvailableResources => defaultTransitRouterAvailableResources.resources?[0]?.slaveZones?[1]),
  *             vswitchId: defaultSlave.id,
  *         },
  *     ],
@@ -98,6 +98,12 @@ export class TransitRouterVpcAttachment extends pulumi.CustomResource {
         return obj['__pulumiType'] === TransitRouterVpcAttachment.__pulumiType;
     }
 
+    /**
+     * Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+     * - `true`: Enable.
+     * - `false`: Disable.
+     */
+    public readonly autoPublishRouteEnabled!: pulumi.Output<boolean>;
     /**
      * The ID of the CEN.
      */
@@ -173,6 +179,7 @@ export class TransitRouterVpcAttachment extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as TransitRouterVpcAttachmentState | undefined;
+            resourceInputs["autoPublishRouteEnabled"] = state ? state.autoPublishRouteEnabled : undefined;
             resourceInputs["cenId"] = state ? state.cenId : undefined;
             resourceInputs["dryRun"] = state ? state.dryRun : undefined;
             resourceInputs["paymentType"] = state ? state.paymentType : undefined;
@@ -199,6 +206,7 @@ export class TransitRouterVpcAttachment extends pulumi.CustomResource {
             if ((!args || args.zoneMappings === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'zoneMappings'");
             }
+            resourceInputs["autoPublishRouteEnabled"] = args ? args.autoPublishRouteEnabled : undefined;
             resourceInputs["cenId"] = args ? args.cenId : undefined;
             resourceInputs["dryRun"] = args ? args.dryRun : undefined;
             resourceInputs["paymentType"] = args ? args.paymentType : undefined;
@@ -224,6 +232,12 @@ export class TransitRouterVpcAttachment extends pulumi.CustomResource {
  * Input properties used for looking up and filtering TransitRouterVpcAttachment resources.
  */
 export interface TransitRouterVpcAttachmentState {
+    /**
+     * Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+     * - `true`: Enable.
+     * - `false`: Disable.
+     */
+    autoPublishRouteEnabled?: pulumi.Input<boolean>;
     /**
      * The ID of the CEN.
      */
@@ -291,6 +305,12 @@ export interface TransitRouterVpcAttachmentState {
  * The set of arguments for constructing a TransitRouterVpcAttachment resource.
  */
 export interface TransitRouterVpcAttachmentArgs {
+    /**
+     * Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+     * - `true`: Enable.
+     * - `false`: Disable.
+     */
+    autoPublishRouteEnabled?: pulumi.Input<boolean>;
     /**
      * The ID of the CEN.
      */

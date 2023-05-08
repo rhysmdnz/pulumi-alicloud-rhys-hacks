@@ -54,6 +54,12 @@ namespace Pulumi.AliCloud.GraphDatabase
     public partial class DbInstance : global::Pulumi.CustomResource
     {
         /// <summary>
+        /// (Available in 1.196.0+)  The connection string of the instance.
+        /// </summary>
+        [Output("connectionString")]
+        public Output<string> ConnectionString { get; private set; } = null!;
+
+        /// <summary>
         /// The category of the db instance. Valid values: `HA`, `SINGLE`(Available in 1.173.0+).
         /// </summary>
         [Output("dbInstanceCategory")]
@@ -106,6 +112,12 @@ namespace Pulumi.AliCloud.GraphDatabase
         /// </summary>
         [Output("paymentType")]
         public Output<string> PaymentType { get; private set; } = null!;
+
+        /// <summary>
+        /// (Available in 1.196.0+) The connection port of the instance.
+        /// </summary>
+        [Output("port")]
+        public Output<string> Port { get; private set; } = null!;
 
         /// <summary>
         /// Instance status. Value range: `Creating`, `Running`, `Deleting`, `Rebooting`, `DBInstanceClassChanging`, `NetAddressCreating` and `NetAddressDeleting`.
@@ -265,6 +277,12 @@ namespace Pulumi.AliCloud.GraphDatabase
     public sealed class DbInstanceState : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// (Available in 1.196.0+)  The connection string of the instance.
+        /// </summary>
+        [Input("connectionString")]
+        public Input<string>? ConnectionString { get; set; }
+
+        /// <summary>
         /// The category of the db instance. Valid values: `HA`, `SINGLE`(Available in 1.173.0+).
         /// </summary>
         [Input("dbInstanceCategory")]
@@ -323,6 +341,12 @@ namespace Pulumi.AliCloud.GraphDatabase
         /// </summary>
         [Input("paymentType")]
         public Input<string>? PaymentType { get; set; }
+
+        /// <summary>
+        /// (Available in 1.196.0+) The connection port of the instance.
+        /// </summary>
+        [Input("port")]
+        public Input<string>? Port { get; set; }
 
         /// <summary>
         /// Instance status. Value range: `Creating`, `Running`, `Deleting`, `Rebooting`, `DBInstanceClassChanging`, `NetAddressCreating` and `NetAddressDeleting`.

@@ -26,6 +26,70 @@ import (
 //
 // For information about server group and how to use it, see [Configure a server group](https://www.alibabacloud.com/help/en/doc-detail/35215.html).
 //
+// ## Example Usage
+//
+// ```go
+// package main
+//
+// import (
+//
+//	"github.com/pulumi/pulumi-alicloud/sdk/go/alicloud"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+//	"github.com/rhysmdnz/pulumi-alicloud/sdk/go/alicloud"
+//	"github.com/rhysmdnz/pulumi-alicloud/sdk/go/alicloud/slb"
+//	"github.com/rhysmdnz/pulumi-alicloud/sdk/go/alicloud/vpc"
+//
+// )
+//
+//	func main() {
+//		pulumi.Run(func(ctx *pulumi.Context) error {
+//			cfg := config.New(ctx, "")
+//			slbServerGroupName := "forSlbServerGroup"
+//			if param := cfg.Get("slbServerGroupName"); param != "" {
+//				slbServerGroupName = param
+//			}
+//			serverGroupZones, err := alicloud.GetZones(ctx, &GetZonesArgs{
+//				AvailableResourceCreation: pulumi.StringRef("VSwitch"),
+//			}, nil)
+//			if err != nil {
+//				return err
+//			}
+//			serverGroupNetwork, err := vpc.NewNetwork(ctx, "serverGroupNetwork", &vpc.NetworkArgs{
+//				VpcName:   pulumi.String(slbServerGroupName),
+//				CidrBlock: pulumi.String("172.16.0.0/16"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			serverGroupSwitch, err := vpc.NewSwitch(ctx, "serverGroupSwitch", &vpc.SwitchArgs{
+//				VpcId:       serverGroupNetwork.ID(),
+//				CidrBlock:   pulumi.String("172.16.0.0/16"),
+//				ZoneId:      pulumi.String(serverGroupZones.Zones[0].Id),
+//				VswitchName: pulumi.String(slbServerGroupName),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			serverGroupApplicationLoadBalancer, err := slb.NewApplicationLoadBalancer(ctx, "serverGroupApplicationLoadBalancer", &slb.ApplicationLoadBalancerArgs{
+//				LoadBalancerName:   pulumi.String(slbServerGroupName),
+//				VswitchId:          serverGroupSwitch.ID(),
+//				InstanceChargeType: pulumi.String("PayByCLCU"),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			_, err = slb.NewServerGroup(ctx, "serverGroupServerGroup", &slb.ServerGroupArgs{
+//				LoadBalancerId: serverGroupApplicationLoadBalancer.ID(),
+//			})
+//			if err != nil {
+//				return err
+//			}
+//			return nil
+//		})
+//	}
+//
+// ```
 // ## Block servers
 //
 // The servers mapping supports the following:

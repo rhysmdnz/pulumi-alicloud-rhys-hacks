@@ -1533,6 +1533,59 @@ class Listener(pulumi.CustomResource):
         * [Configure a TCP Listener](https://www.alibabacloud.com/help/doc-detail/27594.htm).
         * [Configure a UDP Listener](https://www.alibabacloud.com/help/doc-detail/27595.htm).
 
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_alicloud as alicloud
+
+        config = pulumi.Config()
+        slb_listener_name = config.get("slbListenerName")
+        if slb_listener_name is None:
+            slb_listener_name = "forSlbListener"
+        listener_application_load_balancer = alicloud.slb.ApplicationLoadBalancer("listenerApplicationLoadBalancer",
+            load_balancer_name="tf-testAccSlbListenerHttp",
+            internet_charge_type="PayByTraffic",
+            address_type="internet",
+            instance_charge_type="PayByCLCU")
+        listener_acl = alicloud.slb.Acl("listenerAcl", ip_version="ipv4")
+        listener_listener = alicloud.slb.Listener("listenerListener",
+            load_balancer_id=listener_application_load_balancer.id,
+            backend_port=80,
+            frontend_port=80,
+            protocol="http",
+            bandwidth=10,
+            sticky_session="on",
+            sticky_session_type="insert",
+            cookie_timeout=86400,
+            cookie="testslblistenercookie",
+            health_check="on",
+            health_check_domain="ali.com",
+            health_check_uri="/cons",
+            health_check_connect_port=20,
+            healthy_threshold=8,
+            unhealthy_threshold=8,
+            health_check_timeout=8,
+            health_check_interval=5,
+            health_check_http_code="http_2xx,http_3xx",
+            x_forwarded_for=alicloud.slb.ListenerXForwardedForArgs(
+                retrive_slb_ip=True,
+                retrive_slb_id=True,
+            ),
+            acl_status="on",
+            acl_type="white",
+            acl_id=listener_acl.id,
+            request_timeout=80,
+            idle_timeout=30)
+        first = alicloud.slb.AclEntryAttachment("first",
+            acl_id=listener_acl.id,
+            entry="10.10.10.0/24",
+            comment="first")
+        second = alicloud.slb.AclEntryAttachment("second",
+            acl_id=listener_acl.id,
+            entry="168.10.10.0/24",
+            comment="second")
+        ```
         ## Listener fields and protocol mapping
 
         load balance support 4 protocol to listen on, they are `http`,`https`,`tcp`,`udp`, the every listener support which portocal following:
@@ -1647,6 +1700,59 @@ class Listener(pulumi.CustomResource):
         * [Configure a TCP Listener](https://www.alibabacloud.com/help/doc-detail/27594.htm).
         * [Configure a UDP Listener](https://www.alibabacloud.com/help/doc-detail/27595.htm).
 
+        ## Example Usage
+
+        ```python
+        import pulumi
+        import pulumi_alicloud as alicloud
+
+        config = pulumi.Config()
+        slb_listener_name = config.get("slbListenerName")
+        if slb_listener_name is None:
+            slb_listener_name = "forSlbListener"
+        listener_application_load_balancer = alicloud.slb.ApplicationLoadBalancer("listenerApplicationLoadBalancer",
+            load_balancer_name="tf-testAccSlbListenerHttp",
+            internet_charge_type="PayByTraffic",
+            address_type="internet",
+            instance_charge_type="PayByCLCU")
+        listener_acl = alicloud.slb.Acl("listenerAcl", ip_version="ipv4")
+        listener_listener = alicloud.slb.Listener("listenerListener",
+            load_balancer_id=listener_application_load_balancer.id,
+            backend_port=80,
+            frontend_port=80,
+            protocol="http",
+            bandwidth=10,
+            sticky_session="on",
+            sticky_session_type="insert",
+            cookie_timeout=86400,
+            cookie="testslblistenercookie",
+            health_check="on",
+            health_check_domain="ali.com",
+            health_check_uri="/cons",
+            health_check_connect_port=20,
+            healthy_threshold=8,
+            unhealthy_threshold=8,
+            health_check_timeout=8,
+            health_check_interval=5,
+            health_check_http_code="http_2xx,http_3xx",
+            x_forwarded_for=alicloud.slb.ListenerXForwardedForArgs(
+                retrive_slb_ip=True,
+                retrive_slb_id=True,
+            ),
+            acl_status="on",
+            acl_type="white",
+            acl_id=listener_acl.id,
+            request_timeout=80,
+            idle_timeout=30)
+        first = alicloud.slb.AclEntryAttachment("first",
+            acl_id=listener_acl.id,
+            entry="10.10.10.0/24",
+            comment="first")
+        second = alicloud.slb.AclEntryAttachment("second",
+            acl_id=listener_acl.id,
+            entry="168.10.10.0/24",
+            comment="second")
+        ```
         ## Listener fields and protocol mapping
 
         load balance support 4 protocol to listen on, they are `http`,`https`,`tcp`,`udp`, the every listener support which portocal following:

@@ -482,6 +482,8 @@ func (o GetAccountsAccountDatabasePrivilegeArrayOutput) Index(i pulumi.IntInput)
 type GetClustersCluster struct {
 	// Billing method. Value options: `PostPaid` for Pay-As-You-Go and `PrePaid` for subscription.
 	ChargeType string `pulumi:"chargeType"`
+	// PolarDB cluster connection string.
+	ConnectionString string `pulumi:"connectionString"`
 	// The createTime of the db_nodes.
 	CreateTime string `pulumi:"createTime"`
 	// The dbNodeClass of the db_nodes.
@@ -510,6 +512,8 @@ type GetClustersCluster struct {
 	LockMode string `pulumi:"lockMode"`
 	// The DBClusterNetworkType of the PolarDB cluster.
 	NetworkType string `pulumi:"networkType"`
+	// PolarDB cluster connection port.
+	Port string `pulumi:"port"`
 	// The regionId of the db_nodes.
 	RegionId string `pulumi:"regionId"`
 	// status of the cluster.
@@ -536,6 +540,8 @@ type GetClustersClusterInput interface {
 type GetClustersClusterArgs struct {
 	// Billing method. Value options: `PostPaid` for Pay-As-You-Go and `PrePaid` for subscription.
 	ChargeType pulumi.StringInput `pulumi:"chargeType"`
+	// PolarDB cluster connection string.
+	ConnectionString pulumi.StringInput `pulumi:"connectionString"`
 	// The createTime of the db_nodes.
 	CreateTime pulumi.StringInput `pulumi:"createTime"`
 	// The dbNodeClass of the db_nodes.
@@ -564,6 +570,8 @@ type GetClustersClusterArgs struct {
 	LockMode pulumi.StringInput `pulumi:"lockMode"`
 	// The DBClusterNetworkType of the PolarDB cluster.
 	NetworkType pulumi.StringInput `pulumi:"networkType"`
+	// PolarDB cluster connection port.
+	Port pulumi.StringInput `pulumi:"port"`
 	// The regionId of the db_nodes.
 	RegionId pulumi.StringInput `pulumi:"regionId"`
 	// status of the cluster.
@@ -630,6 +638,11 @@ func (o GetClustersClusterOutput) ToGetClustersClusterOutputWithContext(ctx cont
 // Billing method. Value options: `PostPaid` for Pay-As-You-Go and `PrePaid` for subscription.
 func (o GetClustersClusterOutput) ChargeType() pulumi.StringOutput {
 	return o.ApplyT(func(v GetClustersCluster) string { return v.ChargeType }).(pulumi.StringOutput)
+}
+
+// PolarDB cluster connection string.
+func (o GetClustersClusterOutput) ConnectionString() pulumi.StringOutput {
+	return o.ApplyT(func(v GetClustersCluster) string { return v.ConnectionString }).(pulumi.StringOutput)
 }
 
 // The createTime of the db_nodes.
@@ -700,6 +713,11 @@ func (o GetClustersClusterOutput) LockMode() pulumi.StringOutput {
 // The DBClusterNetworkType of the PolarDB cluster.
 func (o GetClustersClusterOutput) NetworkType() pulumi.StringOutput {
 	return o.ApplyT(func(v GetClustersCluster) string { return v.NetworkType }).(pulumi.StringOutput)
+}
+
+// PolarDB cluster connection port.
+func (o GetClustersClusterOutput) Port() pulumi.StringOutput {
+	return o.ApplyT(func(v GetClustersCluster) string { return v.Port }).(pulumi.StringOutput)
 }
 
 // The regionId of the db_nodes.

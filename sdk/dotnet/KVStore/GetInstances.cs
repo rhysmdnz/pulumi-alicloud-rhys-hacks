@@ -98,7 +98,7 @@ namespace Pulumi.AliCloud.KVStore
         public bool? EnableDetails { get; set; }
 
         /// <summary>
-        /// The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`.
+        /// The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`, `7.0`.
         /// </summary>
         [Input("engineVersion")]
         public string? EngineVersion { get; set; }
@@ -235,7 +235,7 @@ namespace Pulumi.AliCloud.KVStore
         public Input<bool>? EnableDetails { get; set; }
 
         /// <summary>
-        /// The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`.
+        /// The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`, `7.0`.
         /// </summary>
         [Input("engineVersion")]
         public Input<string>? EngineVersion { get; set; }

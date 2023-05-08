@@ -1715,6 +1715,7 @@ type InstanceDataDisk struct {
 	// - `cloudSsd`: The SSD cloud disk.
 	// - `cloudEssd`: The ESSD cloud disk.
 	// - `ephemeralSsd`: The local SSD disk.
+	// - `cloudAuto`: The AutoPL cloud disk.
 	//   Default to `cloudEfficiency`.
 	Category *string `pulumi:"category"`
 	// Delete this data disk when the instance is destroyed. It only works on cloud, cloud_efficiency, cloud_essd, cloudSsd disk. If the category of this data disk was ephemeral_ssd, please don't set this param. Default value: `true`.
@@ -1767,6 +1768,7 @@ type InstanceDataDiskArgs struct {
 	// - `cloudSsd`: The SSD cloud disk.
 	// - `cloudEssd`: The ESSD cloud disk.
 	// - `ephemeralSsd`: The local SSD disk.
+	// - `cloudAuto`: The AutoPL cloud disk.
 	//   Default to `cloudEfficiency`.
 	Category pulumi.StringPtrInput `pulumi:"category"`
 	// Delete this data disk when the instance is destroyed. It only works on cloud, cloud_efficiency, cloud_essd, cloudSsd disk. If the category of this data disk was ephemeral_ssd, please don't set this param. Default value: `true`.
@@ -1861,6 +1863,7 @@ func (o InstanceDataDiskOutput) AutoSnapshotPolicyId() pulumi.StringPtrOutput {
 //   - `cloudSsd`: The SSD cloud disk.
 //   - `cloudEssd`: The ESSD cloud disk.
 //   - `ephemeralSsd`: The local SSD disk.
+//   - `cloudAuto`: The AutoPL cloud disk.
 //     Default to `cloudEfficiency`.
 func (o InstanceDataDiskOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v InstanceDataDisk) *string { return v.Category }).(pulumi.StringPtrOutput)
@@ -12402,7 +12405,7 @@ type GetInstancesInstance struct {
 	RamRoleName string `pulumi:"ramRoleName"`
 	// Region ID the instance belongs to.
 	RegionId string `pulumi:"regionId"`
-	// The Id of resource group which the instance belongs.
+	// The ID of resource group which the instance belongs.
 	ResourceGroupId string `pulumi:"resourceGroupId"`
 	// List of security group IDs the instance belongs to.
 	SecurityGroups []string `pulumi:"securityGroups"`
@@ -12488,7 +12491,7 @@ type GetInstancesInstanceArgs struct {
 	RamRoleName pulumi.StringInput `pulumi:"ramRoleName"`
 	// Region ID the instance belongs to.
 	RegionId pulumi.StringInput `pulumi:"regionId"`
-	// The Id of resource group which the instance belongs.
+	// The ID of resource group which the instance belongs.
 	ResourceGroupId pulumi.StringInput `pulumi:"resourceGroupId"`
 	// List of security group IDs the instance belongs to.
 	SecurityGroups pulumi.StringArrayInput `pulumi:"securityGroups"`
@@ -12664,7 +12667,7 @@ func (o GetInstancesInstanceOutput) RegionId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.RegionId }).(pulumi.StringOutput)
 }
 
-// The Id of resource group which the instance belongs.
+// The ID of resource group which the instance belongs.
 func (o GetInstancesInstanceOutput) ResourceGroupId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.ResourceGroupId }).(pulumi.StringOutput)
 }

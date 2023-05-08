@@ -36,7 +36,7 @@ import (
 //				IncludeReservationData: pulumi.BoolRef(true),
 //				NameRegex:              pulumi.StringRef("testAcc*"),
 //				OutputFile:             pulumi.StringRef("/tmp/vpns"),
-//				Status:                 pulumi.StringRef("active"),
+//				Status:                 pulumi.StringRef("Active"),
 //				VpcId:                  pulumi.StringRef("fake-vpc-id"),
 //			}, nil)
 //			if err != nil {

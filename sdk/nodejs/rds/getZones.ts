@@ -35,7 +35,7 @@ export function getZones(args?: GetZonesArgs, opts?: pulumi.InvokeOptions): Prom
  */
 export interface GetZonesArgs {
     /**
-     * DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
+     * DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`, `serverlessBasic`, `cluster`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
      */
     category?: string;
     dbInstanceClass?: string;
@@ -44,7 +44,7 @@ export interface GetZonesArgs {
      */
     dbInstanceStorageType?: string;
     /**
-     * Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+     * Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
      */
     engine?: string;
     /**
@@ -52,7 +52,7 @@ export interface GetZonesArgs {
      */
     engineVersion?: string;
     /**
-     * Filter the results by a specific instance charge type. Valid values: `PrePaid` and `PostPaid`. Default to `PostPaid`.
+     * Filter the results by a specific instance charge type. Valid values: `PrePaid` and `PostPaid` and `Serverless`. Default to `PostPaid`.
      */
     instanceChargeType?: string;
     /**
@@ -102,7 +102,7 @@ export function getZonesOutput(args?: GetZonesOutputArgs, opts?: pulumi.InvokeOp
  */
 export interface GetZonesOutputArgs {
     /**
-     * DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
+     * DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`, `serverlessBasic`, `cluster`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
      */
     category?: pulumi.Input<string>;
     dbInstanceClass?: pulumi.Input<string>;
@@ -111,7 +111,7 @@ export interface GetZonesOutputArgs {
      */
     dbInstanceStorageType?: pulumi.Input<string>;
     /**
-     * Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+     * Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
      */
     engine?: pulumi.Input<string>;
     /**
@@ -119,7 +119,7 @@ export interface GetZonesOutputArgs {
      */
     engineVersion?: pulumi.Input<string>;
     /**
-     * Filter the results by a specific instance charge type. Valid values: `PrePaid` and `PostPaid`. Default to `PostPaid`.
+     * Filter the results by a specific instance charge type. Valid values: `PrePaid` and `PostPaid` and `Serverless`. Default to `PostPaid`.
      */
     instanceChargeType?: pulumi.Input<string>;
     /**

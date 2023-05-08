@@ -54,6 +54,9 @@ namespace Pulumi.AliCloud.Ecs
         [Output("description")]
         public Output<string?> Description { get; private set; } = null!;
 
+        [Output("highDefinitionMonitorLogStatus")]
+        public Output<string> HighDefinitionMonitorLogStatus { get; private set; } = null!;
+
         /// <summary>
         /// (It has been deprecated from version 1.126.0 and using new attribute `payment_type` instead) Elastic IP instance charge type. Valid values are "PrePaid" and "PostPaid". Default to "PostPaid".
         /// </summary>
@@ -77,6 +80,12 @@ namespace Pulumi.AliCloud.Ecs
         /// </summary>
         [Output("isp")]
         public Output<string> Isp { get; private set; } = null!;
+
+        [Output("logProject")]
+        public Output<string?> LogProject { get; private set; } = null!;
+
+        [Output("logStore")]
+        public Output<string?> LogStore { get; private set; } = null!;
 
         /// <summary>
         /// It has been deprecated from version 1.126.0 and using new attribute `address_name` instead.
@@ -199,6 +208,9 @@ namespace Pulumi.AliCloud.Ecs
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        [Input("highDefinitionMonitorLogStatus")]
+        public Input<string>? HighDefinitionMonitorLogStatus { get; set; }
+
         /// <summary>
         /// (It has been deprecated from version 1.126.0 and using new attribute `payment_type` instead) Elastic IP instance charge type. Valid values are "PrePaid" and "PostPaid". Default to "PostPaid".
         /// </summary>
@@ -216,6 +228,12 @@ namespace Pulumi.AliCloud.Ecs
         /// </summary>
         [Input("isp")]
         public Input<string>? Isp { get; set; }
+
+        [Input("logProject")]
+        public Input<string>? LogProject { get; set; }
+
+        [Input("logStore")]
+        public Input<string>? LogStore { get; set; }
 
         /// <summary>
         /// It has been deprecated from version 1.126.0 and using new attribute `address_name` instead.
@@ -304,6 +322,9 @@ namespace Pulumi.AliCloud.Ecs
         [Input("description")]
         public Input<string>? Description { get; set; }
 
+        [Input("highDefinitionMonitorLogStatus")]
+        public Input<string>? HighDefinitionMonitorLogStatus { get; set; }
+
         /// <summary>
         /// (It has been deprecated from version 1.126.0 and using new attribute `payment_type` instead) Elastic IP instance charge type. Valid values are "PrePaid" and "PostPaid". Default to "PostPaid".
         /// </summary>
@@ -327,6 +348,12 @@ namespace Pulumi.AliCloud.Ecs
         /// </summary>
         [Input("isp")]
         public Input<string>? Isp { get; set; }
+
+        [Input("logProject")]
+        public Input<string>? LogProject { get; set; }
+
+        [Input("logStore")]
+        public Input<string>? LogStore { get; set; }
 
         /// <summary>
         /// It has been deprecated from version 1.126.0 and using new attribute `address_name` instead.

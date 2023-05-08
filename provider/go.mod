@@ -5,8 +5,8 @@ go 1.18
 replace (
 	github.com/Sirupsen/logrus => github.com/sirupsen/logrus v0.0.0-20181010200618-458213699411
 	github.com/aliyun/aliyun-tablestore-go-sdk => github.com/aliyun/aliyun-tablestore-go-sdk v1.7.6
-	github.com/aliyun/fc-go-sdk => github.com/rhysmdnz/fc-go-sdk v0.0.0-20221220034254-3c10a6a12288
-	github.com/aliyun/terraform-provider-alicloud => github.com/rhysmdnz/terraform-provider-alicloud v0.0.1
+	github.com/aliyun/fc-go-sdk => github.com/rhysmdnz/fc-go-sdk v0.0.0-20230508064220-d582675ebbfa
+	github.com/aliyun/terraform-provider-alicloud => github.com/rhysmdnz/terraform-provider-alicloud v0.0.0-20230508064939-7e3d863925a8
 	github.com/hashicorp/go-getter => github.com/hashicorp/go-getter v1.4.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/pulumi/terraform-plugin-sdk/v2 v2.0.0-20220824175045-450992f2f5b9
 	github.com/hashicorp/vault => github.com/hashicorp/vault v1.2.0
@@ -54,32 +54,33 @@ require (
 	github.com/aead/chacha20 v0.0.0-20180709150244-8b13a72661da // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.4 // indirect
-	github.com/alibabacloud-go/cs-20151215/v3 v3.0.16 // indirect
-	github.com/alibabacloud-go/darabonba-openapi v0.1.19-0.20220507083948-2c7e1f6567c1 // indirect
+	github.com/alibabacloud-go/cs-20151215/v3 v3.0.34 // indirect
+	github.com/alibabacloud-go/darabonba-openapi/v2 v2.0.4 // indirect
 	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
 	github.com/alibabacloud-go/endpoint-util v1.1.0 // indirect
-	github.com/alibabacloud-go/openapi-util v0.0.11 // indirect
-	github.com/alibabacloud-go/tea v1.1.17 // indirect
+	github.com/alibabacloud-go/openapi-util v0.1.0 // indirect
+	github.com/alibabacloud-go/tea v1.1.19 // indirect
 	github.com/alibabacloud-go/tea-roa v1.3.0 // indirect
 	github.com/alibabacloud-go/tea-roa-utils v1.1.5 // indirect
 	github.com/alibabacloud-go/tea-rpc v1.2.0 // indirect
 	github.com/alibabacloud-go/tea-rpc-utils v1.1.2 // indirect
 	github.com/alibabacloud-go/tea-utils v1.4.5 // indirect
+	github.com/alibabacloud-go/tea-utils/v2 v2.0.1 // indirect
 	github.com/alibabacloud-go/tea-xml v1.1.2 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.1538 // indirect
 	github.com/aliyun/aliyun-datahub-sdk-go v0.1.5 // indirect
-	github.com/aliyun/aliyun-log-go-sdk v0.1.39-0.20221010075026-bd1a0c47d122 // indirect
+	github.com/aliyun/aliyun-log-go-sdk v0.1.44-0.20230310032108-e8f9ed9bb3c5 // indirect
 	github.com/aliyun/aliyun-mns-go-sdk v0.0.0-20210305050620-d1b5875bda58 // indirect
 	github.com/aliyun/aliyun-oss-go-sdk v2.2.1+incompatible // indirect
 	github.com/aliyun/aliyun-tablestore-go-sdk v1.7.6 // indirect
-	github.com/aliyun/credentials-go v1.1.2 // indirect
+	github.com/aliyun/credentials-go v1.2.6 // indirect
 	github.com/aliyun/fc-go-sdk v0.0.0-20220622030011-bc7ded2a9050 // indirect
 	github.com/andybalholm/brotli v1.0.1 // indirect
 	github.com/apparentlymart/go-cidr v1.1.0 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/armon/go-radix v1.0.0 // indirect
-	github.com/aws/aws-sdk-go v1.40.34 // indirect
-	github.com/aws/aws-sdk-go-v2 v1.9.0 // indirect
+	github.com/aws/aws-sdk-go v1.40.45 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.9.1 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.7.0 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.4.0 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.5.0 // indirect
@@ -110,8 +111,9 @@ require (
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.3.1 // indirect
 	github.com/go-git/go-git/v5 v5.4.2 // indirect
-	github.com/go-kit/kit v0.10.0 // indirect
-	github.com/go-logfmt/logfmt v0.5.0 // indirect
+	github.com/go-kit/kit v0.12.0 // indirect
+	github.com/go-kit/log v0.2.1 // indirect
+	github.com/go-logfmt/logfmt v0.6.0 // indirect
 	github.com/go-logr/logr v0.4.0 // indirect
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/gogap/errors v0.0.0-20160523102334-149c546090d0 // indirect
@@ -121,7 +123,7 @@ require (
 	github.com/golang/glog v1.0.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/mock v1.6.0 // indirect
-	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/flatbuffers v1.11.0 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
@@ -172,7 +174,7 @@ require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/kevinburke/ssh_config v1.1.0 // indirect
 	github.com/keybase/go-crypto v0.0.0-20190416182011-b785b22cc757 // indirect
-	github.com/klauspost/compress v1.13.5 // indirect
+	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-ieproxy v0.0.1 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
@@ -242,28 +244,28 @@ require (
 	go.opencensus.io v0.23.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
-	go.uber.org/zap v1.19.0 // indirect
+	go.uber.org/zap v1.19.1 // indirect
 	gocloud.dev v0.24.0 // indirect
 	gocloud.dev/secrets/hashivault v0.24.0 // indirect
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
-	golang.org/x/mod v0.5.0 // indirect
-	golang.org/x/net v0.0.0-20220325170049-de3da57026de // indirect
+	golang.org/x/mod v0.8.0 // indirect
+	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220309155454-6242fa91716a // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
-	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/term v0.6.0 // indirect
+	golang.org/x/text v0.8.0 // indirect
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/api v0.74.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20220405205423-9d709892a2bf // indirect
 	google.golang.org/grpc v1.48.0 // indirect
-	google.golang.org/protobuf v1.28.1 // indirect
+	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/AlecAivazis/survey.v1 v1.8.9-0.20200217094205-6773bdf39b7f // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
-	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/resty.v1 v1.12.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect

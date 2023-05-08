@@ -1367,6 +1367,219 @@ func (o AlertSeverityConfigurationArrayOutput) Index(i pulumi.IntInput) AlertSev
 	}).(AlertSeverityConfigurationOutput)
 }
 
+type AlertTemplateConfiguration struct {
+	// Alert template annotations.
+	Annotations map[string]string `pulumi:"annotations"`
+	// Alert template id.
+	Id string `pulumi:"id"`
+	// Alert template language including `cn`, `en`.
+	Lang *string `pulumi:"lang"`
+	// Alert template tokens.
+	Tokens map[string]string `pulumi:"tokens"`
+	// including FixedRate,Hourly,Daily,Weekly,Cron.
+	Type string `pulumi:"type"`
+}
+
+// AlertTemplateConfigurationInput is an input type that accepts AlertTemplateConfigurationArgs and AlertTemplateConfigurationOutput values.
+// You can construct a concrete instance of `AlertTemplateConfigurationInput` via:
+//
+//	AlertTemplateConfigurationArgs{...}
+type AlertTemplateConfigurationInput interface {
+	pulumi.Input
+
+	ToAlertTemplateConfigurationOutput() AlertTemplateConfigurationOutput
+	ToAlertTemplateConfigurationOutputWithContext(context.Context) AlertTemplateConfigurationOutput
+}
+
+type AlertTemplateConfigurationArgs struct {
+	// Alert template annotations.
+	Annotations pulumi.StringMapInput `pulumi:"annotations"`
+	// Alert template id.
+	Id pulumi.StringInput `pulumi:"id"`
+	// Alert template language including `cn`, `en`.
+	Lang pulumi.StringPtrInput `pulumi:"lang"`
+	// Alert template tokens.
+	Tokens pulumi.StringMapInput `pulumi:"tokens"`
+	// including FixedRate,Hourly,Daily,Weekly,Cron.
+	Type pulumi.StringInput `pulumi:"type"`
+}
+
+func (AlertTemplateConfigurationArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*AlertTemplateConfiguration)(nil)).Elem()
+}
+
+func (i AlertTemplateConfigurationArgs) ToAlertTemplateConfigurationOutput() AlertTemplateConfigurationOutput {
+	return i.ToAlertTemplateConfigurationOutputWithContext(context.Background())
+}
+
+func (i AlertTemplateConfigurationArgs) ToAlertTemplateConfigurationOutputWithContext(ctx context.Context) AlertTemplateConfigurationOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AlertTemplateConfigurationOutput)
+}
+
+func (i AlertTemplateConfigurationArgs) ToAlertTemplateConfigurationPtrOutput() AlertTemplateConfigurationPtrOutput {
+	return i.ToAlertTemplateConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i AlertTemplateConfigurationArgs) ToAlertTemplateConfigurationPtrOutputWithContext(ctx context.Context) AlertTemplateConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AlertTemplateConfigurationOutput).ToAlertTemplateConfigurationPtrOutputWithContext(ctx)
+}
+
+// AlertTemplateConfigurationPtrInput is an input type that accepts AlertTemplateConfigurationArgs, AlertTemplateConfigurationPtr and AlertTemplateConfigurationPtrOutput values.
+// You can construct a concrete instance of `AlertTemplateConfigurationPtrInput` via:
+//
+//	        AlertTemplateConfigurationArgs{...}
+//
+//	or:
+//
+//	        nil
+type AlertTemplateConfigurationPtrInput interface {
+	pulumi.Input
+
+	ToAlertTemplateConfigurationPtrOutput() AlertTemplateConfigurationPtrOutput
+	ToAlertTemplateConfigurationPtrOutputWithContext(context.Context) AlertTemplateConfigurationPtrOutput
+}
+
+type alertTemplateConfigurationPtrType AlertTemplateConfigurationArgs
+
+func AlertTemplateConfigurationPtr(v *AlertTemplateConfigurationArgs) AlertTemplateConfigurationPtrInput {
+	return (*alertTemplateConfigurationPtrType)(v)
+}
+
+func (*alertTemplateConfigurationPtrType) ElementType() reflect.Type {
+	return reflect.TypeOf((**AlertTemplateConfiguration)(nil)).Elem()
+}
+
+func (i *alertTemplateConfigurationPtrType) ToAlertTemplateConfigurationPtrOutput() AlertTemplateConfigurationPtrOutput {
+	return i.ToAlertTemplateConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (i *alertTemplateConfigurationPtrType) ToAlertTemplateConfigurationPtrOutputWithContext(ctx context.Context) AlertTemplateConfigurationPtrOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(AlertTemplateConfigurationPtrOutput)
+}
+
+type AlertTemplateConfigurationOutput struct{ *pulumi.OutputState }
+
+func (AlertTemplateConfigurationOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*AlertTemplateConfiguration)(nil)).Elem()
+}
+
+func (o AlertTemplateConfigurationOutput) ToAlertTemplateConfigurationOutput() AlertTemplateConfigurationOutput {
+	return o
+}
+
+func (o AlertTemplateConfigurationOutput) ToAlertTemplateConfigurationOutputWithContext(ctx context.Context) AlertTemplateConfigurationOutput {
+	return o
+}
+
+func (o AlertTemplateConfigurationOutput) ToAlertTemplateConfigurationPtrOutput() AlertTemplateConfigurationPtrOutput {
+	return o.ToAlertTemplateConfigurationPtrOutputWithContext(context.Background())
+}
+
+func (o AlertTemplateConfigurationOutput) ToAlertTemplateConfigurationPtrOutputWithContext(ctx context.Context) AlertTemplateConfigurationPtrOutput {
+	return o.ApplyTWithContext(ctx, func(_ context.Context, v AlertTemplateConfiguration) *AlertTemplateConfiguration {
+		return &v
+	}).(AlertTemplateConfigurationPtrOutput)
+}
+
+// Alert template annotations.
+func (o AlertTemplateConfigurationOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v AlertTemplateConfiguration) map[string]string { return v.Annotations }).(pulumi.StringMapOutput)
+}
+
+// Alert template id.
+func (o AlertTemplateConfigurationOutput) Id() pulumi.StringOutput {
+	return o.ApplyT(func(v AlertTemplateConfiguration) string { return v.Id }).(pulumi.StringOutput)
+}
+
+// Alert template language including `cn`, `en`.
+func (o AlertTemplateConfigurationOutput) Lang() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v AlertTemplateConfiguration) *string { return v.Lang }).(pulumi.StringPtrOutput)
+}
+
+// Alert template tokens.
+func (o AlertTemplateConfigurationOutput) Tokens() pulumi.StringMapOutput {
+	return o.ApplyT(func(v AlertTemplateConfiguration) map[string]string { return v.Tokens }).(pulumi.StringMapOutput)
+}
+
+// including FixedRate,Hourly,Daily,Weekly,Cron.
+func (o AlertTemplateConfigurationOutput) Type() pulumi.StringOutput {
+	return o.ApplyT(func(v AlertTemplateConfiguration) string { return v.Type }).(pulumi.StringOutput)
+}
+
+type AlertTemplateConfigurationPtrOutput struct{ *pulumi.OutputState }
+
+func (AlertTemplateConfigurationPtrOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((**AlertTemplateConfiguration)(nil)).Elem()
+}
+
+func (o AlertTemplateConfigurationPtrOutput) ToAlertTemplateConfigurationPtrOutput() AlertTemplateConfigurationPtrOutput {
+	return o
+}
+
+func (o AlertTemplateConfigurationPtrOutput) ToAlertTemplateConfigurationPtrOutputWithContext(ctx context.Context) AlertTemplateConfigurationPtrOutput {
+	return o
+}
+
+func (o AlertTemplateConfigurationPtrOutput) Elem() AlertTemplateConfigurationOutput {
+	return o.ApplyT(func(v *AlertTemplateConfiguration) AlertTemplateConfiguration {
+		if v != nil {
+			return *v
+		}
+		var ret AlertTemplateConfiguration
+		return ret
+	}).(AlertTemplateConfigurationOutput)
+}
+
+// Alert template annotations.
+func (o AlertTemplateConfigurationPtrOutput) Annotations() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *AlertTemplateConfiguration) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Annotations
+	}).(pulumi.StringMapOutput)
+}
+
+// Alert template id.
+func (o AlertTemplateConfigurationPtrOutput) Id() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *AlertTemplateConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Id
+	}).(pulumi.StringPtrOutput)
+}
+
+// Alert template language including `cn`, `en`.
+func (o AlertTemplateConfigurationPtrOutput) Lang() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *AlertTemplateConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return v.Lang
+	}).(pulumi.StringPtrOutput)
+}
+
+// Alert template tokens.
+func (o AlertTemplateConfigurationPtrOutput) Tokens() pulumi.StringMapOutput {
+	return o.ApplyT(func(v *AlertTemplateConfiguration) map[string]string {
+		if v == nil {
+			return nil
+		}
+		return v.Tokens
+	}).(pulumi.StringMapOutput)
+}
+
+// including FixedRate,Hourly,Daily,Weekly,Cron.
+func (o AlertTemplateConfigurationPtrOutput) Type() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *AlertTemplateConfiguration) *string {
+		if v == nil {
+			return nil
+		}
+		return &v.Type
+	}).(pulumi.StringPtrOutput)
+}
+
 type EtlEtlSink struct {
 	// Delivery target logstore access key id.
 	AccessKeyId *string `pulumi:"accessKeyId"`
@@ -2587,6 +2800,8 @@ type GetProjectsProject struct {
 	LastModifyTime string `pulumi:"lastModifyTime"`
 	// The owner of project.
 	Owner string `pulumi:"owner"`
+	// The policy of project.
+	Policy string `pulumi:"policy"`
 	// The name of the project.
 	ProjectName string `pulumi:"projectName"`
 	// The region of project.
@@ -2615,6 +2830,8 @@ type GetProjectsProjectArgs struct {
 	LastModifyTime pulumi.StringInput `pulumi:"lastModifyTime"`
 	// The owner of project.
 	Owner pulumi.StringInput `pulumi:"owner"`
+	// The policy of project.
+	Policy pulumi.StringInput `pulumi:"policy"`
 	// The name of the project.
 	ProjectName pulumi.StringInput `pulumi:"projectName"`
 	// The region of project.
@@ -2692,6 +2909,11 @@ func (o GetProjectsProjectOutput) LastModifyTime() pulumi.StringOutput {
 // The owner of project.
 func (o GetProjectsProjectOutput) Owner() pulumi.StringOutput {
 	return o.ApplyT(func(v GetProjectsProject) string { return v.Owner }).(pulumi.StringOutput)
+}
+
+// The policy of project.
+func (o GetProjectsProjectOutput) Policy() pulumi.StringOutput {
+	return o.ApplyT(func(v GetProjectsProject) string { return v.Policy }).(pulumi.StringOutput)
 }
 
 // The name of the project.
@@ -2854,6 +3076,8 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*AlertSchedulePtrInput)(nil)).Elem(), AlertScheduleArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*AlertSeverityConfigurationInput)(nil)).Elem(), AlertSeverityConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*AlertSeverityConfigurationArrayInput)(nil)).Elem(), AlertSeverityConfigurationArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*AlertTemplateConfigurationInput)(nil)).Elem(), AlertTemplateConfigurationArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*AlertTemplateConfigurationPtrInput)(nil)).Elem(), AlertTemplateConfigurationArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtlEtlSinkInput)(nil)).Elem(), EtlEtlSinkArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*EtlEtlSinkArrayInput)(nil)).Elem(), EtlEtlSinkArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*OssShipperParquetConfigInput)(nil)).Elem(), OssShipperParquetConfigArgs{})
@@ -2892,6 +3116,8 @@ func init() {
 	pulumi.RegisterOutputType(AlertSchedulePtrOutput{})
 	pulumi.RegisterOutputType(AlertSeverityConfigurationOutput{})
 	pulumi.RegisterOutputType(AlertSeverityConfigurationArrayOutput{})
+	pulumi.RegisterOutputType(AlertTemplateConfigurationOutput{})
+	pulumi.RegisterOutputType(AlertTemplateConfigurationPtrOutput{})
 	pulumi.RegisterOutputType(EtlEtlSinkOutput{})
 	pulumi.RegisterOutputType(EtlEtlSinkArrayOutput{})
 	pulumi.RegisterOutputType(OssShipperParquetConfigOutput{})

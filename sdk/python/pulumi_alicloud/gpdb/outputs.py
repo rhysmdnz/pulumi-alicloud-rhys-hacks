@@ -178,7 +178,7 @@ class GetInstancesInstanceResult(dict):
                  zone_id: str):
         """
         :param str availability_zone: Instance availability zone.
-        :param str connection_string: The endpoint of the instance.
+        :param str connection_string: The connection string of the instance.
         :param str cpu_cores: The number of CPU cores of the computing node. Unit: Core.
         :param str create_time: The time when the instance was created. The time is in the YYYY-MM-DDThh:mm:ssZ format, such as 2011-05-30T12:11:4Z.
         :param str db_instance_category: The db instance category. Valid values: `HighAvailability`, `Basic`.
@@ -254,7 +254,7 @@ class GetInstancesInstanceResult(dict):
     @pulumi.getter(name="connectionString")
     def connection_string(self) -> str:
         """
-        The endpoint of the instance.
+        The connection string of the instance.
         """
         return pulumi.get(self, "connection_string")
 

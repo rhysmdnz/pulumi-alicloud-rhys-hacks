@@ -87,6 +87,12 @@ namespace Pulumi.AliCloud.Ecs
         [Input("availabilityZone")]
         public string? AvailabilityZone { get; set; }
 
+        /// <summary>
+        /// Default to `true`. If false, the attributes `ram_role_name` and `disk_device_mappings` will not be fetched and output.
+        /// </summary>
+        [Input("enableDetails")]
+        public bool? EnableDetails { get; set; }
+
         [Input("ids")]
         private List<string>? _ids;
 
@@ -104,6 +110,12 @@ namespace Pulumi.AliCloud.Ecs
         /// </summary>
         [Input("imageId")]
         public string? ImageId { get; set; }
+
+        /// <summary>
+        /// The name of the instance. Fuzzy search with the asterisk (*) wildcard characters is supported.
+        /// </summary>
+        [Input("instanceName")]
+        public string? InstanceName { get; set; }
 
         /// <summary>
         /// A regex string to filter results by instance name.
@@ -127,7 +139,7 @@ namespace Pulumi.AliCloud.Ecs
         public string? RamRoleName { get; set; }
 
         /// <summary>
-        /// The Id of resource group which the instance belongs.
+        /// The ID of resource group which the instance belongs.
         /// </summary>
         [Input("resourceGroupId")]
         public string? ResourceGroupId { get; set; }
@@ -194,6 +206,12 @@ namespace Pulumi.AliCloud.Ecs
         [Input("availabilityZone")]
         public Input<string>? AvailabilityZone { get; set; }
 
+        /// <summary>
+        /// Default to `true`. If false, the attributes `ram_role_name` and `disk_device_mappings` will not be fetched and output.
+        /// </summary>
+        [Input("enableDetails")]
+        public Input<bool>? EnableDetails { get; set; }
+
         [Input("ids")]
         private InputList<string>? _ids;
 
@@ -211,6 +229,12 @@ namespace Pulumi.AliCloud.Ecs
         /// </summary>
         [Input("imageId")]
         public Input<string>? ImageId { get; set; }
+
+        /// <summary>
+        /// The name of the instance. Fuzzy search with the asterisk (*) wildcard characters is supported.
+        /// </summary>
+        [Input("instanceName")]
+        public Input<string>? InstanceName { get; set; }
 
         /// <summary>
         /// A regex string to filter results by instance name.
@@ -234,7 +258,7 @@ namespace Pulumi.AliCloud.Ecs
         public Input<string>? RamRoleName { get; set; }
 
         /// <summary>
-        /// The Id of resource group which the instance belongs.
+        /// The ID of resource group which the instance belongs.
         /// </summary>
         [Input("resourceGroupId")]
         public Input<string>? ResourceGroupId { get; set; }
@@ -301,6 +325,7 @@ namespace Pulumi.AliCloud.Ecs
         /// Availability zone the instance belongs to.
         /// </summary>
         public readonly string? AvailabilityZone;
+        public readonly bool? EnableDetails;
         /// <summary>
         /// The provider-assigned unique ID for this managed resource.
         /// </summary>
@@ -313,6 +338,7 @@ namespace Pulumi.AliCloud.Ecs
         /// Image ID the instance is using.
         /// </summary>
         public readonly string? ImageId;
+        public readonly string? InstanceName;
         /// <summary>
         /// A list of instances. Each element contains the following attributes:
         /// </summary>
@@ -355,11 +381,15 @@ namespace Pulumi.AliCloud.Ecs
         private GetInstancesResult(
             string? availabilityZone,
 
+            bool? enableDetails,
+
             string id,
 
             ImmutableArray<string> ids,
 
             string? imageId,
+
+            string? instanceName,
 
             ImmutableArray<Outputs.GetInstancesInstanceResult> instances,
 
@@ -388,9 +418,11 @@ namespace Pulumi.AliCloud.Ecs
             string? vswitchId)
         {
             AvailabilityZone = availabilityZone;
+            EnableDetails = enableDetails;
             Id = id;
             Ids = ids;
             ImageId = imageId;
+            InstanceName = instanceName;
             Instances = instances;
             NameRegex = nameRegex;
             Names = names;

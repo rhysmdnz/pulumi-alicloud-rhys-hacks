@@ -24,6 +24,7 @@ namespace Pulumi.AliCloud.Ecs.Outputs
         /// - `cloud_ssd`: The SSD cloud disk.
         /// - `cloud_essd`: The ESSD cloud disk.
         /// - `ephemeral_ssd`: The local SSD disk.
+        /// - `cloud_auto`: The AutoPL cloud disk.
         /// Default to `cloud_efficiency`.
         /// </summary>
         public readonly string? Category;

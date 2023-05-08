@@ -106,11 +106,11 @@ export class Connection extends pulumi.CustomResource {
      */
     public readonly effectImmediately!: pulumi.Output<boolean | undefined>;
     /**
-     * Whether to enable NAT traversal.
+     * Specifies whether to enable the dead peer detection (DPD) feature. Valid values: `true`(default), `false`.
      */
     public readonly enableDpd!: pulumi.Output<boolean>;
     /**
-     * Whether to enable NAT traversal.
+     * Specifies whether to enable NAT traversal. Valid values: `true`(default), `false`.
      */
     public readonly enableNatTraversal!: pulumi.Output<boolean>;
     /**
@@ -222,11 +222,11 @@ export interface ConnectionState {
      */
     effectImmediately?: pulumi.Input<boolean>;
     /**
-     * Whether to enable NAT traversal.
+     * Specifies whether to enable the dead peer detection (DPD) feature. Valid values: `true`(default), `false`.
      */
     enableDpd?: pulumi.Input<boolean>;
     /**
-     * Whether to enable NAT traversal.
+     * Specifies whether to enable NAT traversal. Valid values: `true`(default), `false`.
      */
     enableNatTraversal?: pulumi.Input<boolean>;
     /**
@@ -280,11 +280,11 @@ export interface ConnectionArgs {
      */
     effectImmediately?: pulumi.Input<boolean>;
     /**
-     * Whether to enable NAT traversal.
+     * Specifies whether to enable the dead peer detection (DPD) feature. Valid values: `true`(default), `false`.
      */
     enableDpd?: pulumi.Input<boolean>;
     /**
-     * Whether to enable NAT traversal.
+     * Specifies whether to enable NAT traversal. Valid values: `true`(default), `false`.
      */
     enableNatTraversal?: pulumi.Input<boolean>;
     /**

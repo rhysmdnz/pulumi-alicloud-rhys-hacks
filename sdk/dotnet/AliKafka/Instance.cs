@@ -12,6 +12,8 @@ namespace Pulumi.AliCloud.AliKafka
     /// <summary>
     /// Provides an ALIKAFKA instance resource.
     /// 
+    /// For information about ALIKAFKA instance and how to use it, see [What is ALIKAFKA instance](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/api-doc-alikafka-2019-09-16-api-doc-startinstance).
+    /// 
     /// &gt; **NOTE:** Available in 1.59.0+
     /// 
     /// &gt; **NOTE:** Creation or modification may took about 10-40 minutes.
@@ -126,6 +128,14 @@ namespace Pulumi.AliCloud.AliKafka
         public Output<int> IoMax { get; private set; } = null!;
 
         /// <summary>
+        /// The traffic specification of the instance. We recommend that you configure this parameter.
+        /// - You should specify one of the `io_max` and `io_max_spec` parameters, and `io_max_spec` is recommended.
+        /// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+        /// </summary>
+        [Output("ioMaxSpec")]
+        public Output<string> IoMaxSpec { get; private set; } = null!;
+
+        /// <summary>
         /// The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
         /// </summary>
         [Output("kmsKeyId")]
@@ -154,6 +164,12 @@ namespace Pulumi.AliCloud.AliKafka
         /// </summary>
         [Output("securityGroup")]
         public Output<string> SecurityGroup { get; private set; } = null!;
+
+        /// <summary>
+        /// The zones among which you want to deploy the instance.
+        /// </summary>
+        [Output("selectedZones")]
+        public Output<ImmutableArray<string>> SelectedZones { get; private set; } = null!;
 
         /// <summary>
         /// The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
@@ -290,8 +306,16 @@ namespace Pulumi.AliCloud.AliKafka
         /// <summary>
         /// The max value of io of the instance. When modify this value, it only support adjust to a greater value.
         /// </summary>
-        [Input("ioMax", required: true)]
-        public Input<int> IoMax { get; set; } = null!;
+        [Input("ioMax")]
+        public Input<int>? IoMax { get; set; }
+
+        /// <summary>
+        /// The traffic specification of the instance. We recommend that you configure this parameter.
+        /// - You should specify one of the `io_max` and `io_max_spec` parameters, and `io_max_spec` is recommended.
+        /// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+        /// </summary>
+        [Input("ioMaxSpec")]
+        public Input<string>? IoMaxSpec { get; set; }
 
         /// <summary>
         /// The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
@@ -322,6 +346,18 @@ namespace Pulumi.AliCloud.AliKafka
         /// </summary>
         [Input("securityGroup")]
         public Input<string>? SecurityGroup { get; set; }
+
+        [Input("selectedZones")]
+        private InputList<string>? _selectedZones;
+
+        /// <summary>
+        /// The zones among which you want to deploy the instance.
+        /// </summary>
+        public InputList<string> SelectedZones
+        {
+            get => _selectedZones ?? (_selectedZones = new InputList<string>());
+            set => _selectedZones = value;
+        }
 
         /// <summary>
         /// The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
@@ -425,6 +461,14 @@ namespace Pulumi.AliCloud.AliKafka
         public Input<int>? IoMax { get; set; }
 
         /// <summary>
+        /// The traffic specification of the instance. We recommend that you configure this parameter.
+        /// - You should specify one of the `io_max` and `io_max_spec` parameters, and `io_max_spec` is recommended.
+        /// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+        /// </summary>
+        [Input("ioMaxSpec")]
+        public Input<string>? IoMaxSpec { get; set; }
+
+        /// <summary>
         /// The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
         /// </summary>
         [Input("kmsKeyId")]
@@ -453,6 +497,18 @@ namespace Pulumi.AliCloud.AliKafka
         /// </summary>
         [Input("securityGroup")]
         public Input<string>? SecurityGroup { get; set; }
+
+        [Input("selectedZones")]
+        private InputList<string>? _selectedZones;
+
+        /// <summary>
+        /// The zones among which you want to deploy the instance.
+        /// </summary>
+        public InputList<string> SelectedZones
+        {
+            get => _selectedZones ?? (_selectedZones = new InputList<string>());
+            set => _selectedZones = value;
+        }
 
         /// <summary>
         /// The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.

@@ -72,11 +72,15 @@ namespace Pulumi.AliCloud.Rds
         public Output<string> CaType { get; private set; } = null!;
 
         /// <summary>
-        /// The RDS edition of the instance. Valid values:
+        /// The RDS edition of the instance. If you want to create a serverless instance, you must use this value. Valid values:
         /// * **Basic**: Basic Edition.
         /// * **HighAvailability**: High-availability Edition.
         /// * **AlwaysOn**: Cluster Edition.
         /// * **Finance**: Enterprise Edition.
+        /// * **cluster**: MySQL Cluster Edition. (Available in 1.202.0+)
+        /// * **serverless_basic**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.200.0+)
+        /// * **serverless_standard**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.204.0+)
+        /// * **serverless_ha**: RDS Serverless High-availability Edition for SQL Server. (Available in 1.204.0+)
         /// </summary>
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
@@ -131,7 +135,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<string?> DbInstanceIpArrayName { get; private set; } = null!;
 
         /// <summary>
-        /// The storage type of the instance. Valid values:
+        /// The storage type of the instance. Serverless instance, only `cloud_essd` can be selected. Valid values:
         /// - local_ssd: specifies to use local SSDs. This value is recommended.
         /// - cloud_ssd: specifies to use standard SSDs.
         /// - cloud_essd: specifies to use enhanced SSDs (ESSDs).
@@ -140,6 +144,12 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Output("dbInstanceStorageType")]
         public Output<string> DbInstanceStorageType { get; private set; } = null!;
+
+        /// <summary>
+        /// (Available in 1.197.0+) The type of db instance.
+        /// </summary>
+        [Output("dbInstanceType")]
+        public Output<string> DbInstanceType { get; private set; } = null!;
 
         /// <summary>
         /// Specifies whether table names on the instance are case-sensitive. Valid values: `true`, `false`.
@@ -182,7 +192,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<string?> EncryptionKey { get; private set; } = null!;
 
         /// <summary>
-        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB. Create a serverless instance, you must set this parameter to MySQL.
         /// </summary>
         [Output("engine")]
         public Output<string> Engine { get; private set; } = null!;
@@ -216,7 +226,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<string> HaConfig { get; private set; } = null!;
 
         /// <summary>
-        /// Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid.
+        /// Valid values are `Prepaid`, `Postpaid`, `Serverless`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid. `Serverless` This value is supported only for instances that run MySQL. For more information, see [Overview](https://www.alibabacloud.com/help/en/apsaradb-for-rds/latest/what-is-serverless?spm=a2c63.p38356.0.0.772a28cfTAGqIv).
         /// </summary>
         [Output("instanceChargeType")]
         public Output<string?> InstanceChargeType { get; private set; } = null!;
@@ -229,7 +239,7 @@ namespace Pulumi.AliCloud.Rds
 
         /// <summary>
         /// User-defined DB instance storage space. Value range:
-        /// - [5, 2000] for MySQL/PostgreSQL/PPAS HA dual node edition;
+        /// - [5, 2000] for MySQL/PostgreSQL HA dual node edition;
         /// - [20,1000] for MySQL 5.7 basic single node edition;
         /// - [10, 2000] for SQL Server 2008R2;
         /// - [20,2000] for SQL Server 2012 basic single node edition
@@ -240,7 +250,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<int> InstanceStorage { get; private set; } = null!;
 
         /// <summary>
-        /// DB Instance type. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
+        /// DB Instance type. Create a serverless instance, you must set this parameter to mysql.n2.serverless.1c. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
         /// </summary>
         [Output("instanceType")]
         public Output<string> InstanceType { get; private set; } = null!;
@@ -267,7 +277,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<string?> ModifyMode { get; private set; } = null!;
 
         /// <summary>
-        /// The monitoring frequency in seconds. Valid values are 5, 60, 300. Defaults to 300.
+        /// The monitoring frequency in seconds. Valid values are 5, 10, 60, 300. Defaults to 300.
         /// </summary>
         [Output("monitoringPeriod")]
         public Output<int> MonitoringPeriod { get; private set; } = null!;
@@ -364,6 +374,12 @@ namespace Pulumi.AliCloud.Rds
         public Output<string> ServerKey { get; private set; } = null!;
 
         /// <summary>
+        /// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+        /// </summary>
+        [Output("serverlessConfigs")]
+        public Output<ImmutableArray<Outputs.InstanceServerlessConfig>> ServerlessConfigs { get; private set; } = null!;
+
+        /// <summary>
         /// The sql collector keep time of the instance. Valid values are `30`, `180`, `365`, `1095`, `1825`, Default to `30`.
         /// </summary>
         [Output("sqlCollectorConfigValue")]
@@ -380,6 +396,12 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Output("sslAction")]
         public Output<string> SslAction { get; private set; } = null!;
+
+        /// <summary>
+        /// The internal or public endpoint for which the server certificate needs to be created or updated.
+        /// </summary>
+        [Output("sslConnectionString")]
+        public Output<string> SslConnectionString { get; private set; } = null!;
 
         /// <summary>
         /// Status of the SSL feature. `Yes`: SSL is turned on; `No`: SSL is turned off.
@@ -413,7 +435,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<int?> StorageUpperBound { get; private set; } = null!;
 
         /// <summary>
-        /// The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `upgrade_db_instance_kernel_version = true`. The time must be in UTC.
+        /// The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `target_minor_version` is changed. The time must be in UTC.
         /// </summary>
         [Output("switchTime")]
         public Output<string?> SwitchTime { get; private set; } = null!;
@@ -427,7 +449,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<ImmutableDictionary<string, object>?> Tags { get; private set; } = null!;
 
         /// <summary>
-        /// The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. It is valid only when `upgrade_db_instance_kernel_version = true`. You must specify the minor engine version in one of the following formats:
+        /// The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. You must specify the minor engine version in one of the following formats:
         /// - PostgreSQL: rds_postgres_&lt;Major engine version&gt;00_&lt;Minor engine version&gt;. Example: rds_postgres_1200_20200830.
         /// - MySQL: &lt;RDS edition&gt;_&lt;Minor engine version&gt;. Examples: rds_20200229, xcluster_20200229, and xcluster80_20200229. The following RDS editions are supported:
         /// - rds: The instance runs RDS Basic or High-availability Edition.
@@ -461,7 +483,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<bool?> UpgradeDbInstanceKernelVersion { get; private set; } = null!;
 
         /// <summary>
-        /// The method to update the minor engine version. Default value: Immediate. It is valid only when `upgrade_db_instance_kernel_version = true`. Valid values:
+        /// The method to update the minor engine version. Default value: Immediate. It is valid only when `target_minor_version` is changed. Valid values:
         /// - Immediate: The minor engine version is immediately updated.
         /// - MaintainTime: The minor engine version is updated during the maintenance window. For more information about how to change the maintenance window, see ModifyDBInstanceMaintainTime.
         /// - SpecifyTime: The minor engine version is updated at the point in time you specify.
@@ -508,7 +530,7 @@ namespace Pulumi.AliCloud.Rds
         /// The region ID of the log instance if you create a log instance. If you set this parameter to the same value as the ZoneId parameter, the instance is deployed in a single zone. Otherwise, the instance is deployed in multiple zones.
         /// </summary>
         [Output("zoneIdSlaveB")]
-        public Output<string?> ZoneIdSlaveB { get; private set; } = null!;
+        public Output<string> ZoneIdSlaveB { get; private set; } = null!;
 
 
         /// <summary>
@@ -614,11 +636,15 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? CaType { get; set; }
 
         /// <summary>
-        /// The RDS edition of the instance. Valid values:
+        /// The RDS edition of the instance. If you want to create a serverless instance, you must use this value. Valid values:
         /// * **Basic**: Basic Edition.
         /// * **HighAvailability**: High-availability Edition.
         /// * **AlwaysOn**: Cluster Edition.
         /// * **Finance**: Enterprise Edition.
+        /// * **cluster**: MySQL Cluster Edition. (Available in 1.202.0+)
+        /// * **serverless_basic**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.200.0+)
+        /// * **serverless_standard**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.204.0+)
+        /// * **serverless_ha**: RDS Serverless High-availability Edition for SQL Server. (Available in 1.204.0+)
         /// </summary>
         [Input("category")]
         public Input<string>? Category { get; set; }
@@ -667,7 +693,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? DbInstanceIpArrayName { get; set; }
 
         /// <summary>
-        /// The storage type of the instance. Valid values:
+        /// The storage type of the instance. Serverless instance, only `cloud_essd` can be selected. Valid values:
         /// - local_ssd: specifies to use local SSDs. This value is recommended.
         /// - cloud_ssd: specifies to use standard SSDs.
         /// - cloud_essd: specifies to use enhanced SSDs (ESSDs).
@@ -718,7 +744,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? EncryptionKey { get; set; }
 
         /// <summary>
-        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB. Create a serverless instance, you must set this parameter to MySQL.
         /// </summary>
         [Input("engine", required: true)]
         public Input<string> Engine { get; set; } = null!;
@@ -752,7 +778,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? HaConfig { get; set; }
 
         /// <summary>
-        /// Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid.
+        /// Valid values are `Prepaid`, `Postpaid`, `Serverless`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid. `Serverless` This value is supported only for instances that run MySQL. For more information, see [Overview](https://www.alibabacloud.com/help/en/apsaradb-for-rds/latest/what-is-serverless?spm=a2c63.p38356.0.0.772a28cfTAGqIv).
         /// </summary>
         [Input("instanceChargeType")]
         public Input<string>? InstanceChargeType { get; set; }
@@ -765,7 +791,7 @@ namespace Pulumi.AliCloud.Rds
 
         /// <summary>
         /// User-defined DB instance storage space. Value range:
-        /// - [5, 2000] for MySQL/PostgreSQL/PPAS HA dual node edition;
+        /// - [5, 2000] for MySQL/PostgreSQL HA dual node edition;
         /// - [20,1000] for MySQL 5.7 basic single node edition;
         /// - [10, 2000] for SQL Server 2008R2;
         /// - [20,2000] for SQL Server 2012 basic single node edition
@@ -776,7 +802,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<int> InstanceStorage { get; set; } = null!;
 
         /// <summary>
-        /// DB Instance type. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
+        /// DB Instance type. Create a serverless instance, you must set this parameter to mysql.n2.serverless.1c. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
         /// </summary>
         [Input("instanceType", required: true)]
         public Input<string> InstanceType { get; set; } = null!;
@@ -803,7 +829,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? ModifyMode { get; set; }
 
         /// <summary>
-        /// The monitoring frequency in seconds. Valid values are 5, 60, 300. Defaults to 300.
+        /// The monitoring frequency in seconds. Valid values are 5, 10, 60, 300. Defaults to 300.
         /// </summary>
         [Input("monitoringPeriod")]
         public Input<int>? MonitoringPeriod { get; set; }
@@ -923,6 +949,18 @@ namespace Pulumi.AliCloud.Rds
         [Input("serverKey")]
         public Input<string>? ServerKey { get; set; }
 
+        [Input("serverlessConfigs")]
+        private InputList<Inputs.InstanceServerlessConfigArgs>? _serverlessConfigs;
+
+        /// <summary>
+        /// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+        /// </summary>
+        public InputList<Inputs.InstanceServerlessConfigArgs> ServerlessConfigs
+        {
+            get => _serverlessConfigs ?? (_serverlessConfigs = new InputList<Inputs.InstanceServerlessConfigArgs>());
+            set => _serverlessConfigs = value;
+        }
+
         /// <summary>
         /// The sql collector keep time of the instance. Valid values are `30`, `180`, `365`, `1095`, `1825`, Default to `30`.
         /// </summary>
@@ -940,6 +978,12 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("sslAction")]
         public Input<string>? SslAction { get; set; }
+
+        /// <summary>
+        /// The internal or public endpoint for which the server certificate needs to be created or updated.
+        /// </summary>
+        [Input("sslConnectionString")]
+        public Input<string>? SslConnectionString { get; set; }
 
         /// <summary>
         /// Automatic storage space expansion switch. Valid values:
@@ -967,7 +1011,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<int>? StorageUpperBound { get; set; }
 
         /// <summary>
-        /// The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `upgrade_db_instance_kernel_version = true`. The time must be in UTC.
+        /// The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `target_minor_version` is changed. The time must be in UTC.
         /// </summary>
         [Input("switchTime")]
         public Input<string>? SwitchTime { get; set; }
@@ -987,7 +1031,7 @@ namespace Pulumi.AliCloud.Rds
         }
 
         /// <summary>
-        /// The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. It is valid only when `upgrade_db_instance_kernel_version = true`. You must specify the minor engine version in one of the following formats:
+        /// The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. You must specify the minor engine version in one of the following formats:
         /// - PostgreSQL: rds_postgres_&lt;Major engine version&gt;00_&lt;Minor engine version&gt;. Example: rds_postgres_1200_20200830.
         /// - MySQL: &lt;RDS edition&gt;_&lt;Minor engine version&gt;. Examples: rds_20200229, xcluster_20200229, and xcluster80_20200229. The following RDS editions are supported:
         /// - rds: The instance runs RDS Basic or High-availability Edition.
@@ -1021,7 +1065,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<bool>? UpgradeDbInstanceKernelVersion { get; set; }
 
         /// <summary>
-        /// The method to update the minor engine version. Default value: Immediate. It is valid only when `upgrade_db_instance_kernel_version = true`. Valid values:
+        /// The method to update the minor engine version. Default value: Immediate. It is valid only when `target_minor_version` is changed. Valid values:
         /// - Immediate: The minor engine version is immediately updated.
         /// - MaintainTime: The minor engine version is updated during the maintenance window. For more information about how to change the maintenance window, see ModifyDBInstanceMaintainTime.
         /// - SpecifyTime: The minor engine version is updated at the point in time you specify.
@@ -1135,11 +1179,15 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? CaType { get; set; }
 
         /// <summary>
-        /// The RDS edition of the instance. Valid values:
+        /// The RDS edition of the instance. If you want to create a serverless instance, you must use this value. Valid values:
         /// * **Basic**: Basic Edition.
         /// * **HighAvailability**: High-availability Edition.
         /// * **AlwaysOn**: Cluster Edition.
         /// * **Finance**: Enterprise Edition.
+        /// * **cluster**: MySQL Cluster Edition. (Available in 1.202.0+)
+        /// * **serverless_basic**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.200.0+)
+        /// * **serverless_standard**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.204.0+)
+        /// * **serverless_ha**: RDS Serverless High-availability Edition for SQL Server. (Available in 1.204.0+)
         /// </summary>
         [Input("category")]
         public Input<string>? Category { get; set; }
@@ -1194,7 +1242,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? DbInstanceIpArrayName { get; set; }
 
         /// <summary>
-        /// The storage type of the instance. Valid values:
+        /// The storage type of the instance. Serverless instance, only `cloud_essd` can be selected. Valid values:
         /// - local_ssd: specifies to use local SSDs. This value is recommended.
         /// - cloud_ssd: specifies to use standard SSDs.
         /// - cloud_essd: specifies to use enhanced SSDs (ESSDs).
@@ -1203,6 +1251,12 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("dbInstanceStorageType")]
         public Input<string>? DbInstanceStorageType { get; set; }
+
+        /// <summary>
+        /// (Available in 1.197.0+) The type of db instance.
+        /// </summary>
+        [Input("dbInstanceType")]
+        public Input<string>? DbInstanceType { get; set; }
 
         /// <summary>
         /// Specifies whether table names on the instance are case-sensitive. Valid values: `true`, `false`.
@@ -1245,7 +1299,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? EncryptionKey { get; set; }
 
         /// <summary>
-        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB. Create a serverless instance, you must set this parameter to MySQL.
         /// </summary>
         [Input("engine")]
         public Input<string>? Engine { get; set; }
@@ -1279,7 +1333,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? HaConfig { get; set; }
 
         /// <summary>
-        /// Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid.
+        /// Valid values are `Prepaid`, `Postpaid`, `Serverless`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid. `Serverless` This value is supported only for instances that run MySQL. For more information, see [Overview](https://www.alibabacloud.com/help/en/apsaradb-for-rds/latest/what-is-serverless?spm=a2c63.p38356.0.0.772a28cfTAGqIv).
         /// </summary>
         [Input("instanceChargeType")]
         public Input<string>? InstanceChargeType { get; set; }
@@ -1292,7 +1346,7 @@ namespace Pulumi.AliCloud.Rds
 
         /// <summary>
         /// User-defined DB instance storage space. Value range:
-        /// - [5, 2000] for MySQL/PostgreSQL/PPAS HA dual node edition;
+        /// - [5, 2000] for MySQL/PostgreSQL HA dual node edition;
         /// - [20,1000] for MySQL 5.7 basic single node edition;
         /// - [10, 2000] for SQL Server 2008R2;
         /// - [20,2000] for SQL Server 2012 basic single node edition
@@ -1303,7 +1357,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<int>? InstanceStorage { get; set; }
 
         /// <summary>
-        /// DB Instance type. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
+        /// DB Instance type. Create a serverless instance, you must set this parameter to mysql.n2.serverless.1c. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
         /// </summary>
         [Input("instanceType")]
         public Input<string>? InstanceType { get; set; }
@@ -1330,7 +1384,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? ModifyMode { get; set; }
 
         /// <summary>
-        /// The monitoring frequency in seconds. Valid values are 5, 60, 300. Defaults to 300.
+        /// The monitoring frequency in seconds. Valid values are 5, 10, 60, 300. Defaults to 300.
         /// </summary>
         [Input("monitoringPeriod")]
         public Input<int>? MonitoringPeriod { get; set; }
@@ -1450,6 +1504,18 @@ namespace Pulumi.AliCloud.Rds
         [Input("serverKey")]
         public Input<string>? ServerKey { get; set; }
 
+        [Input("serverlessConfigs")]
+        private InputList<Inputs.InstanceServerlessConfigGetArgs>? _serverlessConfigs;
+
+        /// <summary>
+        /// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+        /// </summary>
+        public InputList<Inputs.InstanceServerlessConfigGetArgs> ServerlessConfigs
+        {
+            get => _serverlessConfigs ?? (_serverlessConfigs = new InputList<Inputs.InstanceServerlessConfigGetArgs>());
+            set => _serverlessConfigs = value;
+        }
+
         /// <summary>
         /// The sql collector keep time of the instance. Valid values are `30`, `180`, `365`, `1095`, `1825`, Default to `30`.
         /// </summary>
@@ -1467,6 +1533,12 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("sslAction")]
         public Input<string>? SslAction { get; set; }
+
+        /// <summary>
+        /// The internal or public endpoint for which the server certificate needs to be created or updated.
+        /// </summary>
+        [Input("sslConnectionString")]
+        public Input<string>? SslConnectionString { get; set; }
 
         /// <summary>
         /// Status of the SSL feature. `Yes`: SSL is turned on; `No`: SSL is turned off.
@@ -1500,7 +1572,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<int>? StorageUpperBound { get; set; }
 
         /// <summary>
-        /// The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `upgrade_db_instance_kernel_version = true`. The time must be in UTC.
+        /// The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `target_minor_version` is changed. The time must be in UTC.
         /// </summary>
         [Input("switchTime")]
         public Input<string>? SwitchTime { get; set; }
@@ -1520,7 +1592,7 @@ namespace Pulumi.AliCloud.Rds
         }
 
         /// <summary>
-        /// The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. It is valid only when `upgrade_db_instance_kernel_version = true`. You must specify the minor engine version in one of the following formats:
+        /// The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. You must specify the minor engine version in one of the following formats:
         /// - PostgreSQL: rds_postgres_&lt;Major engine version&gt;00_&lt;Minor engine version&gt;. Example: rds_postgres_1200_20200830.
         /// - MySQL: &lt;RDS edition&gt;_&lt;Minor engine version&gt;. Examples: rds_20200229, xcluster_20200229, and xcluster80_20200229. The following RDS editions are supported:
         /// - rds: The instance runs RDS Basic or High-availability Edition.
@@ -1554,7 +1626,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<bool>? UpgradeDbInstanceKernelVersion { get; set; }
 
         /// <summary>
-        /// The method to update the minor engine version. Default value: Immediate. It is valid only when `upgrade_db_instance_kernel_version = true`. Valid values:
+        /// The method to update the minor engine version. Default value: Immediate. It is valid only when `target_minor_version` is changed. Valid values:
         /// - Immediate: The minor engine version is immediately updated.
         /// - MaintainTime: The minor engine version is updated during the maintenance window. For more information about how to change the maintenance window, see ModifyDBInstanceMaintainTime.
         /// - SpecifyTime: The minor engine version is updated at the point in time you specify.

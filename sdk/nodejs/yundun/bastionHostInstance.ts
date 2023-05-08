@@ -41,6 +41,7 @@ export class BastionHostInstance extends pulumi.CustomResource {
     public readonly licenseCode!: pulumi.Output<string>;
     public readonly period!: pulumi.Output<number | undefined>;
     public readonly planCode!: pulumi.Output<string>;
+    public readonly publicWhiteLists!: pulumi.Output<string[] | undefined>;
     public readonly renewPeriod!: pulumi.Output<number | undefined>;
     public readonly renewalPeriodUnit!: pulumi.Output<string>;
     public readonly renewalStatus!: pulumi.Output<string>;
@@ -71,6 +72,7 @@ export class BastionHostInstance extends pulumi.CustomResource {
             resourceInputs["licenseCode"] = state ? state.licenseCode : undefined;
             resourceInputs["period"] = state ? state.period : undefined;
             resourceInputs["planCode"] = state ? state.planCode : undefined;
+            resourceInputs["publicWhiteLists"] = state ? state.publicWhiteLists : undefined;
             resourceInputs["renewPeriod"] = state ? state.renewPeriod : undefined;
             resourceInputs["renewalPeriodUnit"] = state ? state.renewalPeriodUnit : undefined;
             resourceInputs["renewalStatus"] = state ? state.renewalStatus : undefined;
@@ -110,6 +112,7 @@ export class BastionHostInstance extends pulumi.CustomResource {
             resourceInputs["licenseCode"] = args ? args.licenseCode : undefined;
             resourceInputs["period"] = args ? args.period : undefined;
             resourceInputs["planCode"] = args ? args.planCode : undefined;
+            resourceInputs["publicWhiteLists"] = args ? args.publicWhiteLists : undefined;
             resourceInputs["renewPeriod"] = args ? args.renewPeriod : undefined;
             resourceInputs["renewalPeriodUnit"] = args ? args.renewalPeriodUnit : undefined;
             resourceInputs["renewalStatus"] = args ? args.renewalStatus : undefined;
@@ -136,6 +139,7 @@ export interface BastionHostInstanceState {
     licenseCode?: pulumi.Input<string>;
     period?: pulumi.Input<number>;
     planCode?: pulumi.Input<string>;
+    publicWhiteLists?: pulumi.Input<pulumi.Input<string>[]>;
     renewPeriod?: pulumi.Input<number>;
     renewalPeriodUnit?: pulumi.Input<string>;
     renewalStatus?: pulumi.Input<string>;
@@ -158,6 +162,7 @@ export interface BastionHostInstanceArgs {
     licenseCode: pulumi.Input<string>;
     period?: pulumi.Input<number>;
     planCode: pulumi.Input<string>;
+    publicWhiteLists?: pulumi.Input<pulumi.Input<string>[]>;
     renewPeriod?: pulumi.Input<number>;
     renewalPeriodUnit?: pulumi.Input<string>;
     renewalStatus?: pulumi.Input<string>;

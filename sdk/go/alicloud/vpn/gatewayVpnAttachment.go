@@ -31,7 +31,7 @@ type GatewayVpnAttachment struct {
 
 	// Bgp configuration information. See the following `Block bgpConfig`.
 	BgpConfig GatewayVpnAttachmentBgpConfigOutput `pulumi:"bgpConfig"`
-	// The ID of the customer gateway.
+	// The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
 	CustomerGatewayId pulumi.StringOutput `pulumi:"customerGatewayId"`
 	// Indicates whether IPsec-VPN negotiations are initiated immediately. Valid values.
 	EffectImmediately pulumi.BoolPtrOutput `pulumi:"effectImmediately"`
@@ -100,7 +100,7 @@ func GetGatewayVpnAttachment(ctx *pulumi.Context,
 type gatewayVpnAttachmentState struct {
 	// Bgp configuration information. See the following `Block bgpConfig`.
 	BgpConfig *GatewayVpnAttachmentBgpConfig `pulumi:"bgpConfig"`
-	// The ID of the customer gateway.
+	// The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
 	CustomerGatewayId *string `pulumi:"customerGatewayId"`
 	// Indicates whether IPsec-VPN negotiations are initiated immediately. Valid values.
 	EffectImmediately *bool `pulumi:"effectImmediately"`
@@ -131,7 +131,7 @@ type gatewayVpnAttachmentState struct {
 type GatewayVpnAttachmentState struct {
 	// Bgp configuration information. See the following `Block bgpConfig`.
 	BgpConfig GatewayVpnAttachmentBgpConfigPtrInput
-	// The ID of the customer gateway.
+	// The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
 	CustomerGatewayId pulumi.StringPtrInput
 	// Indicates whether IPsec-VPN negotiations are initiated immediately. Valid values.
 	EffectImmediately pulumi.BoolPtrInput
@@ -166,7 +166,7 @@ func (GatewayVpnAttachmentState) ElementType() reflect.Type {
 type gatewayVpnAttachmentArgs struct {
 	// Bgp configuration information. See the following `Block bgpConfig`.
 	BgpConfig *GatewayVpnAttachmentBgpConfig `pulumi:"bgpConfig"`
-	// The ID of the customer gateway.
+	// The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
 	CustomerGatewayId string `pulumi:"customerGatewayId"`
 	// Indicates whether IPsec-VPN negotiations are initiated immediately. Valid values.
 	EffectImmediately *bool `pulumi:"effectImmediately"`
@@ -194,7 +194,7 @@ type gatewayVpnAttachmentArgs struct {
 type GatewayVpnAttachmentArgs struct {
 	// Bgp configuration information. See the following `Block bgpConfig`.
 	BgpConfig GatewayVpnAttachmentBgpConfigPtrInput
-	// The ID of the customer gateway.
+	// The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
 	CustomerGatewayId pulumi.StringInput
 	// Indicates whether IPsec-VPN negotiations are initiated immediately. Valid values.
 	EffectImmediately pulumi.BoolPtrInput
@@ -310,7 +310,7 @@ func (o GatewayVpnAttachmentOutput) BgpConfig() GatewayVpnAttachmentBgpConfigOut
 	return o.ApplyT(func(v *GatewayVpnAttachment) GatewayVpnAttachmentBgpConfigOutput { return v.BgpConfig }).(GatewayVpnAttachmentBgpConfigOutput)
 }
 
-// The ID of the customer gateway.
+// The ID of the customer gateway. From version 1.196.0, `customerGatewayId` can be modified.
 func (o GatewayVpnAttachmentOutput) CustomerGatewayId() pulumi.StringOutput {
 	return o.ApplyT(func(v *GatewayVpnAttachment) pulumi.StringOutput { return v.CustomerGatewayId }).(pulumi.StringOutput)
 }

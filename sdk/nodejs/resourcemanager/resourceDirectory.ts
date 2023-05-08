@@ -76,6 +76,10 @@ export class ResourceDirectory extends pulumi.CustomResource {
      */
     public /*out*/ readonly masterAccountName!: pulumi.Output<string>;
     /**
+     * Specifies whether to enable the member deletion feature. Valid values:`Enabled` and `Disabled`.
+     */
+    public readonly memberDeletionStatus!: pulumi.Output<string>;
+    /**
      * The ID of the root folder.
      */
     public /*out*/ readonly rootFolderId!: pulumi.Output<string>;
@@ -99,10 +103,12 @@ export class ResourceDirectory extends pulumi.CustomResource {
             const state = argsOrState as ResourceDirectoryState | undefined;
             resourceInputs["masterAccountId"] = state ? state.masterAccountId : undefined;
             resourceInputs["masterAccountName"] = state ? state.masterAccountName : undefined;
+            resourceInputs["memberDeletionStatus"] = state ? state.memberDeletionStatus : undefined;
             resourceInputs["rootFolderId"] = state ? state.rootFolderId : undefined;
             resourceInputs["status"] = state ? state.status : undefined;
         } else {
             const args = argsOrState as ResourceDirectoryArgs | undefined;
+            resourceInputs["memberDeletionStatus"] = args ? args.memberDeletionStatus : undefined;
             resourceInputs["status"] = args ? args.status : undefined;
             resourceInputs["masterAccountId"] = undefined /*out*/;
             resourceInputs["masterAccountName"] = undefined /*out*/;
@@ -126,6 +132,10 @@ export interface ResourceDirectoryState {
      */
     masterAccountName?: pulumi.Input<string>;
     /**
+     * Specifies whether to enable the member deletion feature. Valid values:`Enabled` and `Disabled`.
+     */
+    memberDeletionStatus?: pulumi.Input<string>;
+    /**
      * The ID of the root folder.
      */
     rootFolderId?: pulumi.Input<string>;
@@ -139,6 +149,10 @@ export interface ResourceDirectoryState {
  * The set of arguments for constructing a ResourceDirectory resource.
  */
 export interface ResourceDirectoryArgs {
+    /**
+     * Specifies whether to enable the member deletion feature. Valid values:`Enabled` and `Disabled`.
+     */
+    memberDeletionStatus?: pulumi.Input<string>;
     /**
      * The status of control policy. Valid values:`Enabled` and `Disabled`.
      */

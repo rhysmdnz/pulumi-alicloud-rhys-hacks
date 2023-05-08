@@ -60,7 +60,7 @@ export class SharedResource extends pulumi.CustomResource {
      * - `VSwitch`.
      * - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
      * - The following types are added after v1.192.0: `PrefixList` and `Image`.
-     * - The following types are added after v1.195.0: `PublicIpAddressPool`.
+     * - The following types are added after v1.194.1: `PublicIpAddressPool`.
      */
     public readonly resourceType!: pulumi.Output<string>;
     /**
@@ -123,7 +123,7 @@ export interface SharedResourceState {
      * - `VSwitch`.
      * - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
      * - The following types are added after v1.192.0: `PrefixList` and `Image`.
-     * - The following types are added after v1.195.0: `PublicIpAddressPool`.
+     * - The following types are added after v1.194.1: `PublicIpAddressPool`.
      */
     resourceType?: pulumi.Input<string>;
     /**
@@ -149,7 +149,7 @@ export interface SharedResourceArgs {
      * - `VSwitch`.
      * - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
      * - The following types are added after v1.192.0: `PrefixList` and `Image`.
-     * - The following types are added after v1.195.0: `PublicIpAddressPool`.
+     * - The following types are added after v1.194.1: `PublicIpAddressPool`.
      */
     resourceType: pulumi.Input<string>;
 }

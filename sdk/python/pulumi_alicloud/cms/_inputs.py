@@ -47,7 +47,7 @@ class AlarmEscalationsCriticalArgs:
                  times: Optional[pulumi.Input[int]] = None):
         """
         :param pulumi.Input[str] comparison_operator: Critical level alarm comparison operator. Valid values: ["<=", "<", ">", ">=", "==", "!="]. Default to "==".
-        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         :param pulumi.Input[str] threshold: Critical level alarm threshold value, which must be a numeric value currently.
         :param pulumi.Input[int] times: The number of consecutive triggers. If the number of times that the metric values meet the trigger conditions reaches the value of this parameter, CloudMonitor sends alert notifications.
         """
@@ -76,7 +76,7 @@ class AlarmEscalationsCriticalArgs:
     @pulumi.getter
     def statistics(self) -> Optional[pulumi.Input[str]]:
         """
-        Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         """
         return pulumi.get(self, "statistics")
 
@@ -118,7 +118,7 @@ class AlarmEscalationsInfoArgs:
                  times: Optional[pulumi.Input[int]] = None):
         """
         :param pulumi.Input[str] comparison_operator: Critical level alarm comparison operator. Valid values: ["<=", "<", ">", ">=", "==", "!="]. Default to "==".
-        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         :param pulumi.Input[str] threshold: Critical level alarm threshold value, which must be a numeric value currently.
         :param pulumi.Input[int] times: The number of consecutive triggers. If the number of times that the metric values meet the trigger conditions reaches the value of this parameter, CloudMonitor sends alert notifications.
         """
@@ -147,7 +147,7 @@ class AlarmEscalationsInfoArgs:
     @pulumi.getter
     def statistics(self) -> Optional[pulumi.Input[str]]:
         """
-        Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         """
         return pulumi.get(self, "statistics")
 
@@ -189,7 +189,7 @@ class AlarmEscalationsWarnArgs:
                  times: Optional[pulumi.Input[int]] = None):
         """
         :param pulumi.Input[str] comparison_operator: Critical level alarm comparison operator. Valid values: ["<=", "<", ">", ">=", "==", "!="]. Default to "==".
-        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         :param pulumi.Input[str] threshold: Critical level alarm threshold value, which must be a numeric value currently.
         :param pulumi.Input[int] times: The number of consecutive triggers. If the number of times that the metric values meet the trigger conditions reaches the value of this parameter, CloudMonitor sends alert notifications.
         """
@@ -218,7 +218,7 @@ class AlarmEscalationsWarnArgs:
     @pulumi.getter
     def statistics(self) -> Optional[pulumi.Input[str]]:
         """
-        Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         """
         return pulumi.get(self, "statistics")
 

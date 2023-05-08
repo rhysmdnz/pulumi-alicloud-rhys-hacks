@@ -88,6 +88,7 @@ type Endpoints struct {
 	Apigateway          *string `pulumi:"apigateway"`
 	Arms                *string `pulumi:"arms"`
 	Bastionhost         *string `pulumi:"bastionhost"`
+	Beebot              *string `pulumi:"beebot"`
 	Bpstudio            *string `pulumi:"bpstudio"`
 	BrainIndustrial     *string `pulumi:"brainIndustrial"`
 	Bssopenapi          *string `pulumi:"bssopenapi"`
@@ -133,6 +134,7 @@ type Endpoints struct {
 	Edas                *string `pulumi:"edas"`
 	Edasschedulerx      *string `pulumi:"edasschedulerx"`
 	Edsuser             *string `pulumi:"edsuser"`
+	Eflo                *string `pulumi:"eflo"`
 	Ehpc                *string `pulumi:"ehpc"`
 	Ehs                 *string `pulumi:"ehs"`
 	Eipanycast          *string `pulumi:"eipanycast"`
@@ -167,6 +169,7 @@ type Endpoints struct {
 	Mse                 *string `pulumi:"mse"`
 	Nas                 *string `pulumi:"nas"`
 	Nlb                 *string `pulumi:"nlb"`
+	Oceanbase           *string `pulumi:"oceanbase"`
 	Ons                 *string `pulumi:"ons"`
 	Onsproxy            *string `pulumi:"onsproxy"`
 	Oos                 *string `pulumi:"oos"`
@@ -193,6 +196,7 @@ type Endpoints struct {
 	Sgw                 *string `pulumi:"sgw"`
 	Slb                 *string `pulumi:"slb"`
 	Smartag             *string `pulumi:"smartag"`
+	Srvcatalog          *string `pulumi:"srvcatalog"`
 	Sts                 *string `pulumi:"sts"`
 	Swas                *string `pulumi:"swas"`
 	Tag                 *string `pulumi:"tag"`
@@ -226,6 +230,7 @@ type EndpointsArgs struct {
 	Apigateway          pulumi.StringPtrInput `pulumi:"apigateway"`
 	Arms                pulumi.StringPtrInput `pulumi:"arms"`
 	Bastionhost         pulumi.StringPtrInput `pulumi:"bastionhost"`
+	Beebot              pulumi.StringPtrInput `pulumi:"beebot"`
 	Bpstudio            pulumi.StringPtrInput `pulumi:"bpstudio"`
 	BrainIndustrial     pulumi.StringPtrInput `pulumi:"brainIndustrial"`
 	Bssopenapi          pulumi.StringPtrInput `pulumi:"bssopenapi"`
@@ -271,6 +276,7 @@ type EndpointsArgs struct {
 	Edas                pulumi.StringPtrInput `pulumi:"edas"`
 	Edasschedulerx      pulumi.StringPtrInput `pulumi:"edasschedulerx"`
 	Edsuser             pulumi.StringPtrInput `pulumi:"edsuser"`
+	Eflo                pulumi.StringPtrInput `pulumi:"eflo"`
 	Ehpc                pulumi.StringPtrInput `pulumi:"ehpc"`
 	Ehs                 pulumi.StringPtrInput `pulumi:"ehs"`
 	Eipanycast          pulumi.StringPtrInput `pulumi:"eipanycast"`
@@ -305,6 +311,7 @@ type EndpointsArgs struct {
 	Mse                 pulumi.StringPtrInput `pulumi:"mse"`
 	Nas                 pulumi.StringPtrInput `pulumi:"nas"`
 	Nlb                 pulumi.StringPtrInput `pulumi:"nlb"`
+	Oceanbase           pulumi.StringPtrInput `pulumi:"oceanbase"`
 	Ons                 pulumi.StringPtrInput `pulumi:"ons"`
 	Onsproxy            pulumi.StringPtrInput `pulumi:"onsproxy"`
 	Oos                 pulumi.StringPtrInput `pulumi:"oos"`
@@ -331,6 +338,7 @@ type EndpointsArgs struct {
 	Sgw                 pulumi.StringPtrInput `pulumi:"sgw"`
 	Slb                 pulumi.StringPtrInput `pulumi:"slb"`
 	Smartag             pulumi.StringPtrInput `pulumi:"smartag"`
+	Srvcatalog          pulumi.StringPtrInput `pulumi:"srvcatalog"`
 	Sts                 pulumi.StringPtrInput `pulumi:"sts"`
 	Swas                pulumi.StringPtrInput `pulumi:"swas"`
 	Tag                 pulumi.StringPtrInput `pulumi:"tag"`
@@ -431,6 +439,10 @@ func (o EndpointsOutput) Arms() pulumi.StringPtrOutput {
 
 func (o EndpointsOutput) Bastionhost() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Endpoints) *string { return v.Bastionhost }).(pulumi.StringPtrOutput)
+}
+
+func (o EndpointsOutput) Beebot() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Endpoints) *string { return v.Beebot }).(pulumi.StringPtrOutput)
 }
 
 func (o EndpointsOutput) Bpstudio() pulumi.StringPtrOutput {
@@ -613,6 +625,10 @@ func (o EndpointsOutput) Edsuser() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Endpoints) *string { return v.Edsuser }).(pulumi.StringPtrOutput)
 }
 
+func (o EndpointsOutput) Eflo() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Endpoints) *string { return v.Eflo }).(pulumi.StringPtrOutput)
+}
+
 func (o EndpointsOutput) Ehpc() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Endpoints) *string { return v.Ehpc }).(pulumi.StringPtrOutput)
 }
@@ -749,6 +765,10 @@ func (o EndpointsOutput) Nlb() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Endpoints) *string { return v.Nlb }).(pulumi.StringPtrOutput)
 }
 
+func (o EndpointsOutput) Oceanbase() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Endpoints) *string { return v.Oceanbase }).(pulumi.StringPtrOutput)
+}
+
 func (o EndpointsOutput) Ons() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Endpoints) *string { return v.Ons }).(pulumi.StringPtrOutput)
 }
@@ -851,6 +871,10 @@ func (o EndpointsOutput) Slb() pulumi.StringPtrOutput {
 
 func (o EndpointsOutput) Smartag() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v Endpoints) *string { return v.Smartag }).(pulumi.StringPtrOutput)
+}
+
+func (o EndpointsOutput) Srvcatalog() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v Endpoints) *string { return v.Srvcatalog }).(pulumi.StringPtrOutput)
 }
 
 func (o EndpointsOutput) Sts() pulumi.StringPtrOutput {

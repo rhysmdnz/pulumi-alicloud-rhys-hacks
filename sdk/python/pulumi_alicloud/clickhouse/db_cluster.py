@@ -39,8 +39,8 @@ class DbClusterArgs:
         The set of arguments for constructing a DbCluster resource.
         :param pulumi.Input[str] category: The Category of DBCluster. Valid values: `Basic`,`HighAvailability`.
         :param pulumi.Input[str] db_cluster_class: The DBCluster class. According to the category, db_cluster_class has two value ranges:
-               * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-               * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+               * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+               * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         :param pulumi.Input[str] db_cluster_network_type: The DBCluster network type. Valid values: `vpc`.
         :param pulumi.Input[str] db_cluster_version: The DBCluster version. Valid values: `20.3.10.75`, `20.8.7.15`, `21.8.10.19`, `22.8.5.29`. **NOTE:** `19.15.2.2` is no longer supported. From version 1.191.0, `db_cluster_version` can be set to `22.8.5.29`.
         :param pulumi.Input[int] db_node_group_count: The db node group count. The number should between 1 and 48.
@@ -107,8 +107,8 @@ class DbClusterArgs:
     def db_cluster_class(self) -> pulumi.Input[str]:
         """
         The DBCluster class. According to the category, db_cluster_class has two value ranges:
-        * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-        * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+        * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+        * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         """
         return pulumi.get(self, "db_cluster_class")
 
@@ -325,6 +325,7 @@ class DbClusterArgs:
 class _DbClusterState:
     def __init__(__self__, *,
                  category: Optional[pulumi.Input[str]] = None,
+                 connection_string: Optional[pulumi.Input[str]] = None,
                  db_cluster_access_white_lists: Optional[pulumi.Input[Sequence[pulumi.Input['DbClusterDbClusterAccessWhiteListArgs']]]] = None,
                  db_cluster_class: Optional[pulumi.Input[str]] = None,
                  db_cluster_description: Optional[pulumi.Input[str]] = None,
@@ -337,6 +338,7 @@ class _DbClusterState:
                  maintain_time: Optional[pulumi.Input[str]] = None,
                  payment_type: Optional[pulumi.Input[str]] = None,
                  period: Optional[pulumi.Input[str]] = None,
+                 port: Optional[pulumi.Input[str]] = None,
                  status: Optional[pulumi.Input[str]] = None,
                  storage_type: Optional[pulumi.Input[str]] = None,
                  used_time: Optional[pulumi.Input[str]] = None,
@@ -348,8 +350,8 @@ class _DbClusterState:
         :param pulumi.Input[str] category: The Category of DBCluster. Valid values: `Basic`,`HighAvailability`.
         :param pulumi.Input[Sequence[pulumi.Input['DbClusterDbClusterAccessWhiteListArgs']]] db_cluster_access_white_lists: The db cluster access white list.
         :param pulumi.Input[str] db_cluster_class: The DBCluster class. According to the category, db_cluster_class has two value ranges:
-               * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-               * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+               * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+               * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         :param pulumi.Input[str] db_cluster_description: The DBCluster description.
         :param pulumi.Input[str] db_cluster_network_type: The DBCluster network type. Valid values: `vpc`.
         :param pulumi.Input[str] db_cluster_version: The DBCluster version. Valid values: `20.3.10.75`, `20.8.7.15`, `21.8.10.19`, `22.8.5.29`. **NOTE:** `19.15.2.2` is no longer supported. From version 1.191.0, `db_cluster_version` can be set to `22.8.5.29`.
@@ -360,6 +362,7 @@ class _DbClusterState:
         :param pulumi.Input[str] maintain_time: The maintenance window of DBCluster. Valid format: `hh:mmZ-hh:mm Z`.
         :param pulumi.Input[str] payment_type: The payment type of the resource. Valid values: `PayAsYouGo`,`Subscription`.
         :param pulumi.Input[str] period: Pre-paid cluster of the pay-as-you-go cycle. Valid values: `Month`, `Year`.
+        :param pulumi.Input[str] port: (Available in 1.196.0+) The connection port of the cluster.
         :param pulumi.Input[str] status: The status of the resource. Valid values: `Running`,`Creating`,`Deleting`,`Restarting`,`Preparing`.
         :param pulumi.Input[str] storage_type: Storage type of DBCluster. Valid values: `cloud_essd`, `cloud_efficiency`, `cloud_essd_pl2`, `cloud_essd_pl3`.
         :param pulumi.Input[str] used_time: The used time of DBCluster.
@@ -369,6 +372,8 @@ class _DbClusterState:
         """
         if category is not None:
             pulumi.set(__self__, "category", category)
+        if connection_string is not None:
+            pulumi.set(__self__, "connection_string", connection_string)
         if db_cluster_access_white_lists is not None:
             pulumi.set(__self__, "db_cluster_access_white_lists", db_cluster_access_white_lists)
         if db_cluster_class is not None:
@@ -393,6 +398,8 @@ class _DbClusterState:
             pulumi.set(__self__, "payment_type", payment_type)
         if period is not None:
             pulumi.set(__self__, "period", period)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
         if status is not None:
             pulumi.set(__self__, "status", status)
         if storage_type is not None:
@@ -419,6 +426,15 @@ class _DbClusterState:
         pulumi.set(self, "category", value)
 
     @property
+    @pulumi.getter(name="connectionString")
+    def connection_string(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "connection_string")
+
+    @connection_string.setter
+    def connection_string(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "connection_string", value)
+
+    @property
     @pulumi.getter(name="dbClusterAccessWhiteLists")
     def db_cluster_access_white_lists(self) -> Optional[pulumi.Input[Sequence[pulumi.Input['DbClusterDbClusterAccessWhiteListArgs']]]]:
         """
@@ -435,8 +451,8 @@ class _DbClusterState:
     def db_cluster_class(self) -> Optional[pulumi.Input[str]]:
         """
         The DBCluster class. According to the category, db_cluster_class has two value ranges:
-        * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-        * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+        * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+        * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         """
         return pulumi.get(self, "db_cluster_class")
 
@@ -563,6 +579,18 @@ class _DbClusterState:
     @period.setter
     def period(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "period", value)
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[str]]:
+        """
+        (Available in 1.196.0+) The connection port of the cluster.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "port", value)
 
     @property
     @pulumi.getter
@@ -711,8 +739,8 @@ class DbCluster(pulumi.CustomResource):
         :param pulumi.Input[str] category: The Category of DBCluster. Valid values: `Basic`,`HighAvailability`.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DbClusterDbClusterAccessWhiteListArgs']]]] db_cluster_access_white_lists: The db cluster access white list.
         :param pulumi.Input[str] db_cluster_class: The DBCluster class. According to the category, db_cluster_class has two value ranges:
-               * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-               * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+               * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+               * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         :param pulumi.Input[str] db_cluster_description: The DBCluster description.
         :param pulumi.Input[str] db_cluster_network_type: The DBCluster network type. Valid values: `vpc`.
         :param pulumi.Input[str] db_cluster_version: The DBCluster version. Valid values: `20.3.10.75`, `20.8.7.15`, `21.8.10.19`, `22.8.5.29`. **NOTE:** `19.15.2.2` is no longer supported. From version 1.191.0, `db_cluster_version` can be set to `22.8.5.29`.
@@ -858,6 +886,8 @@ class DbCluster(pulumi.CustomResource):
             __props__.__dict__["vpc_id"] = vpc_id
             __props__.__dict__["vswitch_id"] = vswitch_id
             __props__.__dict__["zone_id"] = zone_id
+            __props__.__dict__["connection_string"] = None
+            __props__.__dict__["port"] = None
         super(DbCluster, __self__).__init__(
             'alicloud:clickhouse/dbCluster:DbCluster',
             resource_name,
@@ -869,6 +899,7 @@ class DbCluster(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             category: Optional[pulumi.Input[str]] = None,
+            connection_string: Optional[pulumi.Input[str]] = None,
             db_cluster_access_white_lists: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DbClusterDbClusterAccessWhiteListArgs']]]]] = None,
             db_cluster_class: Optional[pulumi.Input[str]] = None,
             db_cluster_description: Optional[pulumi.Input[str]] = None,
@@ -881,6 +912,7 @@ class DbCluster(pulumi.CustomResource):
             maintain_time: Optional[pulumi.Input[str]] = None,
             payment_type: Optional[pulumi.Input[str]] = None,
             period: Optional[pulumi.Input[str]] = None,
+            port: Optional[pulumi.Input[str]] = None,
             status: Optional[pulumi.Input[str]] = None,
             storage_type: Optional[pulumi.Input[str]] = None,
             used_time: Optional[pulumi.Input[str]] = None,
@@ -897,8 +929,8 @@ class DbCluster(pulumi.CustomResource):
         :param pulumi.Input[str] category: The Category of DBCluster. Valid values: `Basic`,`HighAvailability`.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['DbClusterDbClusterAccessWhiteListArgs']]]] db_cluster_access_white_lists: The db cluster access white list.
         :param pulumi.Input[str] db_cluster_class: The DBCluster class. According to the category, db_cluster_class has two value ranges:
-               * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-               * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+               * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+               * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         :param pulumi.Input[str] db_cluster_description: The DBCluster description.
         :param pulumi.Input[str] db_cluster_network_type: The DBCluster network type. Valid values: `vpc`.
         :param pulumi.Input[str] db_cluster_version: The DBCluster version. Valid values: `20.3.10.75`, `20.8.7.15`, `21.8.10.19`, `22.8.5.29`. **NOTE:** `19.15.2.2` is no longer supported. From version 1.191.0, `db_cluster_version` can be set to `22.8.5.29`.
@@ -909,6 +941,7 @@ class DbCluster(pulumi.CustomResource):
         :param pulumi.Input[str] maintain_time: The maintenance window of DBCluster. Valid format: `hh:mmZ-hh:mm Z`.
         :param pulumi.Input[str] payment_type: The payment type of the resource. Valid values: `PayAsYouGo`,`Subscription`.
         :param pulumi.Input[str] period: Pre-paid cluster of the pay-as-you-go cycle. Valid values: `Month`, `Year`.
+        :param pulumi.Input[str] port: (Available in 1.196.0+) The connection port of the cluster.
         :param pulumi.Input[str] status: The status of the resource. Valid values: `Running`,`Creating`,`Deleting`,`Restarting`,`Preparing`.
         :param pulumi.Input[str] storage_type: Storage type of DBCluster. Valid values: `cloud_essd`, `cloud_efficiency`, `cloud_essd_pl2`, `cloud_essd_pl3`.
         :param pulumi.Input[str] used_time: The used time of DBCluster.
@@ -921,6 +954,7 @@ class DbCluster(pulumi.CustomResource):
         __props__ = _DbClusterState.__new__(_DbClusterState)
 
         __props__.__dict__["category"] = category
+        __props__.__dict__["connection_string"] = connection_string
         __props__.__dict__["db_cluster_access_white_lists"] = db_cluster_access_white_lists
         __props__.__dict__["db_cluster_class"] = db_cluster_class
         __props__.__dict__["db_cluster_description"] = db_cluster_description
@@ -933,6 +967,7 @@ class DbCluster(pulumi.CustomResource):
         __props__.__dict__["maintain_time"] = maintain_time
         __props__.__dict__["payment_type"] = payment_type
         __props__.__dict__["period"] = period
+        __props__.__dict__["port"] = port
         __props__.__dict__["status"] = status
         __props__.__dict__["storage_type"] = storage_type
         __props__.__dict__["used_time"] = used_time
@@ -950,6 +985,11 @@ class DbCluster(pulumi.CustomResource):
         return pulumi.get(self, "category")
 
     @property
+    @pulumi.getter(name="connectionString")
+    def connection_string(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "connection_string")
+
+    @property
     @pulumi.getter(name="dbClusterAccessWhiteLists")
     def db_cluster_access_white_lists(self) -> pulumi.Output[Optional[Sequence['outputs.DbClusterDbClusterAccessWhiteList']]]:
         """
@@ -962,8 +1002,8 @@ class DbCluster(pulumi.CustomResource):
     def db_cluster_class(self) -> pulumi.Output[str]:
         """
         The DBCluster class. According to the category, db_cluster_class has two value ranges:
-        * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-        * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+        * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+        * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         """
         return pulumi.get(self, "db_cluster_class")
 
@@ -1046,6 +1086,14 @@ class DbCluster(pulumi.CustomResource):
         Pre-paid cluster of the pay-as-you-go cycle. Valid values: `Month`, `Year`.
         """
         return pulumi.get(self, "period")
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Output[str]:
+        """
+        (Available in 1.196.0+) The connection port of the cluster.
+        """
+        return pulumi.get(self, "port")
 
     @property
     @pulumi.getter

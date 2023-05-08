@@ -33,6 +33,12 @@ namespace Pulumi.AliCloud.Gpdb
         public Output<string> AvailabilityZone { get; private set; } = null!;
 
         /// <summary>
+        /// (Available in 1.196.0+) The connection string of the instance.
+        /// </summary>
+        [Output("connectionString")]
+        public Output<string> ConnectionString { get; private set; } = null!;
+
+        /// <summary>
         /// Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
         /// </summary>
         [Output("createSampleData")]
@@ -139,6 +145,12 @@ namespace Pulumi.AliCloud.Gpdb
         /// </summary>
         [Output("period")]
         public Output<string?> Period { get; private set; } = null!;
+
+        /// <summary>
+        /// (Available in 1.196.0+) The connection port of the instance.
+        /// </summary>
+        [Output("port")]
+        public Output<string> Port { get; private set; } = null!;
 
         /// <summary>
         /// The private ip address.
@@ -491,6 +503,12 @@ namespace Pulumi.AliCloud.Gpdb
         public Input<string>? AvailabilityZone { get; set; }
 
         /// <summary>
+        /// (Available in 1.196.0+) The connection string of the instance.
+        /// </summary>
+        [Input("connectionString")]
+        public Input<string>? ConnectionString { get; set; }
+
+        /// <summary>
         /// Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
         /// </summary>
         [Input("createSampleData")]
@@ -603,6 +621,12 @@ namespace Pulumi.AliCloud.Gpdb
         /// </summary>
         [Input("period")]
         public Input<string>? Period { get; set; }
+
+        /// <summary>
+        /// (Available in 1.196.0+) The connection port of the instance.
+        /// </summary>
+        [Input("port")]
+        public Input<string>? Port { get; set; }
 
         /// <summary>
         /// The private ip address.

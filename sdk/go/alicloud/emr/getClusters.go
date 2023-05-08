@@ -10,9 +10,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// This data source provides the Emr Clusters of the current Alibaba Cloud user.
-//
-// > **NOTE:** Available in v1.146.0+.
 func GetClusters(ctx *pulumi.Context, args *GetClustersArgs, opts ...pulumi.InvokeOption) (*GetClustersResult, error) {
 	opts = pkgInvokeDefaultOpts(opts)
 	var rv GetClustersResult

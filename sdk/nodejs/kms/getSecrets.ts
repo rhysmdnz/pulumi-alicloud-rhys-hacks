@@ -60,7 +60,8 @@ export interface GetSecretsArgs {
      */
     fetchTags?: boolean;
     /**
-     * Credential filter. It is composed of Key-Values ​​key-value pairs, the length is 0~1. When using a tag key to filter resources, the number of resources queried cannot exceed 4000.
+     * The secret filter. The filter consists of one or more key-value pairs. 
+     * More details see API [ListSecrets](https://www.alibabacloud.com/help/en/key-management-service/latest/listsecrets).
      */
     filters?: string;
     /**
@@ -126,7 +127,8 @@ export interface GetSecretsOutputArgs {
      */
     fetchTags?: pulumi.Input<boolean>;
     /**
-     * Credential filter. It is composed of Key-Values ​​key-value pairs, the length is 0~1. When using a tag key to filter resources, the number of resources queried cannot exceed 4000.
+     * The secret filter. The filter consists of one or more key-value pairs. 
+     * More details see API [ListSecrets](https://www.alibabacloud.com/help/en/key-management-service/latest/listsecrets).
      */
     filters?: pulumi.Input<string>;
     /**

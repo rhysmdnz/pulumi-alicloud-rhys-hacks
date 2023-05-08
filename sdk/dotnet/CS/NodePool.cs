@@ -717,7 +717,7 @@ namespace Pulumi.AliCloud.CS
         public Output<Outputs.NodePoolRollingPolicy?> RollingPolicy { get; private set; } = null!;
 
         /// <summary>
-        /// Rollout policy is used to specify the strategy when the node pool is rolling update. This field works when nodepool updating. Please use `rolling_policy` to instead it from provider version 1.185.0.
+        /// Rollout policy is used to specify the strategy when the node pool is rolling update. This field works when node pool updating. Please use `rolling_policy` to instead it from provider version 1.185.0.
         /// </summary>
         [Output("rolloutPolicy")]
         public Output<Outputs.NodePoolRolloutPolicy?> RolloutPolicy { get; private set; } = null!;
@@ -1161,7 +1161,7 @@ namespace Pulumi.AliCloud.CS
         public Input<Inputs.NodePoolRollingPolicyArgs>? RollingPolicy { get; set; }
 
         /// <summary>
-        /// Rollout policy is used to specify the strategy when the node pool is rolling update. This field works when nodepool updating. Please use `rolling_policy` to instead it from provider version 1.185.0.
+        /// Rollout policy is used to specify the strategy when the node pool is rolling update. This field works when node pool updating. Please use `rolling_policy` to instead it from provider version 1.185.0.
         /// </summary>
         [Input("rolloutPolicy")]
         public Input<Inputs.NodePoolRolloutPolicyArgs>? RolloutPolicy { get; set; }
@@ -1584,7 +1584,7 @@ namespace Pulumi.AliCloud.CS
         public Input<Inputs.NodePoolRollingPolicyGetArgs>? RollingPolicy { get; set; }
 
         /// <summary>
-        /// Rollout policy is used to specify the strategy when the node pool is rolling update. This field works when nodepool updating. Please use `rolling_policy` to instead it from provider version 1.185.0.
+        /// Rollout policy is used to specify the strategy when the node pool is rolling update. This field works when node pool updating. Please use `rolling_policy` to instead it from provider version 1.185.0.
         /// </summary>
         [Input("rolloutPolicy")]
         public Input<Inputs.NodePoolRolloutPolicyGetArgs>? RolloutPolicy { get; set; }

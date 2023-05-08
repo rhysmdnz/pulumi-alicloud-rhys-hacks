@@ -7,6 +7,8 @@ import * as utilities from "../utilities";
 /**
  * Provides an ALIKAFKA instance resource.
  *
+ * For information about ALIKAFKA instance and how to use it, see [What is ALIKAFKA instance](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/api-doc-alikafka-2019-09-16-api-doc-startinstance).
+ *
  * > **NOTE:** Available in 1.59.0+
  *
  * > **NOTE:** Creation or modification may took about 10-40 minutes.
@@ -114,6 +116,12 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly ioMax!: pulumi.Output<number>;
     /**
+     * The traffic specification of the instance. We recommend that you configure this parameter.
+     * - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+     * - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+     */
+    public readonly ioMaxSpec!: pulumi.Output<string>;
+    /**
      * The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
      */
     public readonly kmsKeyId!: pulumi.Output<string | undefined>;
@@ -133,6 +141,10 @@ export class Instance extends pulumi.CustomResource {
      * The ID of security group for this instance. If the security group is empty, system will create a default one.
      */
     public readonly securityGroup!: pulumi.Output<string>;
+    /**
+     * The zones among which you want to deploy the instance.
+     */
+    public readonly selectedZones!: pulumi.Output<string[] | undefined>;
     /**
      * The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
      */
@@ -193,11 +205,13 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["eipMax"] = state ? state.eipMax : undefined;
             resourceInputs["endPoint"] = state ? state.endPoint : undefined;
             resourceInputs["ioMax"] = state ? state.ioMax : undefined;
+            resourceInputs["ioMaxSpec"] = state ? state.ioMaxSpec : undefined;
             resourceInputs["kmsKeyId"] = state ? state.kmsKeyId : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["paidType"] = state ? state.paidType : undefined;
             resourceInputs["partitionNum"] = state ? state.partitionNum : undefined;
             resourceInputs["securityGroup"] = state ? state.securityGroup : undefined;
+            resourceInputs["selectedZones"] = state ? state.selectedZones : undefined;
             resourceInputs["serviceVersion"] = state ? state.serviceVersion : undefined;
             resourceInputs["specType"] = state ? state.specType : undefined;
             resourceInputs["status"] = state ? state.status : undefined;
@@ -217,9 +231,6 @@ export class Instance extends pulumi.CustomResource {
             if ((!args || args.diskType === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'diskType'");
             }
-            if ((!args || args.ioMax === undefined) && !opts.urn) {
-                throw new Error("Missing required property 'ioMax'");
-            }
             if ((!args || args.vswitchId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'vswitchId'");
             }
@@ -229,11 +240,13 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["diskType"] = args ? args.diskType : undefined;
             resourceInputs["eipMax"] = args ? args.eipMax : undefined;
             resourceInputs["ioMax"] = args ? args.ioMax : undefined;
+            resourceInputs["ioMaxSpec"] = args ? args.ioMaxSpec : undefined;
             resourceInputs["kmsKeyId"] = args ? args.kmsKeyId : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["paidType"] = args ? args.paidType : undefined;
             resourceInputs["partitionNum"] = args ? args.partitionNum : undefined;
             resourceInputs["securityGroup"] = args ? args.securityGroup : undefined;
+            resourceInputs["selectedZones"] = args ? args.selectedZones : undefined;
             resourceInputs["serviceVersion"] = args ? args.serviceVersion : undefined;
             resourceInputs["specType"] = args ? args.specType : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
@@ -284,6 +297,12 @@ export interface InstanceState {
      */
     ioMax?: pulumi.Input<number>;
     /**
+     * The traffic specification of the instance. We recommend that you configure this parameter.
+     * - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+     * - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+     */
+    ioMaxSpec?: pulumi.Input<string>;
+    /**
      * The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
      */
     kmsKeyId?: pulumi.Input<string>;
@@ -303,6 +322,10 @@ export interface InstanceState {
      * The ID of security group for this instance. If the security group is empty, system will create a default one.
      */
     securityGroup?: pulumi.Input<string>;
+    /**
+     * The zones among which you want to deploy the instance.
+     */
+    selectedZones?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
      */
@@ -373,7 +396,13 @@ export interface InstanceArgs {
     /**
      * The max value of io of the instance. When modify this value, it only support adjust to a greater value.
      */
-    ioMax: pulumi.Input<number>;
+    ioMax?: pulumi.Input<number>;
+    /**
+     * The traffic specification of the instance. We recommend that you configure this parameter.
+     * - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+     * - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+     */
+    ioMaxSpec?: pulumi.Input<string>;
     /**
      * The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
      */
@@ -394,6 +423,10 @@ export interface InstanceArgs {
      * The ID of security group for this instance. If the security group is empty, system will create a default one.
      */
     securityGroup?: pulumi.Input<string>;
+    /**
+     * The zones among which you want to deploy the instance.
+     */
+    selectedZones?: pulumi.Input<pulumi.Input<string>[]>;
     /**
      * The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
      */

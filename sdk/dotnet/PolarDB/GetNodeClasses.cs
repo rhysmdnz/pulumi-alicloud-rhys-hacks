@@ -87,6 +87,9 @@ namespace Pulumi.AliCloud.PolarDB
 
     public sealed class GetNodeClassesArgs : global::Pulumi.InvokeArgs
     {
+        [Input("category")]
+        public string? Category { get; set; }
+
         /// <summary>
         /// The PolarDB node class type by the user.
         /// </summary>
@@ -134,6 +137,9 @@ namespace Pulumi.AliCloud.PolarDB
 
     public sealed class GetNodeClassesInvokeArgs : global::Pulumi.InvokeArgs
     {
+        [Input("category")]
+        public Input<string>? Category { get; set; }
+
         /// <summary>
         /// The PolarDB node class type by the user.
         /// </summary>
@@ -183,6 +189,7 @@ namespace Pulumi.AliCloud.PolarDB
     [OutputType]
     public sealed class GetNodeClassesResult
     {
+        public readonly string? Category;
         /// <summary>
         /// A list of PolarDB node classes. Each element contains the following attributes:
         /// </summary>
@@ -207,6 +214,8 @@ namespace Pulumi.AliCloud.PolarDB
 
         [OutputConstructor]
         private GetNodeClassesResult(
+            string? category,
+
             ImmutableArray<Outputs.GetNodeClassesClassResult> classes,
 
             string? dbNodeClass,
@@ -225,6 +234,7 @@ namespace Pulumi.AliCloud.PolarDB
 
             string? zoneId)
         {
+            Category = category;
             Classes = classes;
             DbNodeClass = dbNodeClass;
             DbType = dbType;

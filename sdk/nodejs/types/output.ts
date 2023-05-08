@@ -6086,6 +6086,16 @@ export namespace cfg {
         count: number;
     }
 
+    export interface RuleCompliance {
+        /**
+         * The type of compliance. Valid values: `COMPLIANT`, `NON_COMPLIANT`, `NOT_APPLICABLE`, `INSUFFICIENT_DATA`.
+         */
+        complianceType: string;
+        /**
+         * The count of compliance.
+         */
+        count: number;
+    }
 }
 
 export namespace clickhouse {
@@ -7513,7 +7523,7 @@ export namespace cms {
          */
         comparisonOperator?: string;
         /**
-         * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+         * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
          */
         statistics?: string;
         /**
@@ -7532,7 +7542,7 @@ export namespace cms {
          */
         comparisonOperator?: string;
         /**
-         * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+         * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
          */
         statistics?: string;
         /**
@@ -7551,7 +7561,7 @@ export namespace cms {
          */
         comparisonOperator?: string;
         /**
-         * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+         * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
          */
         statistics?: string;
         /**
@@ -8875,6 +8885,7 @@ export namespace config {
         apigateway?: string;
         arms?: string;
         bastionhost?: string;
+        beebot?: string;
         bpstudio?: string;
         brainIndustrial?: string;
         bssopenapi?: string;
@@ -8920,6 +8931,7 @@ export namespace config {
         edas?: string;
         edasschedulerx?: string;
         edsuser?: string;
+        eflo?: string;
         ehpc?: string;
         ehs?: string;
         eipanycast?: string;
@@ -8954,6 +8966,7 @@ export namespace config {
         mse?: string;
         nas?: string;
         nlb?: string;
+        oceanbase?: string;
         ons?: string;
         onsproxy?: string;
         oos?: string;
@@ -8980,6 +8993,7 @@ export namespace config {
         sgw?: string;
         slb?: string;
         smartag?: string;
+        srvcatalog?: string;
         sts?: string;
         swas?: string;
         tag?: string;
@@ -12914,6 +12928,10 @@ export namespace dns {
 export namespace drds {
     export interface GetInstancesInstance {
         /**
+         * (Available in 1.196.0+) The connection string of the DRDS instance.
+         */
+        connectionString: string;
+        /**
          * Creation time of the instance.
          */
         createTime: number;
@@ -12929,6 +12947,10 @@ export namespace drds {
          * `Classic` for public classic network or `VPC` for private network.
          */
         networkType: string;
+        /**
+         * (Available in 1.196.0+) The connection port of the DRDS instance.
+         */
+        port: string;
         /**
          * Status of the instance.
          */
@@ -17130,7 +17152,7 @@ export namespace ecs {
          */
         regionId: string;
         /**
-         * The Id of resource group which the instance belongs.
+         * The ID of resource group which the instance belongs.
          */
         resourceGroupId: string;
         /**
@@ -17637,6 +17659,7 @@ export namespace ecs {
          * - `cloudSsd`: The SSD cloud disk.
          * - `cloudEssd`: The ESSD cloud disk.
          * - `ephemeralSsd`: The local SSD disk.
+         * - `cloudAuto`: The AutoPL cloud disk.
          * Default to `cloudEfficiency`.
          */
         category?: string;
@@ -22783,7 +22806,7 @@ export namespace gpdb {
         availabilityZone: string;
         chargeType: string;
         /**
-         * The endpoint of the instance.
+         * The connection string of the instance.
          */
         connectionString: string;
         /**
@@ -23188,7 +23211,7 @@ export namespace hbase {
          */
         coreDiskType: string;
         /**
-         * Like hbase.sn1.large, hbase.sn1.large, hbase.n1.2xlarge and so on.
+         * Like hbase.sn2.2xlarge, hbase.sn2.4xlarge, hbase.sn2.8xlarge and so on.
          */
         coreInstanceType: string;
         /**
@@ -23220,7 +23243,7 @@ export namespace hbase {
          */
         id: string;
         /**
-         * Like hbase.sn1.large, hbase.sn1.large, hbase.n1.2xlarge and so on.
+         * Like hbase.sn2.2xlarge, hbase.sn2.4xlarge, hbase.sn2.8xlarge and so on.
          */
         masterInstanceType: string;
         /**
@@ -24968,7 +24991,7 @@ export namespace kvstore {
          */
         endTime: string;
         /**
-         * The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`.
+         * The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`, `7.0`.
          */
         engineVersion: string;
         /**
@@ -25426,6 +25449,29 @@ export namespace log {
         severity: number;
     }
 
+    export interface AlertTemplateConfiguration {
+        /**
+         * Alert template annotations.
+         */
+        annotations?: {[key: string]: string};
+        /**
+         * Alert template id.
+         */
+        id: string;
+        /**
+         * Alert template language including `cn`, `en`.
+         */
+        lang?: string;
+        /**
+         * Alert template tokens.
+         */
+        tokens?: {[key: string]: string};
+        /**
+         * including FixedRate,Hourly,Daily,Weekly,Cron.
+         */
+        type: string;
+    }
+
     export interface EtlEtlSink {
         /**
          * Delivery target logstore access key id.
@@ -25486,6 +25532,10 @@ export namespace log {
          * The owner of project.
          */
         owner: string;
+        /**
+         * The policy of project.
+         */
+        policy: string;
         /**
          * The name of the project.
          */
@@ -25762,6 +25812,123 @@ export namespace marketplace {
          * The warranty date of the product.
          */
         warrantyDate: string;
+    }
+
+}
+
+export namespace maxcompute {
+    export interface ProjectIpWhiteList {
+        /**
+         * Classic network IP white list.
+         */
+        ipList?: string;
+        /**
+         * VPC network whitelist.
+         */
+        vpcIpList?: string;
+    }
+
+    export interface ProjectProperties {
+        /**
+         * Whether to allow full table scan.
+         */
+        allowFullScan: boolean;
+        /**
+         * Whether to turn on Decimal2.0.
+         */
+        enableDecimal2: boolean;
+        /**
+         * Whether encryption is turned on.See the following `Block Encryption`.
+         */
+        encryption: outputs.maxcompute.ProjectPropertiesEncryption;
+        /**
+         * Job default retention time.
+         */
+        retentionDays: number;
+        /**
+         * SQL charge limit.
+         */
+        sqlMeteringMax: string;
+        /**
+         * Life cycle of tables.See the following `Block TableLifecycle`.
+         */
+        tableLifecycle: outputs.maxcompute.ProjectPropertiesTableLifecycle;
+        /**
+         * Project time zone.
+         */
+        timezone: string;
+        /**
+         * Type system.
+         */
+        typeSystem: string;
+    }
+
+    export interface ProjectPropertiesEncryption {
+        /**
+         * Algorithm.
+         */
+        algorithm: string;
+        /**
+         * Whether to open.
+         */
+        enable: boolean;
+        /**
+         * Encryption algorithm key.
+         */
+        key: string;
+    }
+
+    export interface ProjectPropertiesTableLifecycle {
+        /**
+         * Life cycle type.
+         */
+        type: string;
+        /**
+         * The value of the life cycle.
+         */
+        value: string;
+    }
+
+    export interface ProjectSecurityProperties {
+        /**
+         * Whether to enable download permission check.
+         */
+        enableDownloadPrivilege: boolean;
+        /**
+         * Label authorization.
+         */
+        labelSecurity: boolean;
+        /**
+         * Project creator permissions.
+         */
+        objectCreatorHasAccessPermission: boolean;
+        /**
+         * Does the project creator have authorization rights.
+         */
+        objectCreatorHasGrantPermission: boolean;
+        /**
+         * Project protection.See the following `Block ProjectProtection`.
+         */
+        projectProtection: outputs.maxcompute.ProjectSecurityPropertiesProjectProtection;
+        /**
+         * Whether to turn on ACL.
+         */
+        usingAcl: boolean;
+        /**
+         * Whether to enable Policy.
+         */
+        usingPolicy: boolean;
+    }
+
+    export interface ProjectSecurityPropertiesProjectProtection {
+        /**
+         * Exclusion policy.
+         */
+        exceptionPolicy: string;
+        /**
+         * Is it turned on.
+         */
+        protected: boolean;
     }
 
 }
@@ -26299,6 +26466,17 @@ export namespace mongodb {
          * A list of zone ids in which the multi zone.
          */
         multiZoneIds: string[];
+    }
+
+    export interface InstanceParameter {
+        /**
+         * The name of the parameter.
+         */
+        name: string;
+        /**
+         * The value of the parameter.
+         */
+        value: string;
     }
 
     export interface InstanceReplicaSet {
@@ -27933,7 +28111,7 @@ export namespace oss {
          */
         days: number;
         /**
-         * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+         * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
          */
         storageClass: string;
     }
@@ -27948,7 +28126,7 @@ export namespace oss {
          */
         days?: number;
         /**
-         * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+         * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
          */
         storageClass?: string;
     }
@@ -28116,7 +28294,7 @@ export namespace oss {
          */
         sseKmsKeyId: string;
         /**
-         * Object storage type. Possible values: `Standard`, `IA` and `Archive`.
+         * Object storage type. Possible values: `Standard`, `IA`, `Archive` and `ColdArchive`.
          */
         storageClass: string;
     }
@@ -28176,7 +28354,7 @@ export namespace oss {
          */
         serverSideEncryptionRule: outputs.oss.GetBucketsBucketServerSideEncryptionRule;
         /**
-         * Object storage type. Possible values: `Standard`, `IA` and `Archive`.
+         * Object storage type. Possible values: `Standard`, `IA`, `Archive` and `ColdArchive`.
          */
         storageClass: string;
         /**
@@ -28745,6 +28923,10 @@ export namespace polardb {
          */
         chargeType: string;
         /**
+         * PolarDB cluster connection string.
+         */
+        connectionString: string;
+        /**
          * The createTime of the db_nodes.
          */
         createTime: string;
@@ -28800,6 +28982,10 @@ export namespace polardb {
          * The DBClusterNetworkType of the PolarDB cluster.
          */
         networkType: string;
+        /**
+         * PolarDB cluster connection port.
+         */
+        port: string;
         /**
          * The regionId of the db_nodes.
          */
@@ -30135,7 +30321,7 @@ export namespace rds {
          */
         category: string;
         /**
-         * Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+         * Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
          */
         engine: string;
         /**
@@ -30212,6 +30398,10 @@ export namespace rds {
          */
         dbInstanceStorageType: string;
         /**
+         * (Available in 1.197.0+) The type of instance.
+         */
+        dbInstanceType: string;
+        /**
          * `Primary` for primary instance, `Readonly` for read-only instance, `Guard` for disaster recovery instance, and `Temp` for temporary instance.
          */
         dbType: string;
@@ -30240,7 +30430,7 @@ export namespace rds {
          */
         encryptionKeyStatus: string;
         /**
-         * Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+         * Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
          */
         engine: string;
         /**
@@ -30648,6 +30838,29 @@ export namespace rds {
         user: string;
     }
 
+    export interface InstanceServerlessConfig {
+        /**
+         * Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+         * - true: enables the feature.
+         * - false: disables the feature. This is the default value.
+         */
+        autoPause: boolean;
+        /**
+         * The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+         */
+        maxCapacity: number;
+        /**
+         * The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+         */
+        minCapacity: number;
+        /**
+         * Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+         * - true: enables the feature.
+         * - false: disables the feature. This is the default value.
+         */
+        switchForce: boolean;
+    }
+
     export interface RdsCloneDbInstanceParameter {
         name: string;
         value: string;
@@ -30689,6 +30902,29 @@ export namespace rds {
          * The user that is allowed to access the instance. If you specify multiple users, separate the usernames with commas (,).
          */
         user: string;
+    }
+
+    export interface RdsCloneDbInstanceServerlessConfig {
+        /**
+         * Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+         * - true: enables the feature.
+         * - false: disables the feature. This is the default value.
+         */
+        autoPause: boolean;
+        /**
+         * The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+         */
+        maxCapacity: number;
+        /**
+         * The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+         */
+        minCapacity: number;
+        /**
+         * Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+         * - true: enables the feature.
+         * - false: disables the feature. This is the default value.
+         */
+        switchForce: boolean;
     }
 
     export interface RdsParameterGroupParamDetail {
@@ -35612,9 +35848,9 @@ export namespace vpc {
 
     export interface GetDhcpOptionsSetsSet {
         /**
-         * AssociateVpcs.
+         * The Number of VPCs bound by the DHCP option set.
          */
-        associateVpcs: outputs.vpc.GetDhcpOptionsSetsSetAssociateVpc[];
+        associateVpcCount: number;
         /**
          * The description of the DHCP options set. The description must be 2 to 256
          * characters in length and cannot start with `http://` or `https://`.
@@ -35647,17 +35883,6 @@ export namespace vpc {
          * The status of the DHCP options set. Valid values: `Available`, `InUse` or `Pending`. `Available`: The DHCP options set is available for use. `InUse`: The DHCP options set is in use. `Pending`: The DHCP options set is being configured.
          */
         status: string;
-    }
-
-    export interface GetDhcpOptionsSetsSetAssociateVpc {
-        /**
-         * The status of the VPC network that is associated with the DHCP options set. Valid values:`InUse` or `Pending`. `InUse`: The VPC network is in use. `Pending`: The VPC network is being configured.
-         */
-        associateStatus: string;
-        /**
-         * The ID of the VPC network that is associated with the DHCP options set.
-         */
-        vpcId: string;
     }
 
     export interface GetEnhancedNatAvailableZonesZone {
@@ -37449,6 +37674,14 @@ export namespace vpn {
         customerGatewayId: string;
         effectImmediately: boolean;
         /**
+         * Specifies whether to enable the dead peer detection (DPD) feature.
+         */
+        enableDpd: boolean;
+        /**
+         * Specifies whether to enable NAT traversal.
+         */
+        enableNatTraversal: boolean;
+        /**
          * ID of the VPN connection.
          */
         id: string;
@@ -37473,9 +37706,14 @@ export namespace vpn {
          */
         remoteSubnet: string;
         /**
-         * The status of the VPN connection, valid value:ike_sa_not_established, ike_sa_established, ipsec_sa_not_established, ipsec_sa_established.
+         * The negotiation status of the BGP routing protocol. Valid values: `success`, `false`.
          */
         status: string;
+        vcoHealthChecks?: outputs.vpn.GetConnectionsConnectionVcoHealthCheck[];
+        /**
+         * The configuration information for BGP.
+         */
+        vpnBgpConfigs?: outputs.vpn.GetConnectionsConnectionVpnBgpConfig[];
         /**
          * Use the VPN gateway ID as the search key.
          */
@@ -37538,6 +37776,64 @@ export namespace vpn {
          * The Diffie-Hellman key exchange algorithm used by phase-two negotiation.
          */
         ipsecPfs?: string;
+    }
+
+    export interface GetConnectionsConnectionVcoHealthCheck {
+        /**
+         * The destination ip address.
+         */
+        dip?: string;
+        /**
+         * The health check on status. Valid values: `true`, `false`.
+         */
+        enable?: string;
+        /**
+         * The time interval between health checks.
+         */
+        interval?: number;
+        /**
+         * The number of retries for health checks issued.
+         */
+        retry?: number;
+        /**
+         * The source ip address.
+         */
+        sip?: string;
+        /**
+         * The negotiation status of the BGP routing protocol. Valid values: `success`, `false`.
+         */
+        status?: string;
+    }
+
+    export interface GetConnectionsConnectionVpnBgpConfig {
+        /**
+         * The authentication keys for BGP routing protocols.
+         */
+        authKey?: string;
+        /**
+         * The ali cloud side autonomous system.
+         */
+        localAsn?: number;
+        /**
+         * The ali cloud side BGP address.
+         */
+        localBgpIp?: string;
+        /**
+         * The counterpart autonomous system number.
+         */
+        peerAsn?: number;
+        /**
+         * The BGP address on the other side.
+         */
+        peerBgpIp?: string;
+        /**
+         * The negotiation status of the BGP routing protocol. Valid values: `success`, `false`.
+         */
+        status?: string;
+        /**
+         * The ipsec tunnel segments.
+         */
+        tunnelCidr?: string;
     }
 
     export interface GetCustomerGatewaysGateway {
@@ -37744,6 +38040,10 @@ export namespace vpn {
 
     export interface GetGatewaysGateway {
         /**
+         * Whether to automatically propagate BGP routes to the VPC. Valid values: `true`, `false`.
+         */
+        autoPropagate: string;
+        /**
          * Limit search to specific business status - valid value is "Normal", "FinancialLocked".
          */
         businessStatus: string;
@@ -37858,7 +38158,6 @@ export namespace vpn {
          */
         ipsecPfs?: string;
     }
-
 }
 
 export namespace waf {

@@ -13,6 +13,8 @@ import (
 
 // Provides an ALIKAFKA instance resource.
 //
+// For information about ALIKAFKA instance and how to use it, see [What is ALIKAFKA instance](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/api-doc-alikafka-2019-09-16-api-doc-startinstance).
+//
 // > **NOTE:** Available in 1.59.0+
 //
 // > **NOTE:** Creation or modification may took about 10-40 minutes.
@@ -120,6 +122,10 @@ type Instance struct {
 	EndPoint pulumi.StringOutput `pulumi:"endPoint"`
 	// The max value of io of the instance. When modify this value, it only support adjust to a greater value.
 	IoMax pulumi.IntOutput `pulumi:"ioMax"`
+	// The traffic specification of the instance. We recommend that you configure this parameter.
+	// - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+	// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+	IoMaxSpec pulumi.StringOutput `pulumi:"ioMaxSpec"`
 	// The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
 	KmsKeyId pulumi.StringPtrOutput `pulumi:"kmsKeyId"`
 	// Name of your Kafka instance. The length should between 3 and 64 characters. If not set, will use instance id as instance name.
@@ -130,6 +136,8 @@ type Instance struct {
 	PartitionNum pulumi.IntPtrOutput `pulumi:"partitionNum"`
 	// The ID of security group for this instance. If the security group is empty, system will create a default one.
 	SecurityGroup pulumi.StringOutput `pulumi:"securityGroup"`
+	// The zones among which you want to deploy the instance.
+	SelectedZones pulumi.StringArrayOutput `pulumi:"selectedZones"`
 	// The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
 	ServiceVersion pulumi.StringOutput `pulumi:"serviceVersion"`
 	// The spec type of the instance. Support two type, "normal": normal version instance, "professional": professional version instance. Default is normal. When modify this value, it only support adjust from normal to professional. Note only pre paid type instance support professional specific type.
@@ -170,9 +178,6 @@ func NewInstance(ctx *pulumi.Context,
 	}
 	if args.DiskType == nil {
 		return nil, errors.New("invalid value for required argument 'DiskType'")
-	}
-	if args.IoMax == nil {
-		return nil, errors.New("invalid value for required argument 'IoMax'")
 	}
 	if args.VswitchId == nil {
 		return nil, errors.New("invalid value for required argument 'VswitchId'")
@@ -216,6 +221,10 @@ type instanceState struct {
 	EndPoint *string `pulumi:"endPoint"`
 	// The max value of io of the instance. When modify this value, it only support adjust to a greater value.
 	IoMax *int `pulumi:"ioMax"`
+	// The traffic specification of the instance. We recommend that you configure this parameter.
+	// - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+	// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+	IoMaxSpec *string `pulumi:"ioMaxSpec"`
 	// The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
 	KmsKeyId *string `pulumi:"kmsKeyId"`
 	// Name of your Kafka instance. The length should between 3 and 64 characters. If not set, will use instance id as instance name.
@@ -226,6 +235,8 @@ type instanceState struct {
 	PartitionNum *int `pulumi:"partitionNum"`
 	// The ID of security group for this instance. If the security group is empty, system will create a default one.
 	SecurityGroup *string `pulumi:"securityGroup"`
+	// The zones among which you want to deploy the instance.
+	SelectedZones []string `pulumi:"selectedZones"`
 	// The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
 	ServiceVersion *string `pulumi:"serviceVersion"`
 	// The spec type of the instance. Support two type, "normal": normal version instance, "professional": professional version instance. Default is normal. When modify this value, it only support adjust from normal to professional. Note only pre paid type instance support professional specific type.
@@ -268,6 +279,10 @@ type InstanceState struct {
 	EndPoint pulumi.StringPtrInput
 	// The max value of io of the instance. When modify this value, it only support adjust to a greater value.
 	IoMax pulumi.IntPtrInput
+	// The traffic specification of the instance. We recommend that you configure this parameter.
+	// - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+	// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+	IoMaxSpec pulumi.StringPtrInput
 	// The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
 	KmsKeyId pulumi.StringPtrInput
 	// Name of your Kafka instance. The length should between 3 and 64 characters. If not set, will use instance id as instance name.
@@ -278,6 +293,8 @@ type InstanceState struct {
 	PartitionNum pulumi.IntPtrInput
 	// The ID of security group for this instance. If the security group is empty, system will create a default one.
 	SecurityGroup pulumi.StringPtrInput
+	// The zones among which you want to deploy the instance.
+	SelectedZones pulumi.StringArrayInput
 	// The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
 	ServiceVersion pulumi.StringPtrInput
 	// The spec type of the instance. Support two type, "normal": normal version instance, "professional": professional version instance. Default is normal. When modify this value, it only support adjust from normal to professional. Note only pre paid type instance support professional specific type.
@@ -321,7 +338,11 @@ type instanceArgs struct {
 	// The max bandwidth of the instance. It will be ignored when `deployType = 5`. When modify this value, it only supports adjust to a greater value.
 	EipMax *int `pulumi:"eipMax"`
 	// The max value of io of the instance. When modify this value, it only support adjust to a greater value.
-	IoMax int `pulumi:"ioMax"`
+	IoMax *int `pulumi:"ioMax"`
+	// The traffic specification of the instance. We recommend that you configure this parameter.
+	// - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+	// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+	IoMaxSpec *string `pulumi:"ioMaxSpec"`
 	// The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
 	KmsKeyId *string `pulumi:"kmsKeyId"`
 	// Name of your Kafka instance. The length should between 3 and 64 characters. If not set, will use instance id as instance name.
@@ -332,6 +353,8 @@ type instanceArgs struct {
 	PartitionNum *int `pulumi:"partitionNum"`
 	// The ID of security group for this instance. If the security group is empty, system will create a default one.
 	SecurityGroup *string `pulumi:"securityGroup"`
+	// The zones among which you want to deploy the instance.
+	SelectedZones []string `pulumi:"selectedZones"`
 	// The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
 	ServiceVersion *string `pulumi:"serviceVersion"`
 	// The spec type of the instance. Support two type, "normal": normal version instance, "professional": professional version instance. Default is normal. When modify this value, it only support adjust from normal to professional. Note only pre paid type instance support professional specific type.
@@ -366,7 +389,11 @@ type InstanceArgs struct {
 	// The max bandwidth of the instance. It will be ignored when `deployType = 5`. When modify this value, it only supports adjust to a greater value.
 	EipMax pulumi.IntPtrInput
 	// The max value of io of the instance. When modify this value, it only support adjust to a greater value.
-	IoMax pulumi.IntInput
+	IoMax pulumi.IntPtrInput
+	// The traffic specification of the instance. We recommend that you configure this parameter.
+	// - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+	// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+	IoMaxSpec pulumi.StringPtrInput
 	// The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
 	KmsKeyId pulumi.StringPtrInput
 	// Name of your Kafka instance. The length should between 3 and 64 characters. If not set, will use instance id as instance name.
@@ -377,6 +404,8 @@ type InstanceArgs struct {
 	PartitionNum pulumi.IntPtrInput
 	// The ID of security group for this instance. If the security group is empty, system will create a default one.
 	SecurityGroup pulumi.StringPtrInput
+	// The zones among which you want to deploy the instance.
+	SelectedZones pulumi.StringArrayInput
 	// The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.
 	ServiceVersion pulumi.StringPtrInput
 	// The spec type of the instance. Support two type, "normal": normal version instance, "professional": professional version instance. Default is normal. When modify this value, it only support adjust from normal to professional. Note only pre paid type instance support professional specific type.
@@ -520,6 +549,13 @@ func (o InstanceOutput) IoMax() pulumi.IntOutput {
 	return o.ApplyT(func(v *Instance) pulumi.IntOutput { return v.IoMax }).(pulumi.IntOutput)
 }
 
+// The traffic specification of the instance. We recommend that you configure this parameter.
+// - You should specify one of the `ioMax` and `ioMaxSpec` parameters, and `ioMaxSpec` is recommended.
+// - For more information about the valid values, see [Billing](https://www.alibabacloud.com/help/en/message-queue-for-apache-kafka/latest/billing-overview).
+func (o InstanceOutput) IoMaxSpec() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.IoMaxSpec }).(pulumi.StringOutput)
+}
+
 // The ID of the key that is used to encrypt data on standard SSDs in the region of the instance.
 func (o InstanceOutput) KmsKeyId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.KmsKeyId }).(pulumi.StringPtrOutput)
@@ -543,6 +579,11 @@ func (o InstanceOutput) PartitionNum() pulumi.IntPtrOutput {
 // The ID of security group for this instance. If the security group is empty, system will create a default one.
 func (o InstanceOutput) SecurityGroup() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.SecurityGroup }).(pulumi.StringOutput)
+}
+
+// The zones among which you want to deploy the instance.
+func (o InstanceOutput) SelectedZones() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringArrayOutput { return v.SelectedZones }).(pulumi.StringArrayOutput)
 }
 
 // The kafka openSource version for this instance. Only 0.10.2 or 2.2.0 is allowed, default is 0.10.2.

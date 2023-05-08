@@ -19,71 +19,71 @@ import * as utilities from "../utilities";
  * import * as alicloud from "@pulumi/alicloud";
  *
  * const config = new pulumi.Config();
- * const name = config.get("name") || "slbservergroupvpc";
- * const num = config.getNumber("num") || 5;
- * const defaultZones = alicloud.getZones({
+ * const slbServerGroupServerAttachment = config.get("slbServerGroupServerAttachment") || "forSlbServerGroupServerAttachment";
+ * const slbServerGroupServerAttachmentCount = config.getNumber("slbServerGroupServerAttachmentCount") || 5;
+ * const serverAttachmentZones = alicloud.getZones({
  *     availableDiskCategory: "cloud_efficiency",
  *     availableResourceCreation: "VSwitch",
  * });
- * const defaultInstanceTypes = defaultZones.then(defaultZones => alicloud.ecs.getInstanceTypes({
- *     availabilityZone: defaultZones.zones?[0]?.id,
+ * const serverAttachmentInstanceTypes = serverAttachmentZones.then(serverAttachmentZones => alicloud.ecs.getInstanceTypes({
+ *     availabilityZone: serverAttachmentZones.zones?[0]?.id,
  *     cpuCoreCount: 1,
  *     memorySize: 2,
  * }));
- * const defaultImages = alicloud.ecs.getImages({
+ * const serverAttachmentImages = alicloud.ecs.getImages({
  *     nameRegex: "^ubuntu_[0-9]+_[0-9]+_x64*",
  *     mostRecent: true,
  *     owners: "system",
  * });
- * const defaultNetworks = alicloud.vpc.getNetworks({
+ * const serverAttachmentNetworks = alicloud.vpc.getNetworks({
  *     nameRegex: "default-NODELETING",
  * });
- * const defaultSwitches = Promise.all([defaultNetworks, defaultZones]).then(([defaultNetworks, defaultZones]) => alicloud.vpc.getSwitches({
- *     vpcId: defaultNetworks.ids?[0],
- *     zoneId: defaultZones.zones?[0]?.id,
+ * const serverAttachmentSwitches = Promise.all([serverAttachmentNetworks, serverAttachmentZones]).then(([serverAttachmentNetworks, serverAttachmentZones]) => alicloud.vpc.getSwitches({
+ *     vpcId: serverAttachmentNetworks.ids?[0],
+ *     zoneId: serverAttachmentZones.zones?[0]?.id,
  * }));
- * const defaultSecurityGroup = new alicloud.ecs.SecurityGroup("defaultSecurityGroup", {vpcId: defaultNetworks.then(defaultNetworks => defaultNetworks.ids?[0])});
- * const defaultInstance: alicloud.ecs.Instance[];
- * for (const range = {value: 0}; range.value < num; range.value++) {
- *     defaultInstance.push(new alicloud.ecs.Instance(`defaultInstance-${range.value}`, {
- *         imageId: defaultImages.then(defaultImages => defaultImages.images?[0]?.id),
- *         instanceType: defaultInstanceTypes.then(defaultInstanceTypes => defaultInstanceTypes.instanceTypes?[0]?.id),
- *         instanceName: name,
- *         securityGroups: [defaultSecurityGroup].map(__item => __item.id),
+ * const serverAttachmentSecurityGroup = new alicloud.ecs.SecurityGroup("serverAttachmentSecurityGroup", {vpcId: serverAttachmentNetworks.then(serverAttachmentNetworks => serverAttachmentNetworks.ids?[0])});
+ * const serverAttachmentInstance: alicloud.ecs.Instance[];
+ * for (const range = {value: 0}; range.value < slbServerGroupServerAttachmentCount; range.value++) {
+ *     serverAttachmentInstance.push(new alicloud.ecs.Instance(`serverAttachmentInstance-${range.value}`, {
+ *         imageId: serverAttachmentImages.then(serverAttachmentImages => serverAttachmentImages.images?[0]?.id),
+ *         instanceType: serverAttachmentInstanceTypes.then(serverAttachmentInstanceTypes => serverAttachmentInstanceTypes.instanceTypes?[0]?.id),
+ *         instanceName: slbServerGroupServerAttachment,
+ *         securityGroups: [serverAttachmentSecurityGroup].map(__item => __item.id),
  *         internetChargeType: "PayByTraffic",
  *         internetMaxBandwidthOut: 10,
- *         availabilityZone: defaultZones.then(defaultZones => defaultZones.zones?[0]?.id),
+ *         availabilityZone: serverAttachmentZones.then(serverAttachmentZones => serverAttachmentZones.zones?[0]?.id),
  *         instanceChargeType: "PostPaid",
  *         systemDiskCategory: "cloud_efficiency",
- *         vswitchId: defaultSwitches.then(defaultSwitches => defaultSwitches.ids?[0]),
+ *         vswitchId: serverAttachmentSwitches.then(serverAttachmentSwitches => serverAttachmentSwitches.ids?[0]),
  *     }));
  * }
- * const defaultApplicationLoadBalancer = new alicloud.slb.ApplicationLoadBalancer("defaultApplicationLoadBalancer", {
- *     loadBalancerName: name,
- *     vswitchId: defaultSwitches.then(defaultSwitches => defaultSwitches.vswitches?[0]?.id),
+ * const serverAttachmentApplicationLoadBalancer = new alicloud.slb.ApplicationLoadBalancer("serverAttachmentApplicationLoadBalancer", {
+ *     loadBalancerName: slbServerGroupServerAttachment,
+ *     vswitchId: serverAttachmentSwitches.then(serverAttachmentSwitches => serverAttachmentSwitches.vswitches?[0]?.id),
  *     loadBalancerSpec: "slb.s2.small",
  *     addressType: "intranet",
  * });
- * const defaultServerGroup = new alicloud.slb.ServerGroup("defaultServerGroup", {loadBalancerId: defaultApplicationLoadBalancer.id});
- * const defaultServerGroupServerAttachment: alicloud.slb.ServerGroupServerAttachment[];
- * for (const range = {value: 0}; range.value < num; range.value++) {
- *     defaultServerGroupServerAttachment.push(new alicloud.slb.ServerGroupServerAttachment(`defaultServerGroupServerAttachment-${range.value}`, {
- *         serverGroupId: defaultServerGroup.id,
- *         serverId: defaultInstance[range.index].id,
+ * const serverAttachmentServerGroup = new alicloud.slb.ServerGroup("serverAttachmentServerGroup", {loadBalancerId: serverAttachmentApplicationLoadBalancer.id});
+ * const serverAttachmentServerGroupServerAttachment: alicloud.slb.ServerGroupServerAttachment[];
+ * for (const range = {value: 0}; range.value < slbServerGroupServerAttachmentCount; range.value++) {
+ *     serverAttachmentServerGroupServerAttachment.push(new alicloud.slb.ServerGroupServerAttachment(`serverAttachmentServerGroupServerAttachment-${range.value}`, {
+ *         serverGroupId: serverAttachmentServerGroup.id,
+ *         serverId: serverAttachmentInstance[range.index].id,
  *         port: 8080,
  *         weight: 0,
  *     }));
  * }
- * const defaultListener = new alicloud.slb.Listener("defaultListener", {
- *     loadBalancerId: defaultApplicationLoadBalancer.id,
+ * const serverAttachmentListener = new alicloud.slb.Listener("serverAttachmentListener", {
+ *     loadBalancerId: serverAttachmentApplicationLoadBalancer.id,
  *     backendPort: 80,
  *     frontendPort: 80,
  *     protocol: "tcp",
  *     bandwidth: 10,
  *     scheduler: "rr",
- *     serverGroupId: defaultServerGroup.id,
+ *     serverGroupId: serverAttachmentServerGroup.id,
  * }, {
- *     dependsOn: [defaultServerGroupServerAttachment],
+ *     dependsOn: [serverAttachmentServerGroupServerAttachment],
  * });
  * ```
  *

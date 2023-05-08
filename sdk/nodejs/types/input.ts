@@ -22,6 +22,7 @@ export interface ProviderEndpoint {
     apigateway?: pulumi.Input<string>;
     arms?: pulumi.Input<string>;
     bastionhost?: pulumi.Input<string>;
+    beebot?: pulumi.Input<string>;
     bpstudio?: pulumi.Input<string>;
     brainIndustrial?: pulumi.Input<string>;
     bssopenapi?: pulumi.Input<string>;
@@ -67,6 +68,7 @@ export interface ProviderEndpoint {
     edas?: pulumi.Input<string>;
     edasschedulerx?: pulumi.Input<string>;
     edsuser?: pulumi.Input<string>;
+    eflo?: pulumi.Input<string>;
     ehpc?: pulumi.Input<string>;
     ehs?: pulumi.Input<string>;
     eipanycast?: pulumi.Input<string>;
@@ -101,6 +103,7 @@ export interface ProviderEndpoint {
     mse?: pulumi.Input<string>;
     nas?: pulumi.Input<string>;
     nlb?: pulumi.Input<string>;
+    oceanbase?: pulumi.Input<string>;
     ons?: pulumi.Input<string>;
     onsproxy?: pulumi.Input<string>;
     oos?: pulumi.Input<string>;
@@ -127,6 +130,7 @@ export interface ProviderEndpoint {
     sgw?: pulumi.Input<string>;
     slb?: pulumi.Input<string>;
     smartag?: pulumi.Input<string>;
+    srvcatalog?: pulumi.Input<string>;
     sts?: pulumi.Input<string>;
     swas?: pulumi.Input<string>;
     tag?: pulumi.Input<string>;
@@ -1346,6 +1350,17 @@ export namespace cfg {
         configRuleId?: pulumi.Input<string>;
     }
 
+    export interface RuleCompliance {
+        /**
+         * The type of compliance. Valid values: `COMPLIANT`, `NON_COMPLIANT`, `NOT_APPLICABLE`, `INSUFFICIENT_DATA`.
+         */
+        complianceType?: pulumi.Input<string>;
+        /**
+         * The count of compliance.
+         */
+        count?: pulumi.Input<number>;
+    }
+
 }
 
 export namespace clickhouse {
@@ -1425,7 +1440,7 @@ export namespace cms {
          */
         comparisonOperator?: pulumi.Input<string>;
         /**
-         * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+         * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
          */
         statistics?: pulumi.Input<string>;
         /**
@@ -1444,7 +1459,7 @@ export namespace cms {
          */
         comparisonOperator?: pulumi.Input<string>;
         /**
-         * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+         * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
          */
         statistics?: pulumi.Input<string>;
         /**
@@ -1463,7 +1478,7 @@ export namespace cms {
          */
         comparisonOperator?: pulumi.Input<string>;
         /**
-         * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+         * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
          */
         statistics?: pulumi.Input<string>;
         /**
@@ -3745,6 +3760,7 @@ export namespace ecs {
          * - `cloudSsd`: The SSD cloud disk.
          * - `cloudEssd`: The ESSD cloud disk.
          * - `ephemeralSsd`: The local SSD disk.
+         * - `cloudAuto`: The AutoPL cloud disk.
          * Default to `cloudEfficiency`.
          */
         category?: pulumi.Input<string>;
@@ -5407,6 +5423,29 @@ export namespace log {
         severity: pulumi.Input<number>;
     }
 
+    export interface AlertTemplateConfiguration {
+        /**
+         * Alert template annotations.
+         */
+        annotations?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+        /**
+         * Alert template id.
+         */
+        id: pulumi.Input<string>;
+        /**
+         * Alert template language including `cn`, `en`.
+         */
+        lang?: pulumi.Input<string>;
+        /**
+         * Alert template tokens.
+         */
+        tokens?: pulumi.Input<{[key: string]: pulumi.Input<string>}>;
+        /**
+         * including FixedRate,Hourly,Daily,Weekly,Cron.
+         */
+        type: pulumi.Input<string>;
+    }
+
     export interface EtlEtlSink {
         /**
          * Delivery target logstore access key id.
@@ -5577,6 +5616,122 @@ export namespace log {
 export namespace marketplace {
 }
 
+export namespace maxcompute {
+    export interface ProjectIpWhiteList {
+        /**
+         * Classic network IP white list.
+         */
+        ipList?: pulumi.Input<string>;
+        /**
+         * VPC network whitelist.
+         */
+        vpcIpList?: pulumi.Input<string>;
+    }
+
+    export interface ProjectProperties {
+        /**
+         * Whether to allow full table scan.
+         */
+        allowFullScan?: pulumi.Input<boolean>;
+        /**
+         * Whether to turn on Decimal2.0.
+         */
+        enableDecimal2?: pulumi.Input<boolean>;
+        /**
+         * Whether encryption is turned on.See the following `Block Encryption`.
+         */
+        encryption?: pulumi.Input<inputs.maxcompute.ProjectPropertiesEncryption>;
+        /**
+         * Job default retention time.
+         */
+        retentionDays?: pulumi.Input<number>;
+        /**
+         * SQL charge limit.
+         */
+        sqlMeteringMax?: pulumi.Input<string>;
+        /**
+         * Life cycle of tables.See the following `Block TableLifecycle`.
+         */
+        tableLifecycle?: pulumi.Input<inputs.maxcompute.ProjectPropertiesTableLifecycle>;
+        /**
+         * Project time zone.
+         */
+        timezone?: pulumi.Input<string>;
+        /**
+         * Type system.
+         */
+        typeSystem?: pulumi.Input<string>;
+    }
+
+    export interface ProjectPropertiesEncryption {
+        /**
+         * Algorithm.
+         */
+        algorithm?: pulumi.Input<string>;
+        /**
+         * Whether to open.
+         */
+        enable?: pulumi.Input<boolean>;
+        /**
+         * Encryption algorithm key.
+         */
+        key?: pulumi.Input<string>;
+    }
+
+    export interface ProjectPropertiesTableLifecycle {
+        /**
+         * Life cycle type.
+         */
+        type?: pulumi.Input<string>;
+        /**
+         * The value of the life cycle.
+         */
+        value?: pulumi.Input<string>;
+    }
+
+    export interface ProjectSecurityProperties {
+        /**
+         * Whether to enable download permission check.
+         */
+        enableDownloadPrivilege?: pulumi.Input<boolean>;
+        /**
+         * Label authorization.
+         */
+        labelSecurity?: pulumi.Input<boolean>;
+        /**
+         * Project creator permissions.
+         */
+        objectCreatorHasAccessPermission?: pulumi.Input<boolean>;
+        /**
+         * Does the project creator have authorization rights.
+         */
+        objectCreatorHasGrantPermission?: pulumi.Input<boolean>;
+        /**
+         * Project protection.See the following `Block ProjectProtection`.
+         */
+        projectProtection?: pulumi.Input<inputs.maxcompute.ProjectSecurityPropertiesProjectProtection>;
+        /**
+         * Whether to turn on ACL.
+         */
+        usingAcl?: pulumi.Input<boolean>;
+        /**
+         * Whether to enable Policy.
+         */
+        usingPolicy?: pulumi.Input<boolean>;
+    }
+
+    export interface ProjectSecurityPropertiesProjectProtection {
+        /**
+         * Exclusion policy.
+         */
+        exceptionPolicy?: pulumi.Input<string>;
+        /**
+         * Is it turned on.
+         */
+        protected?: pulumi.Input<boolean>;
+    }
+}
+
 export namespace mhub {
 }
 
@@ -5584,6 +5739,17 @@ export namespace mns {
 }
 
 export namespace mongodb {
+    export interface InstanceParameter {
+        /**
+         * The name of the parameter.
+         */
+        name: pulumi.Input<string>;
+        /**
+         * The value of the parameter.
+         */
+        value: pulumi.Input<string>;
+    }
+
     export interface InstanceReplicaSet {
         /**
          * The connection address of the node.
@@ -5983,7 +6149,7 @@ export namespace oss {
          */
         days: pulumi.Input<number>;
         /**
-         * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+         * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
          */
         storageClass: pulumi.Input<string>;
     }
@@ -5998,7 +6164,7 @@ export namespace oss {
          */
         days?: pulumi.Input<number>;
         /**
-         * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+         * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
          */
         storageClass?: pulumi.Input<string>;
     }
@@ -6447,6 +6613,29 @@ export namespace rds {
         user: pulumi.Input<string>;
     }
 
+    export interface InstanceServerlessConfig {
+        /**
+         * Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+         * - true: enables the feature.
+         * - false: disables the feature. This is the default value.
+         */
+        autoPause: pulumi.Input<boolean>;
+        /**
+         * The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+         */
+        maxCapacity: pulumi.Input<number>;
+        /**
+         * The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+         */
+        minCapacity: pulumi.Input<number>;
+        /**
+         * Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+         * - true: enables the feature.
+         * - false: disables the feature. This is the default value.
+         */
+        switchForce: pulumi.Input<boolean>;
+    }
+
     export interface RdsCloneDbInstanceParameter {
         name: pulumi.Input<string>;
         value: pulumi.Input<string>;
@@ -6488,6 +6677,29 @@ export namespace rds {
          * The user that is allowed to access the instance. If you specify multiple users, separate the usernames with commas (,).
          */
         user: pulumi.Input<string>;
+    }
+
+    export interface RdsCloneDbInstanceServerlessConfig {
+        /**
+         * Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+         * - true: enables the feature.
+         * - false: disables the feature. This is the default value.
+         */
+        autoPause: pulumi.Input<boolean>;
+        /**
+         * The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+         */
+        maxCapacity: pulumi.Input<number>;
+        /**
+         * The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+         */
+        minCapacity: pulumi.Input<number>;
+        /**
+         * Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+         * - true: enables the feature.
+         * - false: disables the feature. This is the default value.
+         */
+        switchForce: pulumi.Input<boolean>;
     }
 
     export interface RdsParameterGroupParamDetail {
@@ -7750,6 +7962,7 @@ export namespace vpn {
          */
         ipsecPfs?: pulumi.Input<string>;
     }
+
 }
 
 export namespace waf {

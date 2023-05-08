@@ -255,6 +255,7 @@ class _DomainState:
                  cert_name: Optional[pulumi.Input[str]] = None,
                  cert_type: Optional[pulumi.Input[str]] = None,
                  check_url: Optional[pulumi.Input[str]] = None,
+                 cname: Optional[pulumi.Input[str]] = None,
                  domain_name: Optional[pulumi.Input[str]] = None,
                  force_set: Optional[pulumi.Input[str]] = None,
                  resource_group_id: Optional[pulumi.Input[str]] = None,
@@ -292,6 +293,8 @@ class _DomainState:
             pulumi.set(__self__, "cert_type", cert_type)
         if check_url is not None:
             pulumi.set(__self__, "check_url", check_url)
+        if cname is not None:
+            pulumi.set(__self__, "cname", cname)
         if domain_name is not None:
             pulumi.set(__self__, "domain_name", domain_name)
         if force_set is not None:
@@ -353,6 +356,15 @@ class _DomainState:
     @check_url.setter
     def check_url(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "check_url", value)
+
+    @property
+    @pulumi.getter
+    def cname(self) -> Optional[pulumi.Input[str]]:
+        return pulumi.get(self, "cname")
+
+    @cname.setter
+    def cname(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "cname", value)
 
     @property
     @pulumi.getter(name="domainName")
@@ -665,6 +677,7 @@ class Domain(pulumi.CustomResource):
             __props__.__dict__["ssl_pub"] = ssl_pub
             __props__.__dict__["status"] = status
             __props__.__dict__["top_level_domain"] = top_level_domain
+            __props__.__dict__["cname"] = None
         super(Domain, __self__).__init__(
             'alicloud:dcdn/domain:Domain',
             resource_name,
@@ -678,6 +691,7 @@ class Domain(pulumi.CustomResource):
             cert_name: Optional[pulumi.Input[str]] = None,
             cert_type: Optional[pulumi.Input[str]] = None,
             check_url: Optional[pulumi.Input[str]] = None,
+            cname: Optional[pulumi.Input[str]] = None,
             domain_name: Optional[pulumi.Input[str]] = None,
             force_set: Optional[pulumi.Input[str]] = None,
             resource_group_id: Optional[pulumi.Input[str]] = None,
@@ -721,6 +735,7 @@ class Domain(pulumi.CustomResource):
         __props__.__dict__["cert_name"] = cert_name
         __props__.__dict__["cert_type"] = cert_type
         __props__.__dict__["check_url"] = check_url
+        __props__.__dict__["cname"] = cname
         __props__.__dict__["domain_name"] = domain_name
         __props__.__dict__["force_set"] = force_set
         __props__.__dict__["resource_group_id"] = resource_group_id
@@ -760,6 +775,11 @@ class Domain(pulumi.CustomResource):
         The URL that is used to test the accessibility of the origin.
         """
         return pulumi.get(self, "check_url")
+
+    @property
+    @pulumi.getter
+    def cname(self) -> pulumi.Output[str]:
+        return pulumi.get(self, "cname")
 
     @property
     @pulumi.getter(name="domainName")

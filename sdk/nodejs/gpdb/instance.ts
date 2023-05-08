@@ -54,6 +54,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly availabilityZone!: pulumi.Output<string>;
     /**
+     * (Available in 1.196.0+) The connection string of the instance.
+     */
+    public /*out*/ readonly connectionString!: pulumi.Output<string>;
+    /**
      * Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
      */
     public readonly createSampleData!: pulumi.Output<boolean>;
@@ -130,6 +134,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly period!: pulumi.Output<string | undefined>;
     /**
+     * (Available in 1.196.0+) The connection port of the instance.
+     */
+    public /*out*/ readonly port!: pulumi.Output<string>;
+    /**
      * The private ip address.
      */
     public readonly privateIpAddress!: pulumi.Output<string | undefined>;
@@ -201,6 +209,7 @@ export class Instance extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as InstanceState | undefined;
             resourceInputs["availabilityZone"] = state ? state.availabilityZone : undefined;
+            resourceInputs["connectionString"] = state ? state.connectionString : undefined;
             resourceInputs["createSampleData"] = state ? state.createSampleData : undefined;
             resourceInputs["dbInstanceCategory"] = state ? state.dbInstanceCategory : undefined;
             resourceInputs["dbInstanceClass"] = state ? state.dbInstanceClass : undefined;
@@ -218,6 +227,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["masterNodeNum"] = state ? state.masterNodeNum : undefined;
             resourceInputs["paymentType"] = state ? state.paymentType : undefined;
             resourceInputs["period"] = state ? state.period : undefined;
+            resourceInputs["port"] = state ? state.port : undefined;
             resourceInputs["privateIpAddress"] = state ? state.privateIpAddress : undefined;
             resourceInputs["resourceGroupId"] = state ? state.resourceGroupId : undefined;
             resourceInputs["securityIpLists"] = state ? state.securityIpLists : undefined;
@@ -275,6 +285,8 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["vpcId"] = args ? args.vpcId : undefined;
             resourceInputs["vswitchId"] = args ? args.vswitchId : undefined;
             resourceInputs["zoneId"] = args ? args.zoneId : undefined;
+            resourceInputs["connectionString"] = undefined /*out*/;
+            resourceInputs["port"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -292,6 +304,10 @@ export interface InstanceState {
      * @deprecated Field 'availability_zone' has been deprecated from version 1.187.0. Use 'zone_id' instead.
      */
     availabilityZone?: pulumi.Input<string>;
+    /**
+     * (Available in 1.196.0+) The connection string of the instance.
+     */
+    connectionString?: pulumi.Input<string>;
     /**
      * Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
      */
@@ -368,6 +384,10 @@ export interface InstanceState {
      * The duration that you will buy the resource, in month. required when `paymentType` is `Subscription`. Valid values: `Year`, `Month`.
      */
     period?: pulumi.Input<string>;
+    /**
+     * (Available in 1.196.0+) The connection port of the instance.
+     */
+    port?: pulumi.Input<string>;
     /**
      * The private ip address.
      */

@@ -5,34 +5,6 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 /**
- * Provides a ECS Disk resource.
- *
- * For information about ECS Disk and how to use it, see [What is Disk](https://www.alibabacloud.com/help/en/doc-detail/25513.htm).
- *
- * > **NOTE:** Available in v1.122.0+.
- *
- * ## Example Usage
- *
- * Basic Usage
- *
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as alicloud from "@pulumi/alicloud";
- *
- * const example = new alicloud.ecs.EcsDisk("example", {
- *     category: "cloud_efficiency",
- *     description: "Hello ecs disk.",
- *     diskName: "tf-test",
- *     encrypted: true,
- *     kmsKeyId: "2a6767f0-a16c-4679-a60f-13bf*****",
- *     size: 30,
- *     tags: {
- *         Name: "TerraformTest",
- *     },
- *     zoneId: "cn-beijing-b",
- * });
- * ```
- *
  * ## Import
  *
  * ECS Disk can be imported using the id, e.g.
@@ -77,7 +49,7 @@ export class EcsDisk extends pulumi.CustomResource {
      */
     public readonly availabilityZone!: pulumi.Output<string>;
     /**
-     * Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+     * Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
      */
     public readonly category!: pulumi.Output<string | undefined>;
     public readonly dedicatedBlockStorageClusterId!: pulumi.Output<string | undefined>;
@@ -263,7 +235,7 @@ export interface EcsDiskState {
      */
     availabilityZone?: pulumi.Input<string>;
     /**
-     * Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+     * Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
      */
     category?: pulumi.Input<string>;
     dedicatedBlockStorageClusterId?: pulumi.Input<string>;
@@ -377,7 +349,7 @@ export interface EcsDiskArgs {
      */
     availabilityZone?: pulumi.Input<string>;
     /**
-     * Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+     * Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
      */
     category?: pulumi.Input<string>;
     dedicatedBlockStorageClusterId?: pulumi.Input<string>;

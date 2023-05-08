@@ -58,7 +58,7 @@ type GetInstancesArgs struct {
 	EditionType *string `pulumi:"editionType"`
 	// Default to `false`. Set it to true can output more details.
 	EnableDetails *bool `pulumi:"enableDetails"`
-	// The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`.
+	// The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`, `7.0`.
 	EngineVersion *string `pulumi:"engineVersion"`
 	// The expiration status of the instance.
 	Expired *string `pulumi:"expired"`
@@ -155,7 +155,7 @@ type GetInstancesOutputArgs struct {
 	EditionType pulumi.StringPtrInput `pulumi:"editionType"`
 	// Default to `false`. Set it to true can output more details.
 	EnableDetails pulumi.BoolPtrInput `pulumi:"enableDetails"`
-	// The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`.
+	// The engine version. Valid values: `2.8`, `4.0`, `5.0`, `6.0`, `7.0`.
 	EngineVersion pulumi.StringPtrInput `pulumi:"engineVersion"`
 	// The expiration status of the instance.
 	Expired pulumi.StringPtrInput `pulumi:"expired"`

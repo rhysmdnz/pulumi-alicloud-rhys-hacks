@@ -124,9 +124,12 @@ namespace Pulumi.AliCloud.BastionHost
         public Output<string?> Password { get; private set; } = null!;
 
         /// <summary>
-        /// Specify the New of the User That Created the Source. Valid Values: 
+        /// Specify the New of the User That Created the Source. Valid Values:
         /// * Local: Local User
-        /// * RAM: Ram User
+        /// * Ram: Ram User
+        /// * AD: AD-authenticated User
+        /// * LDAP: LDAP-authenticated User
+        /// &gt; **NOTE:** From version 1.199.0, `source` can be set to `AD`, `LDAP`.
         /// </summary>
         [Output("source")]
         public Output<string> Source { get; private set; } = null!;
@@ -264,9 +267,12 @@ namespace Pulumi.AliCloud.BastionHost
         public Input<string>? Password { get; set; }
 
         /// <summary>
-        /// Specify the New of the User That Created the Source. Valid Values: 
+        /// Specify the New of the User That Created the Source. Valid Values:
         /// * Local: Local User
-        /// * RAM: Ram User
+        /// * Ram: Ram User
+        /// * AD: AD-authenticated User
+        /// * LDAP: LDAP-authenticated User
+        /// &gt; **NOTE:** From version 1.199.0, `source` can be set to `AD`, `LDAP`.
         /// </summary>
         [Input("source", required: true)]
         public Input<string> Source { get; set; } = null!;
@@ -359,9 +365,12 @@ namespace Pulumi.AliCloud.BastionHost
         public Input<string>? Password { get; set; }
 
         /// <summary>
-        /// Specify the New of the User That Created the Source. Valid Values: 
+        /// Specify the New of the User That Created the Source. Valid Values:
         /// * Local: Local User
-        /// * RAM: Ram User
+        /// * Ram: Ram User
+        /// * AD: AD-authenticated User
+        /// * LDAP: LDAP-authenticated User
+        /// &gt; **NOTE:** From version 1.199.0, `source` can be set to `AD`, `LDAP`.
         /// </summary>
         [Input("source")]
         public Input<string>? Source { get; set; }

@@ -924,10 +924,6 @@ class Cluster(pulumi.CustomResource):
                  zone_id: Optional[pulumi.Input[str]] = None,
                  __props__=None):
         """
-        Provides a EMR Cluster resource. With this you can create, read, and release  EMR Cluster.
-
-        > **NOTE:** Available in 1.57.0+.
-
         ## Example Usage
         ### 1. Create A Cluster
 
@@ -1394,10 +1390,6 @@ class Cluster(pulumi.CustomResource):
                  args: ClusterArgs,
                  opts: Optional[pulumi.ResourceOptions] = None):
         """
-        Provides a EMR Cluster resource. With this you can create, read, and release  EMR Cluster.
-
-        > **NOTE:** Available in 1.57.0+.
-
         ## Example Usage
         ### 1. Create A Cluster
 

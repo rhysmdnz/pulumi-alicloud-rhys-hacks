@@ -74,6 +74,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly engineVersion!: pulumi.Output<string>;
     /**
+     * Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+     */
+    public readonly hiddenZoneId!: pulumi.Output<string | undefined>;
+    /**
      * Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
      */
     public readonly instanceChargeType!: pulumi.Output<string | undefined>;
@@ -94,7 +98,7 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly maintainStartTime!: pulumi.Output<string>;
     /**
-     * The name of DB instance. It a string of 2 to 256 characters.
+     * The name of the parameter.
      */
     public readonly name!: pulumi.Output<string>;
     /**
@@ -109,9 +113,17 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly orderType!: pulumi.Output<string | undefined>;
     /**
+     * Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+     */
+    public readonly parameters!: pulumi.Output<outputs.mongodb.InstanceParameter[]>;
+    /**
      * The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
      */
     public readonly period!: pulumi.Output<number>;
+    /**
+     * The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+     */
+    public readonly readonlyReplicas!: pulumi.Output<number>;
     /**
      * The name of the mongo replica set
      */
@@ -133,6 +145,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public /*out*/ readonly retentionPeriod!: pulumi.Output<number>;
     /**
+     * Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+     */
+    public readonly secondaryZoneId!: pulumi.Output<string | undefined>;
+    /**
      * The Security Group ID of ECS.
      */
     public readonly securityGroupId!: pulumi.Output<string>;
@@ -152,6 +168,10 @@ export class Instance extends pulumi.CustomResource {
      * Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
      */
     public readonly storageEngine!: pulumi.Output<string>;
+    /**
+     * The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+     */
+    public readonly storageType!: pulumi.Output<string>;
     /**
      * A mapping of tags to assign to the resource.
      */
@@ -195,6 +215,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["dbInstanceClass"] = state ? state.dbInstanceClass : undefined;
             resourceInputs["dbInstanceStorage"] = state ? state.dbInstanceStorage : undefined;
             resourceInputs["engineVersion"] = state ? state.engineVersion : undefined;
+            resourceInputs["hiddenZoneId"] = state ? state.hiddenZoneId : undefined;
             resourceInputs["instanceChargeType"] = state ? state.instanceChargeType : undefined;
             resourceInputs["kmsEncryptedPassword"] = state ? state.kmsEncryptedPassword : undefined;
             resourceInputs["kmsEncryptionContext"] = state ? state.kmsEncryptionContext : undefined;
@@ -203,17 +224,21 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["networkType"] = state ? state.networkType : undefined;
             resourceInputs["orderType"] = state ? state.orderType : undefined;
+            resourceInputs["parameters"] = state ? state.parameters : undefined;
             resourceInputs["period"] = state ? state.period : undefined;
+            resourceInputs["readonlyReplicas"] = state ? state.readonlyReplicas : undefined;
             resourceInputs["replicaSetName"] = state ? state.replicaSetName : undefined;
             resourceInputs["replicaSets"] = state ? state.replicaSets : undefined;
             resourceInputs["replicationFactor"] = state ? state.replicationFactor : undefined;
             resourceInputs["resourceGroupId"] = state ? state.resourceGroupId : undefined;
             resourceInputs["retentionPeriod"] = state ? state.retentionPeriod : undefined;
+            resourceInputs["secondaryZoneId"] = state ? state.secondaryZoneId : undefined;
             resourceInputs["securityGroupId"] = state ? state.securityGroupId : undefined;
             resourceInputs["securityIpLists"] = state ? state.securityIpLists : undefined;
             resourceInputs["sslAction"] = state ? state.sslAction : undefined;
             resourceInputs["sslStatus"] = state ? state.sslStatus : undefined;
             resourceInputs["storageEngine"] = state ? state.storageEngine : undefined;
+            resourceInputs["storageType"] = state ? state.storageType : undefined;
             resourceInputs["tags"] = state ? state.tags : undefined;
             resourceInputs["tdeStatus"] = state ? state.tdeStatus : undefined;
             resourceInputs["vpcId"] = state ? state.vpcId : undefined;
@@ -237,6 +262,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["dbInstanceClass"] = args ? args.dbInstanceClass : undefined;
             resourceInputs["dbInstanceStorage"] = args ? args.dbInstanceStorage : undefined;
             resourceInputs["engineVersion"] = args ? args.engineVersion : undefined;
+            resourceInputs["hiddenZoneId"] = args ? args.hiddenZoneId : undefined;
             resourceInputs["instanceChargeType"] = args ? args.instanceChargeType : undefined;
             resourceInputs["kmsEncryptedPassword"] = args ? args.kmsEncryptedPassword : undefined;
             resourceInputs["kmsEncryptionContext"] = args ? args.kmsEncryptionContext : undefined;
@@ -245,13 +271,17 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["networkType"] = args ? args.networkType : undefined;
             resourceInputs["orderType"] = args ? args.orderType : undefined;
+            resourceInputs["parameters"] = args ? args.parameters : undefined;
             resourceInputs["period"] = args ? args.period : undefined;
+            resourceInputs["readonlyReplicas"] = args ? args.readonlyReplicas : undefined;
             resourceInputs["replicationFactor"] = args ? args.replicationFactor : undefined;
             resourceInputs["resourceGroupId"] = args ? args.resourceGroupId : undefined;
+            resourceInputs["secondaryZoneId"] = args ? args.secondaryZoneId : undefined;
             resourceInputs["securityGroupId"] = args ? args.securityGroupId : undefined;
             resourceInputs["securityIpLists"] = args ? args.securityIpLists : undefined;
             resourceInputs["sslAction"] = args ? args.sslAction : undefined;
             resourceInputs["storageEngine"] = args ? args.storageEngine : undefined;
+            resourceInputs["storageType"] = args ? args.storageType : undefined;
             resourceInputs["tags"] = args ? args.tags : undefined;
             resourceInputs["tdeStatus"] = args ? args.tdeStatus : undefined;
             resourceInputs["vpcId"] = args ? args.vpcId : undefined;
@@ -303,6 +333,10 @@ export interface InstanceState {
      */
     engineVersion?: pulumi.Input<string>;
     /**
+     * Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+     */
+    hiddenZoneId?: pulumi.Input<string>;
+    /**
      * Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
      */
     instanceChargeType?: pulumi.Input<string>;
@@ -323,7 +357,7 @@ export interface InstanceState {
      */
     maintainStartTime?: pulumi.Input<string>;
     /**
-     * The name of DB instance. It a string of 2 to 256 characters.
+     * The name of the parameter.
      */
     name?: pulumi.Input<string>;
     /**
@@ -338,9 +372,17 @@ export interface InstanceState {
      */
     orderType?: pulumi.Input<string>;
     /**
+     * Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+     */
+    parameters?: pulumi.Input<pulumi.Input<inputs.mongodb.InstanceParameter>[]>;
+    /**
      * The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
      */
     period?: pulumi.Input<number>;
+    /**
+     * The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+     */
+    readonlyReplicas?: pulumi.Input<number>;
     /**
      * The name of the mongo replica set
      */
@@ -362,6 +404,10 @@ export interface InstanceState {
      */
     retentionPeriod?: pulumi.Input<number>;
     /**
+     * Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+     */
+    secondaryZoneId?: pulumi.Input<string>;
+    /**
      * The Security Group ID of ECS.
      */
     securityGroupId?: pulumi.Input<string>;
@@ -381,6 +427,10 @@ export interface InstanceState {
      * Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
      */
     storageEngine?: pulumi.Input<string>;
+    /**
+     * The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+     */
+    storageType?: pulumi.Input<string>;
     /**
      * A mapping of tags to assign to the resource.
      */
@@ -441,6 +491,10 @@ export interface InstanceArgs {
      */
     engineVersion: pulumi.Input<string>;
     /**
+     * Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+     */
+    hiddenZoneId?: pulumi.Input<string>;
+    /**
      * Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
      */
     instanceChargeType?: pulumi.Input<string>;
@@ -461,7 +515,7 @@ export interface InstanceArgs {
      */
     maintainStartTime?: pulumi.Input<string>;
     /**
-     * The name of DB instance. It a string of 2 to 256 characters.
+     * The name of the parameter.
      */
     name?: pulumi.Input<string>;
     /**
@@ -476,9 +530,17 @@ export interface InstanceArgs {
      */
     orderType?: pulumi.Input<string>;
     /**
+     * Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+     */
+    parameters?: pulumi.Input<pulumi.Input<inputs.mongodb.InstanceParameter>[]>;
+    /**
      * The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
      */
     period?: pulumi.Input<number>;
+    /**
+     * The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+     */
+    readonlyReplicas?: pulumi.Input<number>;
     /**
      * Number of replica set nodes. Valid values: [1, 3, 5, 7]
      */
@@ -487,6 +549,10 @@ export interface InstanceArgs {
      * The ID of the Resource Group.
      */
     resourceGroupId?: pulumi.Input<string>;
+    /**
+     * Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+     */
+    secondaryZoneId?: pulumi.Input<string>;
     /**
      * The Security Group ID of ECS.
      */
@@ -503,6 +569,10 @@ export interface InstanceArgs {
      * Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
      */
     storageEngine?: pulumi.Input<string>;
+    /**
+     * The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+     */
+    storageType?: pulumi.Input<string>;
     /**
      * A mapping of tags to assign to the resource.
      */

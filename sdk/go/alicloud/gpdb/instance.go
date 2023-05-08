@@ -32,6 +32,8 @@ type Instance struct {
 	//
 	// Deprecated: Field 'availability_zone' has been deprecated from version 1.187.0. Use 'zone_id' instead.
 	AvailabilityZone pulumi.StringOutput `pulumi:"availabilityZone"`
+	// (Available in 1.196.0+) The connection string of the instance.
+	ConnectionString pulumi.StringOutput `pulumi:"connectionString"`
 	// Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
 	CreateSampleData pulumi.BoolOutput `pulumi:"createSampleData"`
 	// The db instance category. Valid values: `HighAvailability`, `Basic`.
@@ -74,6 +76,8 @@ type Instance struct {
 	PaymentType pulumi.StringOutput `pulumi:"paymentType"`
 	// The duration that you will buy the resource, in month. required when `paymentType` is `Subscription`. Valid values: `Year`, `Month`.
 	Period pulumi.StringPtrOutput `pulumi:"period"`
+	// (Available in 1.196.0+) The connection port of the instance.
+	Port pulumi.StringOutput `pulumi:"port"`
 	// The private ip address.
 	PrivateIpAddress pulumi.StringPtrOutput `pulumi:"privateIpAddress"`
 	// The ID of the enterprise resource group to which the instance belongs.
@@ -153,6 +157,8 @@ type instanceState struct {
 	//
 	// Deprecated: Field 'availability_zone' has been deprecated from version 1.187.0. Use 'zone_id' instead.
 	AvailabilityZone *string `pulumi:"availabilityZone"`
+	// (Available in 1.196.0+) The connection string of the instance.
+	ConnectionString *string `pulumi:"connectionString"`
 	// Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
 	CreateSampleData *bool `pulumi:"createSampleData"`
 	// The db instance category. Valid values: `HighAvailability`, `Basic`.
@@ -195,6 +201,8 @@ type instanceState struct {
 	PaymentType *string `pulumi:"paymentType"`
 	// The duration that you will buy the resource, in month. required when `paymentType` is `Subscription`. Valid values: `Year`, `Month`.
 	Period *string `pulumi:"period"`
+	// (Available in 1.196.0+) The connection port of the instance.
+	Port *string `pulumi:"port"`
 	// The private ip address.
 	PrivateIpAddress *string `pulumi:"privateIpAddress"`
 	// The ID of the enterprise resource group to which the instance belongs.
@@ -233,6 +241,8 @@ type InstanceState struct {
 	//
 	// Deprecated: Field 'availability_zone' has been deprecated from version 1.187.0. Use 'zone_id' instead.
 	AvailabilityZone pulumi.StringPtrInput
+	// (Available in 1.196.0+) The connection string of the instance.
+	ConnectionString pulumi.StringPtrInput
 	// Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
 	CreateSampleData pulumi.BoolPtrInput
 	// The db instance category. Valid values: `HighAvailability`, `Basic`.
@@ -275,6 +285,8 @@ type InstanceState struct {
 	PaymentType pulumi.StringPtrInput
 	// The duration that you will buy the resource, in month. required when `paymentType` is `Subscription`. Valid values: `Year`, `Month`.
 	Period pulumi.StringPtrInput
+	// (Available in 1.196.0+) The connection port of the instance.
+	Port pulumi.StringPtrInput
 	// The private ip address.
 	PrivateIpAddress pulumi.StringPtrInput
 	// The ID of the enterprise resource group to which the instance belongs.
@@ -563,6 +575,11 @@ func (o InstanceOutput) AvailabilityZone() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.AvailabilityZone }).(pulumi.StringOutput)
 }
 
+// (Available in 1.196.0+) The connection string of the instance.
+func (o InstanceOutput) ConnectionString() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.ConnectionString }).(pulumi.StringOutput)
+}
+
 // Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
 func (o InstanceOutput) CreateSampleData() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Instance) pulumi.BoolOutput { return v.CreateSampleData }).(pulumi.BoolOutput)
@@ -654,6 +671,11 @@ func (o InstanceOutput) PaymentType() pulumi.StringOutput {
 // The duration that you will buy the resource, in month. required when `paymentType` is `Subscription`. Valid values: `Year`, `Month`.
 func (o InstanceOutput) Period() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.Period }).(pulumi.StringPtrOutput)
+}
+
+// (Available in 1.196.0+) The connection port of the instance.
+func (o InstanceOutput) Port() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.Port }).(pulumi.StringOutput)
 }
 
 // The private ip address.

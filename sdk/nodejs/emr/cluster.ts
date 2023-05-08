@@ -6,10 +6,6 @@ import { input as inputs, output as outputs } from "../types";
 import * as utilities from "../utilities";
 
 /**
- * Provides a EMR Cluster resource. With this you can create, read, and release  EMR Cluster.
- *
- * > **NOTE:** Available in 1.57.0+.
- *
  * ## Example Usage
  * ### 1. Create A Cluster
  *

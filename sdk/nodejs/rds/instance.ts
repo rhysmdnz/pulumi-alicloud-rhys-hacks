@@ -79,11 +79,15 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly caType!: pulumi.Output<string>;
     /**
-     * The RDS edition of the instance. Valid values:
+     * The RDS edition of the instance. If you want to create a serverless instance, you must use this value. Valid values:
      * * **Basic**: Basic Edition.
      * * **HighAvailability**: High-availability Edition.
      * * **AlwaysOn**: Cluster Edition.
      * * **Finance**: Enterprise Edition.
+     * * **cluster**: MySQL Cluster Edition. (Available in 1.202.0+)
+     * * **serverless_basic**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.200.0+)
+     * * **serverless_standard**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.204.0+)
+     * * **serverless_ha**: RDS Serverless High-availability Edition for SQL Server. (Available in 1.204.0+)
      */
     public readonly category!: pulumi.Output<string>;
     /**
@@ -120,7 +124,7 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly dbInstanceIpArrayName!: pulumi.Output<string | undefined>;
     /**
-     * The storage type of the instance. Valid values:
+     * The storage type of the instance. Serverless instance, only `cloudEssd` can be selected. Valid values:
      * - local_ssd: specifies to use local SSDs. This value is recommended.
      * - cloud_ssd: specifies to use standard SSDs.
      * - cloud_essd: specifies to use enhanced SSDs (ESSDs).
@@ -128,6 +132,10 @@ export class Instance extends pulumi.CustomResource {
      * - cloud_essd3: specifies to use enhanced SSDs (ESSDs).
      */
     public readonly dbInstanceStorageType!: pulumi.Output<string>;
+    /**
+     * (Available in 1.197.0+) The type of db instance.
+     */
+    public /*out*/ readonly dbInstanceType!: pulumi.Output<string>;
     /**
      * Specifies whether table names on the instance are case-sensitive. Valid values: `true`, `false`.
      */
@@ -159,7 +167,7 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly encryptionKey!: pulumi.Output<string | undefined>;
     /**
-     * Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+     * Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB. Create a serverless instance, you must set this parameter to MySQL.
      */
     public readonly engine!: pulumi.Output<string>;
     /**
@@ -183,7 +191,7 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly haConfig!: pulumi.Output<string>;
     /**
-     * Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid.
+     * Valid values are `Prepaid`, `Postpaid`, `Serverless`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid. `Serverless` This value is supported only for instances that run MySQL. For more information, see [Overview](https://www.alibabacloud.com/help/en/apsaradb-for-rds/latest/what-is-serverless?spm=a2c63.p38356.0.0.772a28cfTAGqIv).
      */
     public readonly instanceChargeType!: pulumi.Output<string | undefined>;
     /**
@@ -192,7 +200,7 @@ export class Instance extends pulumi.CustomResource {
     public readonly instanceName!: pulumi.Output<string | undefined>;
     /**
      * User-defined DB instance storage space. Value range:
-     * - [5, 2000] for MySQL/PostgreSQL/PPAS HA dual node edition;
+     * - [5, 2000] for MySQL/PostgreSQL HA dual node edition;
      * - [20,1000] for MySQL 5.7 basic single node edition;
      * - [10, 2000] for SQL Server 2008R2;
      * - [20,2000] for SQL Server 2012 basic single node edition
@@ -201,7 +209,7 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly instanceStorage!: pulumi.Output<number>;
     /**
-     * DB Instance type. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
+     * DB Instance type. Create a serverless instance, you must set this parameter to mysql.n2.serverless.1c. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
      */
     public readonly instanceType!: pulumi.Output<string>;
     /**
@@ -220,7 +228,7 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly modifyMode!: pulumi.Output<string | undefined>;
     /**
-     * The monitoring frequency in seconds. Valid values are 5, 60, 300. Defaults to 300.
+     * The monitoring frequency in seconds. Valid values are 5, 10, 60, 300. Defaults to 300.
      */
     public readonly monitoringPeriod!: pulumi.Output<number>;
     /**
@@ -287,6 +295,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly serverKey!: pulumi.Output<string>;
     /**
+     * The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+     */
+    public readonly serverlessConfigs!: pulumi.Output<outputs.rds.InstanceServerlessConfig[] | undefined>;
+    /**
      * The sql collector keep time of the instance. Valid values are `30`, `180`, `365`, `1095`, `1825`, Default to `30`.
      */
     public readonly sqlCollectorConfigValue!: pulumi.Output<number | undefined>;
@@ -298,6 +310,10 @@ export class Instance extends pulumi.CustomResource {
      * Actions performed on SSL functions, Valid values: `Open`: turn on SSL encryption; `Close`: turn off SSL encryption; `Update`: update SSL certificate. See more [engine and engineVersion limitation](https://www.alibabacloud.com/help/zh/doc-detail/26254.htm).
      */
     public readonly sslAction!: pulumi.Output<string>;
+    /**
+     * The internal or public endpoint for which the server certificate needs to be created or updated.
+     */
+    public readonly sslConnectionString!: pulumi.Output<string>;
     /**
      * Status of the SSL feature. `Yes`: SSL is turned on; `No`: SSL is turned off.
      */
@@ -322,7 +338,7 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly storageUpperBound!: pulumi.Output<number | undefined>;
     /**
-     * The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `upgradeDbInstanceKernelVersion = true`. The time must be in UTC.
+     * The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `targetMinorVersion` is changed. The time must be in UTC.
      */
     public readonly switchTime!: pulumi.Output<string | undefined>;
     /**
@@ -332,7 +348,7 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly tags!: pulumi.Output<{[key: string]: any} | undefined>;
     /**
-     * The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. It is valid only when `upgradeDbInstanceKernelVersion = true`. You must specify the minor engine version in one of the following formats:
+     * The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. You must specify the minor engine version in one of the following formats:
      * - PostgreSQL: rds_postgres_<Major engine version>00_<Minor engine version>. Example: rds_postgres_1200_20200830.
      * - MySQL: <RDS edition>_<Minor engine version>. Examples: rds_20200229, xcluster_20200229, and xcluster80_20200229. The following RDS editions are supported:
      * - rds: The instance runs RDS Basic or High-availability Edition.
@@ -355,10 +371,12 @@ export class Instance extends pulumi.CustomResource {
      * Whether to upgrade a minor version of the kernel. Valid values:
      * - true: upgrade
      * - false: not to upgrade
+     *
+     * @deprecated Attribute `upgrade_db_instance_kernel_version` has been deprecated from 1.198.0 and use `target_minor_version` instead.
      */
     public readonly upgradeDbInstanceKernelVersion!: pulumi.Output<boolean | undefined>;
     /**
-     * The method to update the minor engine version. Default value: Immediate. It is valid only when `upgradeDbInstanceKernelVersion = true`. Valid values:
+     * The method to update the minor engine version. Default value: Immediate. It is valid only when `targetMinorVersion` is changed. Valid values:
      * - Immediate: The minor engine version is immediately updated.
      * - MaintainTime: The minor engine version is updated during the maintenance window. For more information about how to change the maintenance window, see ModifyDBInstanceMaintainTime.
      * - SpecifyTime: The minor engine version is updated at the point in time you specify.
@@ -392,7 +410,7 @@ export class Instance extends pulumi.CustomResource {
     /**
      * The region ID of the log instance if you create a log instance. If you set this parameter to the same value as the ZoneId parameter, the instance is deployed in a single zone. Otherwise, the instance is deployed in multiple zones.
      */
-    public readonly zoneIdSlaveB!: pulumi.Output<string | undefined>;
+    public readonly zoneIdSlaveB!: pulumi.Output<string>;
 
     /**
      * Create a Instance resource with the given unique name, arguments, and options.
@@ -424,6 +442,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["dbInstanceIpArrayAttribute"] = state ? state.dbInstanceIpArrayAttribute : undefined;
             resourceInputs["dbInstanceIpArrayName"] = state ? state.dbInstanceIpArrayName : undefined;
             resourceInputs["dbInstanceStorageType"] = state ? state.dbInstanceStorageType : undefined;
+            resourceInputs["dbInstanceType"] = state ? state.dbInstanceType : undefined;
             resourceInputs["dbIsIgnoreCase"] = state ? state.dbIsIgnoreCase : undefined;
             resourceInputs["dbTimeZone"] = state ? state.dbTimeZone : undefined;
             resourceInputs["deletionProtection"] = state ? state.deletionProtection : undefined;
@@ -457,9 +476,11 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["securityIps"] = state ? state.securityIps : undefined;
             resourceInputs["serverCert"] = state ? state.serverCert : undefined;
             resourceInputs["serverKey"] = state ? state.serverKey : undefined;
+            resourceInputs["serverlessConfigs"] = state ? state.serverlessConfigs : undefined;
             resourceInputs["sqlCollectorConfigValue"] = state ? state.sqlCollectorConfigValue : undefined;
             resourceInputs["sqlCollectorStatus"] = state ? state.sqlCollectorStatus : undefined;
             resourceInputs["sslAction"] = state ? state.sslAction : undefined;
+            resourceInputs["sslConnectionString"] = state ? state.sslConnectionString : undefined;
             resourceInputs["sslStatus"] = state ? state.sslStatus : undefined;
             resourceInputs["storageAutoScale"] = state ? state.storageAutoScale : undefined;
             resourceInputs["storageThreshold"] = state ? state.storageThreshold : undefined;
@@ -540,9 +561,11 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["securityIps"] = args ? args.securityIps : undefined;
             resourceInputs["serverCert"] = args ? args.serverCert : undefined;
             resourceInputs["serverKey"] = args ? args.serverKey : undefined;
+            resourceInputs["serverlessConfigs"] = args ? args.serverlessConfigs : undefined;
             resourceInputs["sqlCollectorConfigValue"] = args ? args.sqlCollectorConfigValue : undefined;
             resourceInputs["sqlCollectorStatus"] = args ? args.sqlCollectorStatus : undefined;
             resourceInputs["sslAction"] = args ? args.sslAction : undefined;
+            resourceInputs["sslConnectionString"] = args ? args.sslConnectionString : undefined;
             resourceInputs["storageAutoScale"] = args ? args.storageAutoScale : undefined;
             resourceInputs["storageThreshold"] = args ? args.storageThreshold : undefined;
             resourceInputs["storageUpperBound"] = args ? args.storageUpperBound : undefined;
@@ -560,6 +583,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["zoneIdSlaveA"] = args ? args.zoneIdSlaveA : undefined;
             resourceInputs["zoneIdSlaveB"] = args ? args.zoneIdSlaveB : undefined;
             resourceInputs["connectionString"] = undefined /*out*/;
+            resourceInputs["dbInstanceType"] = undefined /*out*/;
             resourceInputs["sslStatus"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -608,11 +632,15 @@ export interface InstanceState {
      */
     caType?: pulumi.Input<string>;
     /**
-     * The RDS edition of the instance. Valid values:
+     * The RDS edition of the instance. If you want to create a serverless instance, you must use this value. Valid values:
      * * **Basic**: Basic Edition.
      * * **HighAvailability**: High-availability Edition.
      * * **AlwaysOn**: Cluster Edition.
      * * **Finance**: Enterprise Edition.
+     * * **cluster**: MySQL Cluster Edition. (Available in 1.202.0+)
+     * * **serverless_basic**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.200.0+)
+     * * **serverless_standard**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.204.0+)
+     * * **serverless_ha**: RDS Serverless High-availability Edition for SQL Server. (Available in 1.204.0+)
      */
     category?: pulumi.Input<string>;
     /**
@@ -649,7 +677,7 @@ export interface InstanceState {
      */
     dbInstanceIpArrayName?: pulumi.Input<string>;
     /**
-     * The storage type of the instance. Valid values:
+     * The storage type of the instance. Serverless instance, only `cloudEssd` can be selected. Valid values:
      * - local_ssd: specifies to use local SSDs. This value is recommended.
      * - cloud_ssd: specifies to use standard SSDs.
      * - cloud_essd: specifies to use enhanced SSDs (ESSDs).
@@ -657,6 +685,10 @@ export interface InstanceState {
      * - cloud_essd3: specifies to use enhanced SSDs (ESSDs).
      */
     dbInstanceStorageType?: pulumi.Input<string>;
+    /**
+     * (Available in 1.197.0+) The type of db instance.
+     */
+    dbInstanceType?: pulumi.Input<string>;
     /**
      * Specifies whether table names on the instance are case-sensitive. Valid values: `true`, `false`.
      */
@@ -688,7 +720,7 @@ export interface InstanceState {
      */
     encryptionKey?: pulumi.Input<string>;
     /**
-     * Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+     * Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB. Create a serverless instance, you must set this parameter to MySQL.
      */
     engine?: pulumi.Input<string>;
     /**
@@ -712,7 +744,7 @@ export interface InstanceState {
      */
     haConfig?: pulumi.Input<string>;
     /**
-     * Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid.
+     * Valid values are `Prepaid`, `Postpaid`, `Serverless`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid. `Serverless` This value is supported only for instances that run MySQL. For more information, see [Overview](https://www.alibabacloud.com/help/en/apsaradb-for-rds/latest/what-is-serverless?spm=a2c63.p38356.0.0.772a28cfTAGqIv).
      */
     instanceChargeType?: pulumi.Input<string>;
     /**
@@ -721,7 +753,7 @@ export interface InstanceState {
     instanceName?: pulumi.Input<string>;
     /**
      * User-defined DB instance storage space. Value range:
-     * - [5, 2000] for MySQL/PostgreSQL/PPAS HA dual node edition;
+     * - [5, 2000] for MySQL/PostgreSQL HA dual node edition;
      * - [20,1000] for MySQL 5.7 basic single node edition;
      * - [10, 2000] for SQL Server 2008R2;
      * - [20,2000] for SQL Server 2012 basic single node edition
@@ -730,7 +762,7 @@ export interface InstanceState {
      */
     instanceStorage?: pulumi.Input<number>;
     /**
-     * DB Instance type. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
+     * DB Instance type. Create a serverless instance, you must set this parameter to mysql.n2.serverless.1c. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
      */
     instanceType?: pulumi.Input<string>;
     /**
@@ -749,7 +781,7 @@ export interface InstanceState {
      */
     modifyMode?: pulumi.Input<string>;
     /**
-     * The monitoring frequency in seconds. Valid values are 5, 60, 300. Defaults to 300.
+     * The monitoring frequency in seconds. Valid values are 5, 10, 60, 300. Defaults to 300.
      */
     monitoringPeriod?: pulumi.Input<number>;
     /**
@@ -816,6 +848,10 @@ export interface InstanceState {
      */
     serverKey?: pulumi.Input<string>;
     /**
+     * The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+     */
+    serverlessConfigs?: pulumi.Input<pulumi.Input<inputs.rds.InstanceServerlessConfig>[]>;
+    /**
      * The sql collector keep time of the instance. Valid values are `30`, `180`, `365`, `1095`, `1825`, Default to `30`.
      */
     sqlCollectorConfigValue?: pulumi.Input<number>;
@@ -827,6 +863,10 @@ export interface InstanceState {
      * Actions performed on SSL functions, Valid values: `Open`: turn on SSL encryption; `Close`: turn off SSL encryption; `Update`: update SSL certificate. See more [engine and engineVersion limitation](https://www.alibabacloud.com/help/zh/doc-detail/26254.htm).
      */
     sslAction?: pulumi.Input<string>;
+    /**
+     * The internal or public endpoint for which the server certificate needs to be created or updated.
+     */
+    sslConnectionString?: pulumi.Input<string>;
     /**
      * Status of the SSL feature. `Yes`: SSL is turned on; `No`: SSL is turned off.
      */
@@ -851,7 +891,7 @@ export interface InstanceState {
      */
     storageUpperBound?: pulumi.Input<number>;
     /**
-     * The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `upgradeDbInstanceKernelVersion = true`. The time must be in UTC.
+     * The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `targetMinorVersion` is changed. The time must be in UTC.
      */
     switchTime?: pulumi.Input<string>;
     /**
@@ -861,7 +901,7 @@ export interface InstanceState {
      */
     tags?: pulumi.Input<{[key: string]: any}>;
     /**
-     * The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. It is valid only when `upgradeDbInstanceKernelVersion = true`. You must specify the minor engine version in one of the following formats:
+     * The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. You must specify the minor engine version in one of the following formats:
      * - PostgreSQL: rds_postgres_<Major engine version>00_<Minor engine version>. Example: rds_postgres_1200_20200830.
      * - MySQL: <RDS edition>_<Minor engine version>. Examples: rds_20200229, xcluster_20200229, and xcluster80_20200229. The following RDS editions are supported:
      * - rds: The instance runs RDS Basic or High-availability Edition.
@@ -884,10 +924,12 @@ export interface InstanceState {
      * Whether to upgrade a minor version of the kernel. Valid values:
      * - true: upgrade
      * - false: not to upgrade
+     *
+     * @deprecated Attribute `upgrade_db_instance_kernel_version` has been deprecated from 1.198.0 and use `target_minor_version` instead.
      */
     upgradeDbInstanceKernelVersion?: pulumi.Input<boolean>;
     /**
-     * The method to update the minor engine version. Default value: Immediate. It is valid only when `upgradeDbInstanceKernelVersion = true`. Valid values:
+     * The method to update the minor engine version. Default value: Immediate. It is valid only when `targetMinorVersion` is changed. Valid values:
      * - Immediate: The minor engine version is immediately updated.
      * - MaintainTime: The minor engine version is updated during the maintenance window. For more information about how to change the maintenance window, see ModifyDBInstanceMaintainTime.
      * - SpecifyTime: The minor engine version is updated at the point in time you specify.
@@ -965,11 +1007,15 @@ export interface InstanceArgs {
      */
     caType?: pulumi.Input<string>;
     /**
-     * The RDS edition of the instance. Valid values:
+     * The RDS edition of the instance. If you want to create a serverless instance, you must use this value. Valid values:
      * * **Basic**: Basic Edition.
      * * **HighAvailability**: High-availability Edition.
      * * **AlwaysOn**: Cluster Edition.
      * * **Finance**: Enterprise Edition.
+     * * **cluster**: MySQL Cluster Edition. (Available in 1.202.0+)
+     * * **serverless_basic**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.200.0+)
+     * * **serverless_standard**: RDS Serverless Basic Edition. This edition is available only for instances that run MySQL and PostgreSQL. (Available in 1.204.0+)
+     * * **serverless_ha**: RDS Serverless High-availability Edition for SQL Server. (Available in 1.204.0+)
      */
     category?: pulumi.Input<string>;
     /**
@@ -1002,7 +1048,7 @@ export interface InstanceArgs {
      */
     dbInstanceIpArrayName?: pulumi.Input<string>;
     /**
-     * The storage type of the instance. Valid values:
+     * The storage type of the instance. Serverless instance, only `cloudEssd` can be selected. Valid values:
      * - local_ssd: specifies to use local SSDs. This value is recommended.
      * - cloud_ssd: specifies to use standard SSDs.
      * - cloud_essd: specifies to use enhanced SSDs (ESSDs).
@@ -1041,7 +1087,7 @@ export interface InstanceArgs {
      */
     encryptionKey?: pulumi.Input<string>;
     /**
-     * Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+     * Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB. Create a serverless instance, you must set this parameter to MySQL.
      */
     engine: pulumi.Input<string>;
     /**
@@ -1065,7 +1111,7 @@ export interface InstanceArgs {
      */
     haConfig?: pulumi.Input<string>;
     /**
-     * Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid.
+     * Valid values are `Prepaid`, `Postpaid`, `Serverless`, Default to `Postpaid`. Currently, the resource only supports PostPaid to PrePaid. `Serverless` This value is supported only for instances that run MySQL. For more information, see [Overview](https://www.alibabacloud.com/help/en/apsaradb-for-rds/latest/what-is-serverless?spm=a2c63.p38356.0.0.772a28cfTAGqIv).
      */
     instanceChargeType?: pulumi.Input<string>;
     /**
@@ -1074,7 +1120,7 @@ export interface InstanceArgs {
     instanceName?: pulumi.Input<string>;
     /**
      * User-defined DB instance storage space. Value range:
-     * - [5, 2000] for MySQL/PostgreSQL/PPAS HA dual node edition;
+     * - [5, 2000] for MySQL/PostgreSQL HA dual node edition;
      * - [20,1000] for MySQL 5.7 basic single node edition;
      * - [10, 2000] for SQL Server 2008R2;
      * - [20,2000] for SQL Server 2012 basic single node edition
@@ -1083,7 +1129,7 @@ export interface InstanceArgs {
      */
     instanceStorage: pulumi.Input<number>;
     /**
-     * DB Instance type. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
+     * DB Instance type. Create a serverless instance, you must set this parameter to mysql.n2.serverless.1c. For details, see [Instance type table](https://www.alibabacloud.com/help/doc-detail/26312.htm).
      */
     instanceType: pulumi.Input<string>;
     /**
@@ -1102,7 +1148,7 @@ export interface InstanceArgs {
      */
     modifyMode?: pulumi.Input<string>;
     /**
-     * The monitoring frequency in seconds. Valid values are 5, 60, 300. Defaults to 300.
+     * The monitoring frequency in seconds. Valid values are 5, 10, 60, 300. Defaults to 300.
      */
     monitoringPeriod?: pulumi.Input<number>;
     /**
@@ -1169,6 +1215,10 @@ export interface InstanceArgs {
      */
     serverKey?: pulumi.Input<string>;
     /**
+     * The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+     */
+    serverlessConfigs?: pulumi.Input<pulumi.Input<inputs.rds.InstanceServerlessConfig>[]>;
+    /**
      * The sql collector keep time of the instance. Valid values are `30`, `180`, `365`, `1095`, `1825`, Default to `30`.
      */
     sqlCollectorConfigValue?: pulumi.Input<number>;
@@ -1180,6 +1230,10 @@ export interface InstanceArgs {
      * Actions performed on SSL functions, Valid values: `Open`: turn on SSL encryption; `Close`: turn off SSL encryption; `Update`: update SSL certificate. See more [engine and engineVersion limitation](https://www.alibabacloud.com/help/zh/doc-detail/26254.htm).
      */
     sslAction?: pulumi.Input<string>;
+    /**
+     * The internal or public endpoint for which the server certificate needs to be created or updated.
+     */
+    sslConnectionString?: pulumi.Input<string>;
     /**
      * Automatic storage space expansion switch. Valid values:
      * - Enable
@@ -1200,7 +1254,7 @@ export interface InstanceArgs {
      */
     storageUpperBound?: pulumi.Input<number>;
     /**
-     * The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `upgradeDbInstanceKernelVersion = true`. The time must be in UTC.
+     * The specific point in time when you want to perform the update. Specify the time in the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. It is valid only when `targetMinorVersion` is changed. The time must be in UTC.
      */
     switchTime?: pulumi.Input<string>;
     /**
@@ -1210,7 +1264,7 @@ export interface InstanceArgs {
      */
     tags?: pulumi.Input<{[key: string]: any}>;
     /**
-     * The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. It is valid only when `upgradeDbInstanceKernelVersion = true`. You must specify the minor engine version in one of the following formats:
+     * The minor engine version to which you want to update the instance. If you do not specify this parameter, the instance is updated to the latest minor engine version. You must specify the minor engine version in one of the following formats:
      * - PostgreSQL: rds_postgres_<Major engine version>00_<Minor engine version>. Example: rds_postgres_1200_20200830.
      * - MySQL: <RDS edition>_<Minor engine version>. Examples: rds_20200229, xcluster_20200229, and xcluster80_20200229. The following RDS editions are supported:
      * - rds: The instance runs RDS Basic or High-availability Edition.
@@ -1233,10 +1287,12 @@ export interface InstanceArgs {
      * Whether to upgrade a minor version of the kernel. Valid values:
      * - true: upgrade
      * - false: not to upgrade
+     *
+     * @deprecated Attribute `upgrade_db_instance_kernel_version` has been deprecated from 1.198.0 and use `target_minor_version` instead.
      */
     upgradeDbInstanceKernelVersion?: pulumi.Input<boolean>;
     /**
-     * The method to update the minor engine version. Default value: Immediate. It is valid only when `upgradeDbInstanceKernelVersion = true`. Valid values:
+     * The method to update the minor engine version. Default value: Immediate. It is valid only when `targetMinorVersion` is changed. Valid values:
      * - Immediate: The minor engine version is immediately updated.
      * - MaintainTime: The minor engine version is updated during the maintenance window. For more information about how to change the maintenance window, see ModifyDBInstanceMaintainTime.
      * - SpecifyTime: The minor engine version is updated at the point in time you specify.

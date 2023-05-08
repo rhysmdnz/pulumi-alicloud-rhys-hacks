@@ -173,7 +173,7 @@ namespace Pulumi.AliCloud.CS
         /// The custom configuration of addon. You can checkout the customizable configuration of the addon through datasource `alicloud.cs.getKubernetesAddonMetadata`, the returned format is the standard json schema. If return empty, it means that the addon does not support custom configuration yet. You can also checkout the current custom configuration through the data source `alicloud.cs.getKubernetesAddons`.
         /// </summary>
         [Output("config")]
-        public Output<string?> Config { get; private set; } = null!;
+        public Output<string> Config { get; private set; } = null!;
 
         /// <summary>
         /// The name of addon.

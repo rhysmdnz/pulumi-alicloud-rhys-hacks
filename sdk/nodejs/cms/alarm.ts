@@ -147,7 +147,7 @@ export class Alarm extends pulumi.CustomResource {
      */
     public readonly startTime!: pulumi.Output<number | undefined>;
     /**
-     * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+     * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
      *
      * @deprecated Field 'statistics' has been deprecated from provider version 1.94.0. New field 'escalations_critical.statistics' instead.
      */
@@ -335,7 +335,7 @@ export interface AlarmState {
      */
     startTime?: pulumi.Input<number>;
     /**
-     * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+     * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
      *
      * @deprecated Field 'statistics' has been deprecated from provider version 1.94.0. New field 'escalations_critical.statistics' instead.
      */
@@ -448,7 +448,7 @@ export interface AlarmArgs {
      */
     startTime?: pulumi.Input<number>;
     /**
-     * Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+     * Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
      *
      * @deprecated Field 'statistics' has been deprecated from provider version 1.94.0. New field 'escalations_critical.statistics' instead.
      */

@@ -78,7 +78,8 @@ export class Instance extends pulumi.CustomResource {
     /**
      * The core spec. When `diskCategory` is `localSsdPro` or `localHddPro`, this filed is valid.
      * - When `diskCategory` is `localSsdPro`, the valid values is `lindorm.i2.xlarge`, `lindorm.i2.2xlarge`, `lindorm.i2.4xlarge`, `lindorm.i2.8xlarge`.
-     * - When `diskCategory` is `localHddPro`, the valid values is `lindorm.d1.2xlarge`, `lindorm.d1.4xlarge`, `lindorm.d1.6xlarge`.
+     * - When `diskCategory` is `localHddPro`, the valid values is `lindorm.d2c.6xlarge`, `lindorm.d2c.12xlarge`, `lindorm.d2c.24xlarge`,
+     * `lindorm.d2s.5xlarge`, `lindorm.d2s.10xlarge`, `lindorm.d1.2xlarge`, `lindorm.d1.4xlarge`, `lindorm.d1.6xlarge`.
      */
     public readonly coreSpec!: pulumi.Output<string>;
     /**
@@ -202,6 +203,10 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly searchEngineSpecification!: pulumi.Output<string>;
     /**
+     * (Available in v1.196.0+) The instance type. Valid values: `lindorm`, `lindormMultizone`, `serverlessLindorm`, `lindormStandalone`, `lts`.
+     */
+    public /*out*/ readonly serviceType!: pulumi.Output<string>;
+    /**
      * The multiple availability zone instances, the virtual switch ID of the ready availability zone must be under the availability zone corresponding to the StandbyZoneId. required if you need to create multiple availability zone instances.
      */
     public readonly standbyVswitchId!: pulumi.Output<string | undefined>;
@@ -218,7 +223,8 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly tableEngineNodeCount!: pulumi.Output<number>;
     /**
-     * The specification of  table engine. Valid values: `lindorm.c.2xlarge`, `lindorm.c.4xlarge`, `lindorm.c.8xlarge`, `lindorm.c.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.g.xlarge`.
+     * The specification of  table engine. Valid values: 
+     * `lindorm.c.2xlarge`, `lindorm.c.4xlarge`, `lindorm.c.8xlarge`, `lindorm.g.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`.
      */
     public readonly tableEngineSpecification!: pulumi.Output<string>;
     /**
@@ -230,7 +236,8 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly timeSeriesEngineNodeCount!: pulumi.Output<number>;
     /**
-     * The specification of time series engine. Valid values: `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.g.xlarge`.
+     * The specification of time series engine. 
+     * Valid values: `lindorm.g.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.r.8xlarge`.
      */
     public readonly timeSeriesEngineSpecification!: pulumi.Output<string>;
     /**
@@ -240,7 +247,8 @@ export class Instance extends pulumi.CustomResource {
      */
     public readonly timeSeriresEngineSpecification!: pulumi.Output<string>;
     /**
-     * The upgrade type. **NOTE:** Field 'upgrade_type' has been deprecated from provider version 1.163.0 and it will be removed in the future version. Valid values:  `open-lindorm-engine`, `open-phoenix-engine`, `open-search-engine`, `open-tsdb-engine`,  `upgrade-cold-storage`, `upgrade-disk-size`,  `upgrade-lindorm-core-num`, `upgrade-lindorm-engine`,  `upgrade-search-core-num`, `upgrade-search-engine`, `upgrade-tsdb-core-num`, `upgrade-tsdb-engine`.
+     * The upgrade type. **NOTE:** Field 'upgrade_type' has been deprecated from provider version 1.163.0,
+     * and it will be removed in the future version. Valid values:  `open-lindorm-engine`, `open-phoenix-engine`, `open-search-engine`, `open-tsdb-engine`,  `upgrade-cold-storage`, `upgrade-disk-size`,  `upgrade-lindorm-core-num`, `upgrade-lindorm-engine`,  `upgrade-search-core-num`, `upgrade-search-engine`, `upgrade-tsdb-core-num`, `upgrade-tsdb-engine`.
      *
      * @deprecated Field 'upgrade_type' has been deprecated from provider version 1.163.0 and it will be removed in the future version.
      */
@@ -308,6 +316,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["resourceGroupId"] = state ? state.resourceGroupId : undefined;
             resourceInputs["searchEngineNodeCount"] = state ? state.searchEngineNodeCount : undefined;
             resourceInputs["searchEngineSpecification"] = state ? state.searchEngineSpecification : undefined;
+            resourceInputs["serviceType"] = state ? state.serviceType : undefined;
             resourceInputs["standbyVswitchId"] = state ? state.standbyVswitchId : undefined;
             resourceInputs["standbyZoneId"] = state ? state.standbyZoneId : undefined;
             resourceInputs["status"] = state ? state.status : undefined;
@@ -381,6 +390,7 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["enabledSearchEngine"] = undefined /*out*/;
             resourceInputs["enabledTableEngine"] = undefined /*out*/;
             resourceInputs["enabledTimeSeriresEngine"] = undefined /*out*/;
+            resourceInputs["serviceType"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -421,7 +431,8 @@ export interface InstanceState {
     /**
      * The core spec. When `diskCategory` is `localSsdPro` or `localHddPro`, this filed is valid.
      * - When `diskCategory` is `localSsdPro`, the valid values is `lindorm.i2.xlarge`, `lindorm.i2.2xlarge`, `lindorm.i2.4xlarge`, `lindorm.i2.8xlarge`.
-     * - When `diskCategory` is `localHddPro`, the valid values is `lindorm.d1.2xlarge`, `lindorm.d1.4xlarge`, `lindorm.d1.6xlarge`.
+     * - When `diskCategory` is `localHddPro`, the valid values is `lindorm.d2c.6xlarge`, `lindorm.d2c.12xlarge`, `lindorm.d2c.24xlarge`,
+     * `lindorm.d2s.5xlarge`, `lindorm.d2s.10xlarge`, `lindorm.d1.2xlarge`, `lindorm.d1.4xlarge`, `lindorm.d1.6xlarge`.
      */
     coreSpec?: pulumi.Input<string>;
     /**
@@ -545,6 +556,10 @@ export interface InstanceState {
      */
     searchEngineSpecification?: pulumi.Input<string>;
     /**
+     * (Available in v1.196.0+) The instance type. Valid values: `lindorm`, `lindormMultizone`, `serverlessLindorm`, `lindormStandalone`, `lts`.
+     */
+    serviceType?: pulumi.Input<string>;
+    /**
      * The multiple availability zone instances, the virtual switch ID of the ready availability zone must be under the availability zone corresponding to the StandbyZoneId. required if you need to create multiple availability zone instances.
      */
     standbyVswitchId?: pulumi.Input<string>;
@@ -561,7 +576,8 @@ export interface InstanceState {
      */
     tableEngineNodeCount?: pulumi.Input<number>;
     /**
-     * The specification of  table engine. Valid values: `lindorm.c.2xlarge`, `lindorm.c.4xlarge`, `lindorm.c.8xlarge`, `lindorm.c.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.g.xlarge`.
+     * The specification of  table engine. Valid values: 
+     * `lindorm.c.2xlarge`, `lindorm.c.4xlarge`, `lindorm.c.8xlarge`, `lindorm.g.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`.
      */
     tableEngineSpecification?: pulumi.Input<string>;
     /**
@@ -573,7 +589,8 @@ export interface InstanceState {
      */
     timeSeriesEngineNodeCount?: pulumi.Input<number>;
     /**
-     * The specification of time series engine. Valid values: `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.g.xlarge`.
+     * The specification of time series engine. 
+     * Valid values: `lindorm.g.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.r.8xlarge`.
      */
     timeSeriesEngineSpecification?: pulumi.Input<string>;
     /**
@@ -583,7 +600,8 @@ export interface InstanceState {
      */
     timeSeriresEngineSpecification?: pulumi.Input<string>;
     /**
-     * The upgrade type. **NOTE:** Field 'upgrade_type' has been deprecated from provider version 1.163.0 and it will be removed in the future version. Valid values:  `open-lindorm-engine`, `open-phoenix-engine`, `open-search-engine`, `open-tsdb-engine`,  `upgrade-cold-storage`, `upgrade-disk-size`,  `upgrade-lindorm-core-num`, `upgrade-lindorm-engine`,  `upgrade-search-core-num`, `upgrade-search-engine`, `upgrade-tsdb-core-num`, `upgrade-tsdb-engine`.
+     * The upgrade type. **NOTE:** Field 'upgrade_type' has been deprecated from provider version 1.163.0,
+     * and it will be removed in the future version. Valid values:  `open-lindorm-engine`, `open-phoenix-engine`, `open-search-engine`, `open-tsdb-engine`,  `upgrade-cold-storage`, `upgrade-disk-size`,  `upgrade-lindorm-core-num`, `upgrade-lindorm-engine`,  `upgrade-search-core-num`, `upgrade-search-engine`, `upgrade-tsdb-core-num`, `upgrade-tsdb-engine`.
      *
      * @deprecated Field 'upgrade_type' has been deprecated from provider version 1.163.0 and it will be removed in the future version.
      */
@@ -635,7 +653,8 @@ export interface InstanceArgs {
     /**
      * The core spec. When `diskCategory` is `localSsdPro` or `localHddPro`, this filed is valid.
      * - When `diskCategory` is `localSsdPro`, the valid values is `lindorm.i2.xlarge`, `lindorm.i2.2xlarge`, `lindorm.i2.4xlarge`, `lindorm.i2.8xlarge`.
-     * - When `diskCategory` is `localHddPro`, the valid values is `lindorm.d1.2xlarge`, `lindorm.d1.4xlarge`, `lindorm.d1.6xlarge`.
+     * - When `diskCategory` is `localHddPro`, the valid values is `lindorm.d2c.6xlarge`, `lindorm.d2c.12xlarge`, `lindorm.d2c.24xlarge`,
+     * `lindorm.d2s.5xlarge`, `lindorm.d2s.10xlarge`, `lindorm.d1.2xlarge`, `lindorm.d1.4xlarge`, `lindorm.d1.6xlarge`.
      */
     coreSpec?: pulumi.Input<string>;
     /**
@@ -751,7 +770,8 @@ export interface InstanceArgs {
      */
     tableEngineNodeCount?: pulumi.Input<number>;
     /**
-     * The specification of  table engine. Valid values: `lindorm.c.2xlarge`, `lindorm.c.4xlarge`, `lindorm.c.8xlarge`, `lindorm.c.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.g.xlarge`.
+     * The specification of  table engine. Valid values: 
+     * `lindorm.c.2xlarge`, `lindorm.c.4xlarge`, `lindorm.c.8xlarge`, `lindorm.g.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`.
      */
     tableEngineSpecification?: pulumi.Input<string>;
     /**
@@ -763,7 +783,8 @@ export interface InstanceArgs {
      */
     timeSeriesEngineNodeCount?: pulumi.Input<number>;
     /**
-     * The specification of time series engine. Valid values: `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.g.xlarge`.
+     * The specification of time series engine. 
+     * Valid values: `lindorm.g.xlarge`, `lindorm.g.2xlarge`, `lindorm.g.4xlarge`, `lindorm.g.8xlarge`, `lindorm.r.8xlarge`.
      */
     timeSeriesEngineSpecification?: pulumi.Input<string>;
     /**
@@ -773,7 +794,8 @@ export interface InstanceArgs {
      */
     timeSeriresEngineSpecification?: pulumi.Input<string>;
     /**
-     * The upgrade type. **NOTE:** Field 'upgrade_type' has been deprecated from provider version 1.163.0 and it will be removed in the future version. Valid values:  `open-lindorm-engine`, `open-phoenix-engine`, `open-search-engine`, `open-tsdb-engine`,  `upgrade-cold-storage`, `upgrade-disk-size`,  `upgrade-lindorm-core-num`, `upgrade-lindorm-engine`,  `upgrade-search-core-num`, `upgrade-search-engine`, `upgrade-tsdb-core-num`, `upgrade-tsdb-engine`.
+     * The upgrade type. **NOTE:** Field 'upgrade_type' has been deprecated from provider version 1.163.0,
+     * and it will be removed in the future version. Valid values:  `open-lindorm-engine`, `open-phoenix-engine`, `open-search-engine`, `open-tsdb-engine`,  `upgrade-cold-storage`, `upgrade-disk-size`,  `upgrade-lindorm-core-num`, `upgrade-lindorm-engine`,  `upgrade-search-core-num`, `upgrade-search-engine`, `upgrade-tsdb-core-num`, `upgrade-tsdb-engine`.
      *
      * @deprecated Field 'upgrade_type' has been deprecated from provider version 1.163.0 and it will be removed in the future version.
      */

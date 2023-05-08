@@ -87,6 +87,12 @@ namespace Pulumi.AliCloud.Vpc
         [Output("prefixListName")]
         public Output<string?> PrefixListName { get; private set; } = null!;
 
+        /// <summary>
+        /// (Available in v1.196.0+) The status of the Prefix List.
+        /// </summary>
+        [Output("status")]
+        public Output<string> Status { get; private set; } = null!;
+
 
         /// <summary>
         /// Create a PrefixList resource with the given unique name, arguments, and options.
@@ -213,6 +219,12 @@ namespace Pulumi.AliCloud.Vpc
         /// </summary>
         [Input("prefixListName")]
         public Input<string>? PrefixListName { get; set; }
+
+        /// <summary>
+        /// (Available in v1.196.0+) The status of the Prefix List.
+        /// </summary>
+        [Input("status")]
+        public Input<string>? Status { get; set; }
 
         public PrefixListState()
         {

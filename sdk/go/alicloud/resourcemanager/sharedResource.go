@@ -37,7 +37,7 @@ type SharedResource struct {
 	// - `VSwitch`.
 	// - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
 	// - The following types are added after v1.192.0: `PrefixList` and `Image`.
-	// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+	// - The following types are added after v1.194.1: `PublicIpAddressPool`.
 	ResourceType pulumi.StringOutput `pulumi:"resourceType"`
 	// status.
 	Status pulumi.StringOutput `pulumi:"status"`
@@ -90,7 +90,7 @@ type sharedResourceState struct {
 	// - `VSwitch`.
 	// - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
 	// - The following types are added after v1.192.0: `PrefixList` and `Image`.
-	// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+	// - The following types are added after v1.194.1: `PublicIpAddressPool`.
 	ResourceType *string `pulumi:"resourceType"`
 	// status.
 	Status *string `pulumi:"status"`
@@ -105,7 +105,7 @@ type SharedResourceState struct {
 	// - `VSwitch`.
 	// - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
 	// - The following types are added after v1.192.0: `PrefixList` and `Image`.
-	// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+	// - The following types are added after v1.194.1: `PublicIpAddressPool`.
 	ResourceType pulumi.StringPtrInput
 	// status.
 	Status pulumi.StringPtrInput
@@ -124,7 +124,7 @@ type sharedResourceArgs struct {
 	// - `VSwitch`.
 	// - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
 	// - The following types are added after v1.192.0: `PrefixList` and `Image`.
-	// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+	// - The following types are added after v1.194.1: `PublicIpAddressPool`.
 	ResourceType string `pulumi:"resourceType"`
 }
 
@@ -138,7 +138,7 @@ type SharedResourceArgs struct {
 	// - `VSwitch`.
 	// - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
 	// - The following types are added after v1.192.0: `PrefixList` and `Image`.
-	// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+	// - The following types are added after v1.194.1: `PublicIpAddressPool`.
 	ResourceType pulumi.StringInput
 }
 
@@ -243,7 +243,7 @@ func (o SharedResourceOutput) ResourceShareId() pulumi.StringOutput {
 // - `VSwitch`.
 // - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
 // - The following types are added after v1.192.0: `PrefixList` and `Image`.
-// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+// - The following types are added after v1.194.1: `PublicIpAddressPool`.
 func (o SharedResourceOutput) ResourceType() pulumi.StringOutput {
 	return o.ApplyT(func(v *SharedResource) pulumi.StringOutput { return v.ResourceType }).(pulumi.StringOutput)
 }

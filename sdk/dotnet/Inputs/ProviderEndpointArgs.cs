@@ -42,6 +42,9 @@ namespace Pulumi.AliCloud.Inputs
         [Input("bastionhost")]
         public Input<string>? Bastionhost { get; set; }
 
+        [Input("beebot")]
+        public Input<string>? Beebot { get; set; }
+
         [Input("bpstudio")]
         public Input<string>? Bpstudio { get; set; }
 
@@ -177,6 +180,9 @@ namespace Pulumi.AliCloud.Inputs
         [Input("edsuser")]
         public Input<string>? Edsuser { get; set; }
 
+        [Input("eflo")]
+        public Input<string>? Eflo { get; set; }
+
         [Input("ehpc")]
         public Input<string>? Ehpc { get; set; }
 
@@ -279,6 +285,9 @@ namespace Pulumi.AliCloud.Inputs
         [Input("nlb")]
         public Input<string>? Nlb { get; set; }
 
+        [Input("oceanbase")]
+        public Input<string>? Oceanbase { get; set; }
+
         [Input("ons")]
         public Input<string>? Ons { get; set; }
 
@@ -356,6 +365,9 @@ namespace Pulumi.AliCloud.Inputs
 
         [Input("smartag")]
         public Input<string>? Smartag { get; set; }
+
+        [Input("srvcatalog")]
+        public Input<string>? Srvcatalog { get; set; }
 
         [Input("sts")]
         public Input<string>? Sts { get; set; }

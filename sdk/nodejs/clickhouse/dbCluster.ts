@@ -88,14 +88,15 @@ export class DbCluster extends pulumi.CustomResource {
      * The Category of DBCluster. Valid values: `Basic`,`HighAvailability`.
      */
     public readonly category!: pulumi.Output<string>;
+    public /*out*/ readonly connectionString!: pulumi.Output<string>;
     /**
      * The db cluster access white list.
      */
     public readonly dbClusterAccessWhiteLists!: pulumi.Output<outputs.clickhouse.DbClusterDbClusterAccessWhiteList[] | undefined>;
     /**
      * The DBCluster class. According to the category, dbClusterClass has two value ranges:
-     * * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-     * * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+     * * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+     * * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
      */
     public readonly dbClusterClass!: pulumi.Output<string>;
     /**
@@ -139,6 +140,10 @@ export class DbCluster extends pulumi.CustomResource {
      */
     public readonly period!: pulumi.Output<string | undefined>;
     /**
+     * (Available in 1.196.0+) The connection port of the cluster.
+     */
+    public /*out*/ readonly port!: pulumi.Output<string>;
+    /**
      * The status of the resource. Valid values: `Running`,`Creating`,`Deleting`,`Restarting`,`Preparing`.
      */
     public readonly status!: pulumi.Output<string>;
@@ -177,6 +182,7 @@ export class DbCluster extends pulumi.CustomResource {
         if (opts.id) {
             const state = argsOrState as DbClusterState | undefined;
             resourceInputs["category"] = state ? state.category : undefined;
+            resourceInputs["connectionString"] = state ? state.connectionString : undefined;
             resourceInputs["dbClusterAccessWhiteLists"] = state ? state.dbClusterAccessWhiteLists : undefined;
             resourceInputs["dbClusterClass"] = state ? state.dbClusterClass : undefined;
             resourceInputs["dbClusterDescription"] = state ? state.dbClusterDescription : undefined;
@@ -189,6 +195,7 @@ export class DbCluster extends pulumi.CustomResource {
             resourceInputs["maintainTime"] = state ? state.maintainTime : undefined;
             resourceInputs["paymentType"] = state ? state.paymentType : undefined;
             resourceInputs["period"] = state ? state.period : undefined;
+            resourceInputs["port"] = state ? state.port : undefined;
             resourceInputs["status"] = state ? state.status : undefined;
             resourceInputs["storageType"] = state ? state.storageType : undefined;
             resourceInputs["usedTime"] = state ? state.usedTime : undefined;
@@ -240,6 +247,8 @@ export class DbCluster extends pulumi.CustomResource {
             resourceInputs["vpcId"] = args ? args.vpcId : undefined;
             resourceInputs["vswitchId"] = args ? args.vswitchId : undefined;
             resourceInputs["zoneId"] = args ? args.zoneId : undefined;
+            resourceInputs["connectionString"] = undefined /*out*/;
+            resourceInputs["port"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(DbCluster.__pulumiType, name, resourceInputs, opts);
@@ -254,14 +263,15 @@ export interface DbClusterState {
      * The Category of DBCluster. Valid values: `Basic`,`HighAvailability`.
      */
     category?: pulumi.Input<string>;
+    connectionString?: pulumi.Input<string>;
     /**
      * The db cluster access white list.
      */
     dbClusterAccessWhiteLists?: pulumi.Input<pulumi.Input<inputs.clickhouse.DbClusterDbClusterAccessWhiteList>[]>;
     /**
      * The DBCluster class. According to the category, dbClusterClass has two value ranges:
-     * * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-     * * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+     * * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+     * * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
      */
     dbClusterClass?: pulumi.Input<string>;
     /**
@@ -305,6 +315,10 @@ export interface DbClusterState {
      */
     period?: pulumi.Input<string>;
     /**
+     * (Available in 1.196.0+) The connection port of the cluster.
+     */
+    port?: pulumi.Input<string>;
+    /**
      * The status of the resource. Valid values: `Running`,`Creating`,`Deleting`,`Restarting`,`Preparing`.
      */
     status?: pulumi.Input<string>;
@@ -344,8 +358,8 @@ export interface DbClusterArgs {
     dbClusterAccessWhiteLists?: pulumi.Input<pulumi.Input<inputs.clickhouse.DbClusterDbClusterAccessWhiteList>[]>;
     /**
      * The DBCluster class. According to the category, dbClusterClass has two value ranges:
-     * * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-     * * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+     * * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+     * * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
      */
     dbClusterClass: pulumi.Input<string>;
     /**

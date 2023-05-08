@@ -40,6 +40,8 @@ type Instance struct {
 	// - `cloudbastion`: Basic Edition.
 	// - `cloudbastionHa`: HA Edition.
 	PlanCode pulumi.StringOutput `pulumi:"planCode"`
+	// The public IP address that you want to add to the whitelist.
+	PublicWhiteLists pulumi.StringArrayOutput `pulumi:"publicWhiteLists"`
 	// Automatic renewal period. Valid values: `1` to `9`, `12`, `24`, `36`. **NOTE:** The `renewPeriod` is required under the condition that `renewalStatus` is `AutoRenewal`. From version 1.193.0, `renewPeriod` can be modified.
 	RenewPeriod pulumi.IntPtrOutput `pulumi:"renewPeriod"`
 	// The unit of the auto-renewal period. Valid values:  **NOTE:** The `renewalPeriodUnit` is required under the condition that `renewalStatus` is `AutoRenewal`.
@@ -127,6 +129,8 @@ type instanceState struct {
 	// - `cloudbastion`: Basic Edition.
 	// - `cloudbastionHa`: HA Edition.
 	PlanCode *string `pulumi:"planCode"`
+	// The public IP address that you want to add to the whitelist.
+	PublicWhiteLists []string `pulumi:"publicWhiteLists"`
 	// Automatic renewal period. Valid values: `1` to `9`, `12`, `24`, `36`. **NOTE:** The `renewPeriod` is required under the condition that `renewalStatus` is `AutoRenewal`. From version 1.193.0, `renewPeriod` can be modified.
 	RenewPeriod *int `pulumi:"renewPeriod"`
 	// The unit of the auto-renewal period. Valid values:  **NOTE:** The `renewalPeriodUnit` is required under the condition that `renewalStatus` is `AutoRenewal`.
@@ -164,6 +168,8 @@ type InstanceState struct {
 	// - `cloudbastion`: Basic Edition.
 	// - `cloudbastionHa`: HA Edition.
 	PlanCode pulumi.StringPtrInput
+	// The public IP address that you want to add to the whitelist.
+	PublicWhiteLists pulumi.StringArrayInput
 	// Automatic renewal period. Valid values: `1` to `9`, `12`, `24`, `36`. **NOTE:** The `renewPeriod` is required under the condition that `renewalStatus` is `AutoRenewal`. From version 1.193.0, `renewPeriod` can be modified.
 	RenewPeriod pulumi.IntPtrInput
 	// The unit of the auto-renewal period. Valid values:  **NOTE:** The `renewalPeriodUnit` is required under the condition that `renewalStatus` is `AutoRenewal`.
@@ -205,6 +211,8 @@ type instanceArgs struct {
 	// - `cloudbastion`: Basic Edition.
 	// - `cloudbastionHa`: HA Edition.
 	PlanCode string `pulumi:"planCode"`
+	// The public IP address that you want to add to the whitelist.
+	PublicWhiteLists []string `pulumi:"publicWhiteLists"`
 	// Automatic renewal period. Valid values: `1` to `9`, `12`, `24`, `36`. **NOTE:** The `renewPeriod` is required under the condition that `renewalStatus` is `AutoRenewal`. From version 1.193.0, `renewPeriod` can be modified.
 	RenewPeriod *int `pulumi:"renewPeriod"`
 	// The unit of the auto-renewal period. Valid values:  **NOTE:** The `renewalPeriodUnit` is required under the condition that `renewalStatus` is `AutoRenewal`.
@@ -243,6 +251,8 @@ type InstanceArgs struct {
 	// - `cloudbastion`: Basic Edition.
 	// - `cloudbastionHa`: HA Edition.
 	PlanCode pulumi.StringInput
+	// The public IP address that you want to add to the whitelist.
+	PublicWhiteLists pulumi.StringArrayInput
 	// Automatic renewal period. Valid values: `1` to `9`, `12`, `24`, `36`. **NOTE:** The `renewPeriod` is required under the condition that `renewalStatus` is `AutoRenewal`. From version 1.193.0, `renewPeriod` can be modified.
 	RenewPeriod pulumi.IntPtrInput
 	// The unit of the auto-renewal period. Valid values:  **NOTE:** The `renewalPeriodUnit` is required under the condition that `renewalStatus` is `AutoRenewal`.
@@ -388,6 +398,11 @@ func (o InstanceOutput) Period() pulumi.IntPtrOutput {
 // - `cloudbastionHa`: HA Edition.
 func (o InstanceOutput) PlanCode() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.PlanCode }).(pulumi.StringOutput)
+}
+
+// The public IP address that you want to add to the whitelist.
+func (o InstanceOutput) PublicWhiteLists() pulumi.StringArrayOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringArrayOutput { return v.PublicWhiteLists }).(pulumi.StringArrayOutput)
 }
 
 // Automatic renewal period. Valid values: `1` to `9`, `12`, `24`, `36`. **NOTE:** The `renewPeriod` is required under the condition that `renewalStatus` is `AutoRenewal`. From version 1.193.0, `renewPeriod` can be modified.

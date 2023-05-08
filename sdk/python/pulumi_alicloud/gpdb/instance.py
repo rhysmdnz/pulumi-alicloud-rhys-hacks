@@ -528,6 +528,7 @@ class InstanceArgs:
 class _InstanceState:
     def __init__(__self__, *,
                  availability_zone: Optional[pulumi.Input[str]] = None,
+                 connection_string: Optional[pulumi.Input[str]] = None,
                  create_sample_data: Optional[pulumi.Input[bool]] = None,
                  db_instance_category: Optional[pulumi.Input[str]] = None,
                  db_instance_class: Optional[pulumi.Input[str]] = None,
@@ -545,6 +546,7 @@ class _InstanceState:
                  master_node_num: Optional[pulumi.Input[int]] = None,
                  payment_type: Optional[pulumi.Input[str]] = None,
                  period: Optional[pulumi.Input[str]] = None,
+                 port: Optional[pulumi.Input[str]] = None,
                  private_ip_address: Optional[pulumi.Input[str]] = None,
                  resource_group_id: Optional[pulumi.Input[str]] = None,
                  security_ip_lists: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -561,6 +563,7 @@ class _InstanceState:
         """
         Input properties used for looking up and filtering Instance resources.
         :param pulumi.Input[str] availability_zone: Field `availability_zone` has been deprecated from provider version 1.187.0. New field `zone_id` instead.
+        :param pulumi.Input[str] connection_string: (Available in 1.196.0+) The connection string of the instance.
         :param pulumi.Input[bool] create_sample_data: Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
         :param pulumi.Input[str] db_instance_category: The db instance category. Valid values: `HighAvailability`, `Basic`.
                > **NOTE:** This parameter must be passed in to create a storage reservation mode instance.
@@ -584,6 +587,7 @@ class _InstanceState:
         :param pulumi.Input[int] master_node_num: The number of Master nodes. Valid values: 1 to 2. if it is not filled in, the default value is 1 Master node.
         :param pulumi.Input[str] payment_type: The billing method of the instance. Valid values: `Subscription`, `PayAsYouGo`.
         :param pulumi.Input[str] period: The duration that you will buy the resource, in month. required when `payment_type` is `Subscription`. Valid values: `Year`, `Month`.
+        :param pulumi.Input[str] port: (Available in 1.196.0+) The connection port of the instance.
         :param pulumi.Input[str] private_ip_address: The private ip address.
         :param pulumi.Input[str] resource_group_id: The ID of the enterprise resource group to which the instance belongs.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] security_ip_lists: List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]). System default to `["127.0.0.1"]`.
@@ -606,6 +610,8 @@ class _InstanceState:
             pulumi.log.warn("""availability_zone is deprecated: Field 'availability_zone' has been deprecated from version 1.187.0. Use 'zone_id' instead.""")
         if availability_zone is not None:
             pulumi.set(__self__, "availability_zone", availability_zone)
+        if connection_string is not None:
+            pulumi.set(__self__, "connection_string", connection_string)
         if create_sample_data is not None:
             pulumi.set(__self__, "create_sample_data", create_sample_data)
         if db_instance_category is not None:
@@ -643,6 +649,8 @@ class _InstanceState:
             pulumi.set(__self__, "payment_type", payment_type)
         if period is not None:
             pulumi.set(__self__, "period", period)
+        if port is not None:
+            pulumi.set(__self__, "port", port)
         if private_ip_address is not None:
             pulumi.set(__self__, "private_ip_address", private_ip_address)
         if resource_group_id is not None:
@@ -684,6 +692,18 @@ class _InstanceState:
     @availability_zone.setter
     def availability_zone(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "availability_zone", value)
+
+    @property
+    @pulumi.getter(name="connectionString")
+    def connection_string(self) -> Optional[pulumi.Input[str]]:
+        """
+        (Available in 1.196.0+) The connection string of the instance.
+        """
+        return pulumi.get(self, "connection_string")
+
+    @connection_string.setter
+    def connection_string(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "connection_string", value)
 
     @property
     @pulumi.getter(name="createSampleData")
@@ -894,6 +914,18 @@ class _InstanceState:
     @period.setter
     def period(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "period", value)
+
+    @property
+    @pulumi.getter
+    def port(self) -> Optional[pulumi.Input[str]]:
+        """
+        (Available in 1.196.0+) The connection port of the instance.
+        """
+        return pulumi.get(self, "port")
+
+    @port.setter
+    def port(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "port", value)
 
     @property
     @pulumi.getter(name="privateIpAddress")
@@ -1268,6 +1300,8 @@ class Instance(pulumi.CustomResource):
                 raise TypeError("Missing required property 'vswitch_id'")
             __props__.__dict__["vswitch_id"] = vswitch_id
             __props__.__dict__["zone_id"] = zone_id
+            __props__.__dict__["connection_string"] = None
+            __props__.__dict__["port"] = None
             __props__.__dict__["status"] = None
         super(Instance, __self__).__init__(
             'alicloud:gpdb/instance:Instance',
@@ -1280,6 +1314,7 @@ class Instance(pulumi.CustomResource):
             id: pulumi.Input[str],
             opts: Optional[pulumi.ResourceOptions] = None,
             availability_zone: Optional[pulumi.Input[str]] = None,
+            connection_string: Optional[pulumi.Input[str]] = None,
             create_sample_data: Optional[pulumi.Input[bool]] = None,
             db_instance_category: Optional[pulumi.Input[str]] = None,
             db_instance_class: Optional[pulumi.Input[str]] = None,
@@ -1297,6 +1332,7 @@ class Instance(pulumi.CustomResource):
             master_node_num: Optional[pulumi.Input[int]] = None,
             payment_type: Optional[pulumi.Input[str]] = None,
             period: Optional[pulumi.Input[str]] = None,
+            port: Optional[pulumi.Input[str]] = None,
             private_ip_address: Optional[pulumi.Input[str]] = None,
             resource_group_id: Optional[pulumi.Input[str]] = None,
             security_ip_lists: Optional[pulumi.Input[Sequence[pulumi.Input[str]]]] = None,
@@ -1318,6 +1354,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[str] availability_zone: Field `availability_zone` has been deprecated from provider version 1.187.0. New field `zone_id` instead.
+        :param pulumi.Input[str] connection_string: (Available in 1.196.0+) The connection string of the instance.
         :param pulumi.Input[bool] create_sample_data: Whether to load the sample dataset after the instance is created. Valid values: `true`, `false`.
         :param pulumi.Input[str] db_instance_category: The db instance category. Valid values: `HighAvailability`, `Basic`.
                > **NOTE:** This parameter must be passed in to create a storage reservation mode instance.
@@ -1341,6 +1378,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[int] master_node_num: The number of Master nodes. Valid values: 1 to 2. if it is not filled in, the default value is 1 Master node.
         :param pulumi.Input[str] payment_type: The billing method of the instance. Valid values: `Subscription`, `PayAsYouGo`.
         :param pulumi.Input[str] period: The duration that you will buy the resource, in month. required when `payment_type` is `Subscription`. Valid values: `Year`, `Month`.
+        :param pulumi.Input[str] port: (Available in 1.196.0+) The connection port of the instance.
         :param pulumi.Input[str] private_ip_address: The private ip address.
         :param pulumi.Input[str] resource_group_id: The ID of the enterprise resource group to which the instance belongs.
         :param pulumi.Input[Sequence[pulumi.Input[str]]] security_ip_lists: List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]). System default to `["127.0.0.1"]`.
@@ -1363,6 +1401,7 @@ class Instance(pulumi.CustomResource):
         __props__ = _InstanceState.__new__(_InstanceState)
 
         __props__.__dict__["availability_zone"] = availability_zone
+        __props__.__dict__["connection_string"] = connection_string
         __props__.__dict__["create_sample_data"] = create_sample_data
         __props__.__dict__["db_instance_category"] = db_instance_category
         __props__.__dict__["db_instance_class"] = db_instance_class
@@ -1380,6 +1419,7 @@ class Instance(pulumi.CustomResource):
         __props__.__dict__["master_node_num"] = master_node_num
         __props__.__dict__["payment_type"] = payment_type
         __props__.__dict__["period"] = period
+        __props__.__dict__["port"] = port
         __props__.__dict__["private_ip_address"] = private_ip_address
         __props__.__dict__["resource_group_id"] = resource_group_id
         __props__.__dict__["security_ip_lists"] = security_ip_lists
@@ -1402,6 +1442,14 @@ class Instance(pulumi.CustomResource):
         Field `availability_zone` has been deprecated from provider version 1.187.0. New field `zone_id` instead.
         """
         return pulumi.get(self, "availability_zone")
+
+    @property
+    @pulumi.getter(name="connectionString")
+    def connection_string(self) -> pulumi.Output[str]:
+        """
+        (Available in 1.196.0+) The connection string of the instance.
+        """
+        return pulumi.get(self, "connection_string")
 
     @property
     @pulumi.getter(name="createSampleData")
@@ -1544,6 +1592,14 @@ class Instance(pulumi.CustomResource):
         The duration that you will buy the resource, in month. required when `payment_type` is `Subscription`. Valid values: `Year`, `Month`.
         """
         return pulumi.get(self, "period")
+
+    @property
+    @pulumi.getter
+    def port(self) -> pulumi.Output[str]:
+        """
+        (Available in 1.196.0+) The connection port of the instance.
+        """
+        return pulumi.get(self, "port")
 
     @property
     @pulumi.getter(name="privateIpAddress")

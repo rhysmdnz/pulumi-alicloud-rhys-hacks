@@ -68,7 +68,7 @@ export interface GetInstancesArgs {
      */
     enableDetails?: boolean;
     /**
-     * Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+     * Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
      */
     engine?: string;
     /**
@@ -115,7 +115,7 @@ export interface GetInstancesResult {
     readonly dbType?: string;
     readonly enableDetails?: boolean;
     /**
-     * Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+     * Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
      */
     readonly engine?: string;
     /**
@@ -175,7 +175,7 @@ export interface GetInstancesOutputArgs {
      */
     enableDetails?: pulumi.Input<boolean>;
     /**
-     * Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+     * Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
      */
     engine?: pulumi.Input<string>;
     /**

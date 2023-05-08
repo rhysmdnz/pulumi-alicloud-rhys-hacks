@@ -1055,6 +1055,7 @@ class InstanceDataDisk(dict):
                - `cloud_ssd`: The SSD cloud disk.
                - `cloud_essd`: The ESSD cloud disk.
                - `ephemeral_ssd`: The local SSD disk.
+               - `cloud_auto`: The AutoPL cloud disk.
                Default to `cloud_efficiency`.
         :param bool delete_with_instance: Delete this data disk when the instance is destroyed. It only works on cloud, cloud_efficiency, cloud_essd, cloud_ssd disk. If the category of this data disk was ephemeral_ssd, please don't set this param. Default value: `true`.
         :param str description: The description of the data disk.
@@ -1123,6 +1124,7 @@ class InstanceDataDisk(dict):
         - `cloud_ssd`: The SSD cloud disk.
         - `cloud_essd`: The ESSD cloud disk.
         - `ephemeral_ssd`: The local SSD disk.
+        - `cloud_auto`: The AutoPL cloud disk.
         Default to `cloud_efficiency`.
         """
         return pulumi.get(self, "category")
@@ -8045,7 +8047,7 @@ class GetInstancesInstanceResult(dict):
         :param str public_ip: Instance public IP address.
         :param str ram_role_name: The RAM role name which the instance attaches.
         :param str region_id: Region ID the instance belongs to.
-        :param str resource_group_id: The Id of resource group which the instance belongs.
+        :param str resource_group_id: The ID of resource group which the instance belongs.
         :param Sequence[str] security_groups: List of security group IDs the instance belongs to.
         :param str spot_strategy: Spot strategy the instance is using.
         :param str status: Instance status. Valid values: "Creating", "Starting", "Running", "Stopping" and "Stopped". If undefined, all statuses are considered.
@@ -8228,7 +8230,7 @@ class GetInstancesInstanceResult(dict):
     @pulumi.getter(name="resourceGroupId")
     def resource_group_id(self) -> str:
         """
-        The Id of resource group which the instance belongs.
+        The ID of resource group which the instance belongs.
         """
         return pulumi.get(self, "resource_group_id")
 

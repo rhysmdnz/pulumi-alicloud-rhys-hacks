@@ -330,7 +330,7 @@ export class Bucket extends pulumi.CustomResource {
      */
     public readonly serverSideEncryptionRule!: pulumi.Output<outputs.oss.BucketServerSideEncryptionRule | undefined>;
     /**
-     * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+     * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
      */
     public readonly storageClass!: pulumi.Output<string | undefined>;
     /**
@@ -481,7 +481,7 @@ export interface BucketState {
      */
     serverSideEncryptionRule?: pulumi.Input<inputs.oss.BucketServerSideEncryptionRule>;
     /**
-     * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+     * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
      */
     storageClass?: pulumi.Input<string>;
     /**
@@ -550,7 +550,7 @@ export interface BucketArgs {
      */
     serverSideEncryptionRule?: pulumi.Input<inputs.oss.BucketServerSideEncryptionRule>;
     /**
-     * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+     * Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
      */
     storageClass?: pulumi.Input<string>;
     /**

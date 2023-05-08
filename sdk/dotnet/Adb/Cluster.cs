@@ -156,6 +156,12 @@ namespace Pulumi.AliCloud.Adb
         public Output<int?> Period { get; private set; } = null!;
 
         /// <summary>
+        /// (Available in 1.196.0+) The connection port of the ADB cluster.
+        /// </summary>
+        [Output("port")]
+        public Output<string> Port { get; private set; } = null!;
+
+        /// <summary>
         /// Valid values are `AutoRenewal`, `Normal`, `NotRenewal`, Default to `NotRenewal`.
         /// </summary>
         [Output("renewalStatus")]
@@ -468,6 +474,12 @@ namespace Pulumi.AliCloud.Adb
         /// </summary>
         [Input("period")]
         public Input<int>? Period { get; set; }
+
+        /// <summary>
+        /// (Available in 1.196.0+) The connection port of the ADB cluster.
+        /// </summary>
+        [Input("port")]
+        public Input<string>? Port { get; set; }
 
         /// <summary>
         /// Valid values are `AutoRenewal`, `Normal`, `NotRenewal`, Default to `NotRenewal`.

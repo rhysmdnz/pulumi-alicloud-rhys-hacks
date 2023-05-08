@@ -10,41 +10,6 @@ using Pulumi.Serialization;
 namespace Pulumi.AliCloud.Ecs
 {
     /// <summary>
-    /// Provides a ECS Disk resource.
-    /// 
-    /// For information about ECS Disk and how to use it, see [What is Disk](https://www.alibabacloud.com/help/en/doc-detail/25513.htm).
-    /// 
-    /// &gt; **NOTE:** Available in v1.122.0+.
-    /// 
-    /// ## Example Usage
-    /// 
-    /// Basic Usage
-    /// 
-    /// ```csharp
-    /// using System.Collections.Generic;
-    /// using Pulumi;
-    /// using AliCloud = Pulumi.AliCloud;
-    /// 
-    /// return await Deployment.RunAsync(() =&gt; 
-    /// {
-    ///     var example = new AliCloud.Ecs.EcsDisk("example", new()
-    ///     {
-    ///         Category = "cloud_efficiency",
-    ///         Description = "Hello ecs disk.",
-    ///         DiskName = "tf-test",
-    ///         Encrypted = true,
-    ///         KmsKeyId = "2a6767f0-a16c-4679-a60f-13bf*****",
-    ///         Size = 30,
-    ///         Tags = 
-    ///         {
-    ///             { "Name", "TerraformTest" },
-    ///         },
-    ///         ZoneId = "cn-beijing-b",
-    ///     });
-    /// 
-    /// });
-    /// ```
-    /// 
     /// ## Import
     /// 
     /// ECS Disk can be imported using the id, e.g.
@@ -66,7 +31,7 @@ namespace Pulumi.AliCloud.Ecs
         public Output<string> AvailabilityZone { get; private set; } = null!;
 
         /// <summary>
-        /// Category of the disk. Valid values are `cloud`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`. Default is `cloud_efficiency`.
+        /// Category of the disk. Valid values are `cloud`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`, `cloud_auto`. Default is `cloud_efficiency`.
         /// </summary>
         [Output("category")]
         public Output<string?> Category { get; private set; } = null!;
@@ -269,7 +234,7 @@ namespace Pulumi.AliCloud.Ecs
         public Input<string>? AvailabilityZone { get; set; }
 
         /// <summary>
-        /// Category of the disk. Valid values are `cloud`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`. Default is `cloud_efficiency`.
+        /// Category of the disk. Valid values are `cloud`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`, `cloud_auto`. Default is `cloud_efficiency`.
         /// </summary>
         [Input("category")]
         public Input<string>? Category { get; set; }
@@ -433,7 +398,7 @@ namespace Pulumi.AliCloud.Ecs
         public Input<string>? AvailabilityZone { get; set; }
 
         /// <summary>
-        /// Category of the disk. Valid values are `cloud`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`. Default is `cloud_efficiency`.
+        /// Category of the disk. Valid values are `cloud`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`, `cloud_auto`. Default is `cloud_efficiency`.
         /// </summary>
         [Input("category")]
         public Input<string>? Category { get; set; }

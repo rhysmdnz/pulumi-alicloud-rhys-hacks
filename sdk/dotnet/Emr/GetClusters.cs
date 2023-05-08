@@ -12,10 +12,6 @@ namespace Pulumi.AliCloud.Emr
     public static class GetClusters
     {
         /// <summary>
-        /// This data source provides the Emr Clusters of the current Alibaba Cloud user.
-        /// 
-        /// &gt; **NOTE:** Available in v1.146.0+.
-        /// 
         /// {{% examples %}}
         /// ## Example Usage
         /// {{% example %}}
@@ -218,10 +214,6 @@ namespace Pulumi.AliCloud.Emr
             => Pulumi.Deployment.Instance.InvokeAsync<GetClustersResult>("alicloud:emr/getClusters:getClusters", args ?? new GetClustersArgs(), options.WithDefaults());
 
         /// <summary>
-        /// This data source provides the Emr Clusters of the current Alibaba Cloud user.
-        /// 
-        /// &gt; **NOTE:** Available in v1.146.0+.
-        /// 
         /// {{% examples %}}
         /// ## Example Usage
         /// {{% example %}}

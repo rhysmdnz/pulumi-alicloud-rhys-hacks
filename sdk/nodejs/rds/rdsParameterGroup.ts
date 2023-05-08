@@ -75,11 +75,11 @@ export class RdsParameterGroup extends pulumi.CustomResource {
     }
 
     /**
-     * The database engine. Valid values: `mysql`, `mariadb`.
+     * The database engine. Valid values: `mysql`, `mariadb`, `PostgreSQL`.
      */
     public readonly engine!: pulumi.Output<string>;
     /**
-     * The version of the database engine. Valid values: mysql: `5.1`, `5.5`, `5.6`, `5.7`, `8.0`; mariadb: `10.3`.
+     * The version of the database engine. Valid values: mysql: `5.1`, `5.5`, `5.6`, `5.7`, `8.0`; mariadb: `10.3`; PostgreSQL: `10.0`, `11.0`, `12.0`, `13.0`, `14.0`, `15.0`.
      */
     public readonly engineVersion!: pulumi.Output<string>;
     /**
@@ -143,11 +143,11 @@ export class RdsParameterGroup extends pulumi.CustomResource {
  */
 export interface RdsParameterGroupState {
     /**
-     * The database engine. Valid values: `mysql`, `mariadb`.
+     * The database engine. Valid values: `mysql`, `mariadb`, `PostgreSQL`.
      */
     engine?: pulumi.Input<string>;
     /**
-     * The version of the database engine. Valid values: mysql: `5.1`, `5.5`, `5.6`, `5.7`, `8.0`; mariadb: `10.3`.
+     * The version of the database engine. Valid values: mysql: `5.1`, `5.5`, `5.6`, `5.7`, `8.0`; mariadb: `10.3`; PostgreSQL: `10.0`, `11.0`, `12.0`, `13.0`, `14.0`, `15.0`.
      */
     engineVersion?: pulumi.Input<string>;
     /**
@@ -169,11 +169,11 @@ export interface RdsParameterGroupState {
  */
 export interface RdsParameterGroupArgs {
     /**
-     * The database engine. Valid values: `mysql`, `mariadb`.
+     * The database engine. Valid values: `mysql`, `mariadb`, `PostgreSQL`.
      */
     engine: pulumi.Input<string>;
     /**
-     * The version of the database engine. Valid values: mysql: `5.1`, `5.5`, `5.6`, `5.7`, `8.0`; mariadb: `10.3`.
+     * The version of the database engine. Valid values: mysql: `5.1`, `5.5`, `5.6`, `5.7`, `8.0`; mariadb: `10.3`; PostgreSQL: `10.0`, `11.0`, `12.0`, `13.0`, `14.0`, `15.0`.
      */
     engineVersion: pulumi.Input<string>;
     /**

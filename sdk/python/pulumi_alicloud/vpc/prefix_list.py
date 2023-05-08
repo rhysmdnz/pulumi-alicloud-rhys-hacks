@@ -108,7 +108,8 @@ class _PrefixListState:
                  ip_version: Optional[pulumi.Input[str]] = None,
                  max_entries: Optional[pulumi.Input[int]] = None,
                  prefix_list_description: Optional[pulumi.Input[str]] = None,
-                 prefix_list_name: Optional[pulumi.Input[str]] = None):
+                 prefix_list_name: Optional[pulumi.Input[str]] = None,
+                 status: Optional[pulumi.Input[str]] = None):
         """
         Input properties used for looking up and filtering PrefixList resources.
         :param pulumi.Input[Sequence[pulumi.Input['PrefixListEntryArgs']]] entrys: The CIDR address block list of the prefix list. See the following `Block entrys`.
@@ -116,6 +117,7 @@ class _PrefixListState:
         :param pulumi.Input[int] max_entries: The maximum number of entries for CIDR address blocks in the prefix list.
         :param pulumi.Input[str] prefix_list_description: The description of the prefix list. It must be 2 to 256 characters in length and must start with a letter or Chinese, but cannot start with `http://` or `https://`.
         :param pulumi.Input[str] prefix_list_name: The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
+        :param pulumi.Input[str] status: (Available in v1.196.0+) The status of the Prefix List.
         """
         if entrys is not None:
             pulumi.set(__self__, "entrys", entrys)
@@ -127,6 +129,8 @@ class _PrefixListState:
             pulumi.set(__self__, "prefix_list_description", prefix_list_description)
         if prefix_list_name is not None:
             pulumi.set(__self__, "prefix_list_name", prefix_list_name)
+        if status is not None:
+            pulumi.set(__self__, "status", status)
 
     @property
     @pulumi.getter
@@ -187,6 +191,18 @@ class _PrefixListState:
     @prefix_list_name.setter
     def prefix_list_name(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "prefix_list_name", value)
+
+    @property
+    @pulumi.getter
+    def status(self) -> Optional[pulumi.Input[str]]:
+        """
+        (Available in v1.196.0+) The status of the Prefix List.
+        """
+        return pulumi.get(self, "status")
+
+    @status.setter
+    def status(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "status", value)
 
 
 class PrefixList(pulumi.CustomResource):
@@ -316,6 +332,7 @@ class PrefixList(pulumi.CustomResource):
             __props__.__dict__["max_entries"] = max_entries
             __props__.__dict__["prefix_list_description"] = prefix_list_description
             __props__.__dict__["prefix_list_name"] = prefix_list_name
+            __props__.__dict__["status"] = None
         super(PrefixList, __self__).__init__(
             'alicloud:vpc/prefixList:PrefixList',
             resource_name,
@@ -330,7 +347,8 @@ class PrefixList(pulumi.CustomResource):
             ip_version: Optional[pulumi.Input[str]] = None,
             max_entries: Optional[pulumi.Input[int]] = None,
             prefix_list_description: Optional[pulumi.Input[str]] = None,
-            prefix_list_name: Optional[pulumi.Input[str]] = None) -> 'PrefixList':
+            prefix_list_name: Optional[pulumi.Input[str]] = None,
+            status: Optional[pulumi.Input[str]] = None) -> 'PrefixList':
         """
         Get an existing PrefixList resource's state with the given name, id, and optional extra
         properties used to qualify the lookup.
@@ -343,6 +361,7 @@ class PrefixList(pulumi.CustomResource):
         :param pulumi.Input[int] max_entries: The maximum number of entries for CIDR address blocks in the prefix list.
         :param pulumi.Input[str] prefix_list_description: The description of the prefix list. It must be 2 to 256 characters in length and must start with a letter or Chinese, but cannot start with `http://` or `https://`.
         :param pulumi.Input[str] prefix_list_name: The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
+        :param pulumi.Input[str] status: (Available in v1.196.0+) The status of the Prefix List.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
 
@@ -353,6 +372,7 @@ class PrefixList(pulumi.CustomResource):
         __props__.__dict__["max_entries"] = max_entries
         __props__.__dict__["prefix_list_description"] = prefix_list_description
         __props__.__dict__["prefix_list_name"] = prefix_list_name
+        __props__.__dict__["status"] = status
         return PrefixList(resource_name, opts=opts, __props__=__props__)
 
     @property
@@ -394,4 +414,12 @@ class PrefixList(pulumi.CustomResource):
         The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
         """
         return pulumi.get(self, "prefix_list_name")
+
+    @property
+    @pulumi.getter
+    def status(self) -> pulumi.Output[str]:
+        """
+        (Available in v1.196.0+) The status of the Prefix List.
+        """
+        return pulumi.get(self, "status")
 

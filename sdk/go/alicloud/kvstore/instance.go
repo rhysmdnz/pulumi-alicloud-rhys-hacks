@@ -10,140 +10,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// Provides an ApsaraDB Redis / Memcache instance resource. A DB instance is an isolated database environment in the cloud. It support be associated with IP whitelists and backup configuration which are separate resource providers. For information about Alicloud KVStore DBInstance more and how to use it, see [What is Resource Alicloud KVStore DBInstance](https://www.alibabacloud.com/help/doc-detail/60873.htm).
-//
-// ## Example Usage
-//
-// # Basic Usage
-//
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/rhysmdnz/pulumi-alicloud/sdk/go/alicloud/kvstore"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := kvstore.NewInstance(ctx, "example", &kvstore.InstanceArgs{
-//				Config: pulumi.AnyMap{
-//					"appendonly":             pulumi.Any("yes"),
-//					"lazyfree-lazy-eviction": pulumi.Any("yes"),
-//				},
-//				DbInstanceName:  pulumi.String("tf-test-basic"),
-//				EngineVersion:   pulumi.String("4.0"),
-//				InstanceClass:   pulumi.String("redis.master.large.default"),
-//				InstanceType:    pulumi.String("Redis"),
-//				ResourceGroupId: pulumi.String("rg-123456"),
-//				SecurityIps: pulumi.StringArray{
-//					pulumi.String("10.23.12.24"),
-//				},
-//				Tags: pulumi.AnyMap{
-//					"Created": pulumi.Any("TF"),
-//					"For":     pulumi.Any("Test"),
-//				},
-//				VswitchId: pulumi.String("vsw-123456"),
-//				ZoneId:    pulumi.String("cn-beijing-h"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
-//
-// Transform To PrePaid
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/rhysmdnz/pulumi-alicloud/sdk/go/alicloud/kvstore"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := kvstore.NewInstance(ctx, "example", &kvstore.InstanceArgs{
-//				Config: pulumi.AnyMap{
-//					"appendonly":             pulumi.Any("yes"),
-//					"lazyfree-lazy-eviction": pulumi.Any("yes"),
-//				},
-//				DbInstanceName:  pulumi.String("tf-test-basic"),
-//				EngineVersion:   pulumi.String("4.0"),
-//				InstanceClass:   pulumi.String("redis.master.large.default"),
-//				InstanceType:    pulumi.String("Redis"),
-//				PaymentType:     pulumi.String("PrePaid"),
-//				Period:          pulumi.String("12"),
-//				ResourceGroupId: pulumi.String("rg-123456"),
-//				SecurityIps: pulumi.StringArray{
-//					pulumi.String("10.23.12.24"),
-//				},
-//				Tags: pulumi.AnyMap{
-//					"Created": pulumi.Any("TF"),
-//					"For":     pulumi.Any("Test"),
-//				},
-//				VswitchId: pulumi.String("vsw-123456"),
-//				ZoneId:    pulumi.String("cn-beijing-h"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
-//
-// Modify Private Connection String
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/rhysmdnz/pulumi-alicloud/sdk/go/alicloud/kvstore"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := kvstore.NewInstance(ctx, "example", &kvstore.InstanceArgs{
-//				Config: pulumi.AnyMap{
-//					"appendonly":             pulumi.Any("yes"),
-//					"lazyfree-lazy-eviction": pulumi.Any("yes"),
-//				},
-//				DbInstanceName:          pulumi.String("tf-test-basic"),
-//				EngineVersion:           pulumi.String("4.0"),
-//				InstanceClass:           pulumi.String("redis.master.large.default"),
-//				InstanceType:            pulumi.String("Redis"),
-//				PrivateConnectionPrefix: pulumi.String("privateconnectionstringprefix"),
-//				ResourceGroupId:         pulumi.String("rg-123456"),
-//				SecurityIps: pulumi.StringArray{
-//					pulumi.String("10.23.12.24"),
-//				},
-//				Tags: pulumi.AnyMap{
-//					"Created": pulumi.Any("TF"),
-//					"For":     pulumi.Any("Test"),
-//				},
-//				VswitchId: pulumi.String("vsw-123456"),
-//				ZoneId:    pulumi.String("cn-beijing-h"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
-//
 // ## Import
 //
 // KVStore instance can be imported using the id, e.g.
@@ -197,15 +63,24 @@ type Instance struct {
 	// * true: prechecks the request without creating an instance. The system prechecks the required parameters, request format, service limits, and available resources. If the request fails the precheck, the corresponding error message is returned. If the request passes the precheck, the DryRunOperation error code is returned.
 	// * false: checks the request. After the request passes the check, an instance is created.
 	DryRun pulumi.BoolPtrOutput `pulumi:"dryRun"`
+	// The time when the database is switched after the instance is migrated,
+	// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+	// - Immediately (Default): The configurations are immediately changed.
+	// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintainStartTime` and `maintainEndTime` to change the maintenance window.
+	EffectiveTime pulumi.StringPtrOutput `pulumi:"effectiveTime"`
 	// Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
 	EnableBackupLog pulumi.IntPtrOutput `pulumi:"enableBackupLog"`
 	// It has been deprecated from provider version 1.101.0 and resource `kvstore.Connection` instead.
 	//
 	// Deprecated: Field 'enable_public' has been deprecated from version 1.101.0. Please use resource 'alicloud_kvstore_connection' instead.
 	EnablePublic pulumi.BoolOutput `pulumi:"enablePublic"`
+	// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+	EncryptionKey pulumi.StringOutput `pulumi:"encryptionKey"`
+	// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+	EncryptionName pulumi.StringOutput `pulumi:"encryptionName"`
 	// The expiration time of the prepaid instance.
 	EndTime pulumi.StringOutput `pulumi:"endTime"`
-	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
 	// **NOTE:** When `instanceType = Memcache`, the `engineVersion` only supports "4.0".
 	EngineVersion pulumi.StringOutput `pulumi:"engineVersion"`
 	// Specifies whether to forcibly change the type. Default to: `true`.
@@ -267,6 +142,8 @@ type Instance struct {
 	ResourceGroupId pulumi.StringOutput `pulumi:"resourceGroupId"`
 	// The point in time of a backup file.
 	RestoreTime pulumi.StringPtrOutput `pulumi:"restoreTime"`
+	// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+	RoleArn pulumi.StringPtrOutput `pulumi:"roleArn"`
 	// The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
 	SecondaryZoneId pulumi.StringPtrOutput `pulumi:"secondaryZoneId"`
 	// The ID of security groups.
@@ -287,6 +164,8 @@ type Instance struct {
 	Status pulumi.StringOutput `pulumi:"status"`
 	// A mapping of tags to assign to the resource.
 	Tags pulumi.MapOutput `pulumi:"tags"`
+	// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+	TdeStatus pulumi.StringOutput `pulumi:"tdeStatus"`
 	// Only meaningful if instanceType is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.
 	VpcAuthMode pulumi.StringPtrOutput `pulumi:"vpcAuthMode"`
 	// The ID of VSwitch.
@@ -366,15 +245,24 @@ type instanceState struct {
 	// * true: prechecks the request without creating an instance. The system prechecks the required parameters, request format, service limits, and available resources. If the request fails the precheck, the corresponding error message is returned. If the request passes the precheck, the DryRunOperation error code is returned.
 	// * false: checks the request. After the request passes the check, an instance is created.
 	DryRun *bool `pulumi:"dryRun"`
+	// The time when the database is switched after the instance is migrated,
+	// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+	// - Immediately (Default): The configurations are immediately changed.
+	// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintainStartTime` and `maintainEndTime` to change the maintenance window.
+	EffectiveTime *string `pulumi:"effectiveTime"`
 	// Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
 	EnableBackupLog *int `pulumi:"enableBackupLog"`
 	// It has been deprecated from provider version 1.101.0 and resource `kvstore.Connection` instead.
 	//
 	// Deprecated: Field 'enable_public' has been deprecated from version 1.101.0. Please use resource 'alicloud_kvstore_connection' instead.
 	EnablePublic *bool `pulumi:"enablePublic"`
+	// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+	EncryptionKey *string `pulumi:"encryptionKey"`
+	// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+	EncryptionName *string `pulumi:"encryptionName"`
 	// The expiration time of the prepaid instance.
 	EndTime *string `pulumi:"endTime"`
-	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
 	// **NOTE:** When `instanceType = Memcache`, the `engineVersion` only supports "4.0".
 	EngineVersion *string `pulumi:"engineVersion"`
 	// Specifies whether to forcibly change the type. Default to: `true`.
@@ -436,6 +324,8 @@ type instanceState struct {
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
 	// The point in time of a backup file.
 	RestoreTime *string `pulumi:"restoreTime"`
+	// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+	RoleArn *string `pulumi:"roleArn"`
 	// The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
 	SecondaryZoneId *string `pulumi:"secondaryZoneId"`
 	// The ID of security groups.
@@ -456,6 +346,8 @@ type instanceState struct {
 	Status *string `pulumi:"status"`
 	// A mapping of tags to assign to the resource.
 	Tags map[string]interface{} `pulumi:"tags"`
+	// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+	TdeStatus *string `pulumi:"tdeStatus"`
 	// Only meaningful if instanceType is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.
 	VpcAuthMode *string `pulumi:"vpcAuthMode"`
 	// The ID of VSwitch.
@@ -506,15 +398,24 @@ type InstanceState struct {
 	// * true: prechecks the request without creating an instance. The system prechecks the required parameters, request format, service limits, and available resources. If the request fails the precheck, the corresponding error message is returned. If the request passes the precheck, the DryRunOperation error code is returned.
 	// * false: checks the request. After the request passes the check, an instance is created.
 	DryRun pulumi.BoolPtrInput
+	// The time when the database is switched after the instance is migrated,
+	// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+	// - Immediately (Default): The configurations are immediately changed.
+	// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintainStartTime` and `maintainEndTime` to change the maintenance window.
+	EffectiveTime pulumi.StringPtrInput
 	// Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
 	EnableBackupLog pulumi.IntPtrInput
 	// It has been deprecated from provider version 1.101.0 and resource `kvstore.Connection` instead.
 	//
 	// Deprecated: Field 'enable_public' has been deprecated from version 1.101.0. Please use resource 'alicloud_kvstore_connection' instead.
 	EnablePublic pulumi.BoolPtrInput
+	// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+	EncryptionKey pulumi.StringPtrInput
+	// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+	EncryptionName pulumi.StringPtrInput
 	// The expiration time of the prepaid instance.
 	EndTime pulumi.StringPtrInput
-	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
 	// **NOTE:** When `instanceType = Memcache`, the `engineVersion` only supports "4.0".
 	EngineVersion pulumi.StringPtrInput
 	// Specifies whether to forcibly change the type. Default to: `true`.
@@ -576,6 +477,8 @@ type InstanceState struct {
 	ResourceGroupId pulumi.StringPtrInput
 	// The point in time of a backup file.
 	RestoreTime pulumi.StringPtrInput
+	// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+	RoleArn pulumi.StringPtrInput
 	// The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
 	SecondaryZoneId pulumi.StringPtrInput
 	// The ID of security groups.
@@ -596,6 +499,8 @@ type InstanceState struct {
 	Status pulumi.StringPtrInput
 	// A mapping of tags to assign to the resource.
 	Tags pulumi.MapInput
+	// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+	TdeStatus pulumi.StringPtrInput
 	// Only meaningful if instanceType is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.
 	VpcAuthMode pulumi.StringPtrInput
 	// The ID of VSwitch.
@@ -645,13 +550,22 @@ type instanceArgs struct {
 	// * true: prechecks the request without creating an instance. The system prechecks the required parameters, request format, service limits, and available resources. If the request fails the precheck, the corresponding error message is returned. If the request passes the precheck, the DryRunOperation error code is returned.
 	// * false: checks the request. After the request passes the check, an instance is created.
 	DryRun *bool `pulumi:"dryRun"`
+	// The time when the database is switched after the instance is migrated,
+	// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+	// - Immediately (Default): The configurations are immediately changed.
+	// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintainStartTime` and `maintainEndTime` to change the maintenance window.
+	EffectiveTime *string `pulumi:"effectiveTime"`
 	// Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
 	EnableBackupLog *int `pulumi:"enableBackupLog"`
 	// It has been deprecated from provider version 1.101.0 and resource `kvstore.Connection` instead.
 	//
 	// Deprecated: Field 'enable_public' has been deprecated from version 1.101.0. Please use resource 'alicloud_kvstore_connection' instead.
 	EnablePublic *bool `pulumi:"enablePublic"`
-	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+	// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+	EncryptionKey *string `pulumi:"encryptionKey"`
+	// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+	EncryptionName *string `pulumi:"encryptionName"`
+	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
 	// **NOTE:** When `instanceType = Memcache`, the `engineVersion` only supports "4.0".
 	EngineVersion *string `pulumi:"engineVersion"`
 	// Specifies whether to forcibly change the type. Default to: `true`.
@@ -711,6 +625,8 @@ type instanceArgs struct {
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
 	// The point in time of a backup file.
 	RestoreTime *string `pulumi:"restoreTime"`
+	// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+	RoleArn *string `pulumi:"roleArn"`
 	// The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
 	SecondaryZoneId *string `pulumi:"secondaryZoneId"`
 	// The ID of security groups.
@@ -728,6 +644,8 @@ type instanceArgs struct {
 	SslEnable *string `pulumi:"sslEnable"`
 	// A mapping of tags to assign to the resource.
 	Tags map[string]interface{} `pulumi:"tags"`
+	// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+	TdeStatus *string `pulumi:"tdeStatus"`
 	// Only meaningful if instanceType is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.
 	VpcAuthMode *string `pulumi:"vpcAuthMode"`
 	// The ID of VSwitch.
@@ -774,13 +692,22 @@ type InstanceArgs struct {
 	// * true: prechecks the request without creating an instance. The system prechecks the required parameters, request format, service limits, and available resources. If the request fails the precheck, the corresponding error message is returned. If the request passes the precheck, the DryRunOperation error code is returned.
 	// * false: checks the request. After the request passes the check, an instance is created.
 	DryRun pulumi.BoolPtrInput
+	// The time when the database is switched after the instance is migrated,
+	// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+	// - Immediately (Default): The configurations are immediately changed.
+	// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintainStartTime` and `maintainEndTime` to change the maintenance window.
+	EffectiveTime pulumi.StringPtrInput
 	// Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
 	EnableBackupLog pulumi.IntPtrInput
 	// It has been deprecated from provider version 1.101.0 and resource `kvstore.Connection` instead.
 	//
 	// Deprecated: Field 'enable_public' has been deprecated from version 1.101.0. Please use resource 'alicloud_kvstore_connection' instead.
 	EnablePublic pulumi.BoolPtrInput
-	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+	// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+	EncryptionKey pulumi.StringPtrInput
+	// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+	EncryptionName pulumi.StringPtrInput
+	// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
 	// **NOTE:** When `instanceType = Memcache`, the `engineVersion` only supports "4.0".
 	EngineVersion pulumi.StringPtrInput
 	// Specifies whether to forcibly change the type. Default to: `true`.
@@ -840,6 +767,8 @@ type InstanceArgs struct {
 	ResourceGroupId pulumi.StringPtrInput
 	// The point in time of a backup file.
 	RestoreTime pulumi.StringPtrInput
+	// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+	RoleArn pulumi.StringPtrInput
 	// The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
 	SecondaryZoneId pulumi.StringPtrInput
 	// The ID of security groups.
@@ -857,6 +786,8 @@ type InstanceArgs struct {
 	SslEnable pulumi.StringPtrInput
 	// A mapping of tags to assign to the resource.
 	Tags pulumi.MapInput
+	// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+	TdeStatus pulumi.StringPtrInput
 	// Only meaningful if instanceType is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.
 	VpcAuthMode pulumi.StringPtrInput
 	// The ID of VSwitch.
@@ -1047,6 +978,14 @@ func (o InstanceOutput) DryRun() pulumi.BoolPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.BoolPtrOutput { return v.DryRun }).(pulumi.BoolPtrOutput)
 }
 
+// The time when the database is switched after the instance is migrated,
+// or when the major version is upgraded, or when the instance class is upgraded. Valid values:
+// - Immediately (Default): The configurations are immediately changed.
+// - MaintainTime: The configurations are changed within the maintenance window. You can set `maintainStartTime` and `maintainEndTime` to change the maintenance window.
+func (o InstanceOutput) EffectiveTime() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.EffectiveTime }).(pulumi.StringPtrOutput)
+}
+
 // Turn on or off incremental backup. Valid values: `1`, `0`. Default to `0`
 func (o InstanceOutput) EnableBackupLog() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.IntPtrOutput { return v.EnableBackupLog }).(pulumi.IntPtrOutput)
@@ -1059,12 +998,22 @@ func (o InstanceOutput) EnablePublic() pulumi.BoolOutput {
 	return o.ApplyT(func(v *Instance) pulumi.BoolOutput { return v.EnablePublic }).(pulumi.BoolOutput)
 }
 
+// The Custom key ID, which you can get by calling DescribeEncryptionKeyList.If this parameter is not passed, the key is automatically generated by the key management service. To create a custom key, you can call the CreateKey interface of the key management service.
+func (o InstanceOutput) EncryptionKey() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.EncryptionKey }).(pulumi.StringOutput)
+}
+
+// The Encryption algorithm, default AES-CTR-256.Note that this parameter is only available when the TDEStatus parameter is Enabled.
+func (o InstanceOutput) EncryptionName() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.EncryptionName }).(pulumi.StringOutput)
+}
+
 // The expiration time of the prepaid instance.
 func (o InstanceOutput) EndTime() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.EndTime }).(pulumi.StringOutput)
 }
 
-// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0"]. Default to "5.0".
+// The engine version of the KVStore DBInstance. Valid values: ["2.8", "4.0", "5.0", "6.0", "7.0"]. Default to "5.0".
 // **NOTE:** When `instanceType = Memcache`, the `engineVersion` only supports "4.0".
 func (o InstanceOutput) EngineVersion() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.EngineVersion }).(pulumi.StringOutput)
@@ -1207,6 +1156,11 @@ func (o InstanceOutput) RestoreTime() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.RestoreTime }).(pulumi.StringPtrOutput)
 }
 
+// The Specify the global resource descriptor ARN (Alibaba Cloud Resource Name) information of the role to be authorized, and use the related key management services after the authorization is completed, in the format: `acs:ram::$accountID:role/$roleName`.
+func (o InstanceOutput) RoleArn() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.RoleArn }).(pulumi.StringPtrOutput)
+}
+
 // The ID of the secondary zone to which you want to migrate the ApsaraDB for Redis instance.
 func (o InstanceOutput) SecondaryZoneId() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.SecondaryZoneId }).(pulumi.StringPtrOutput)
@@ -1252,6 +1206,11 @@ func (o InstanceOutput) Status() pulumi.StringOutput {
 // A mapping of tags to assign to the resource.
 func (o InstanceOutput) Tags() pulumi.MapOutput {
 	return o.ApplyT(func(v *Instance) pulumi.MapOutput { return v.Tags }).(pulumi.MapOutput)
+}
+
+// The Is the TDE encryption function on. The TDE function cannot be switched off for the time being. Please assess whether it will affect your business before switching it on. Valid values: `Enabled`, `Disabled`.
+func (o InstanceOutput) TdeStatus() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.TdeStatus }).(pulumi.StringOutput)
 }
 
 // Only meaningful if instanceType is `Redis` and network type is VPC. Valid values: `Close`, `Open`. Defaults to `Open`.  `Close` means the redis instance can be accessed without authentication. `Open` means authentication is required.

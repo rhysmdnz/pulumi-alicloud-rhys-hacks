@@ -25,86 +25,87 @@ namespace Pulumi.AliCloud.Slb
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
     ///     var config = new Config();
-    ///     var name = config.Get("name") ?? "slbbackendservertest";
-    ///     var defaultZones = AliCloud.GetZones.Invoke(new()
+    ///     var slbBackendServerName = config.Get("slbBackendServerName") ?? "slbbackendservertest";
+    ///     var backendServerZones = AliCloud.GetZones.Invoke(new()
     ///     {
     ///         AvailableDiskCategory = "cloud_efficiency",
     ///         AvailableResourceCreation = "VSwitch",
     ///     });
     /// 
-    ///     var defaultInstanceTypes = AliCloud.Ecs.GetInstanceTypes.Invoke(new()
+    ///     var backendServerInstanceTypes = AliCloud.Ecs.GetInstanceTypes.Invoke(new()
     ///     {
-    ///         AvailabilityZone = defaultZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
+    ///         AvailabilityZone = backendServerZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
     ///         CpuCoreCount = 1,
     ///         MemorySize = 2,
     ///     });
     /// 
-    ///     var defaultImages = AliCloud.Ecs.GetImages.Invoke(new()
+    ///     var backendServerImages = AliCloud.Ecs.GetImages.Invoke(new()
     ///     {
     ///         NameRegex = "^ubuntu_18.*64",
     ///         MostRecent = true,
     ///         Owners = "system",
     ///     });
     /// 
-    ///     var defaultNetwork = new AliCloud.Vpc.Network("defaultNetwork", new()
+    ///     var backendServerNetwork = new AliCloud.Vpc.Network("backendServerNetwork", new()
     ///     {
-    ///         VpcName = name,
+    ///         VpcName = slbBackendServerName,
     ///         CidrBlock = "172.16.0.0/16",
     ///     });
     /// 
-    ///     var defaultSwitch = new AliCloud.Vpc.Switch("defaultSwitch", new()
+    ///     var backendServerSwitch = new AliCloud.Vpc.Switch("backendServerSwitch", new()
     ///     {
-    ///         VpcId = defaultNetwork.Id,
+    ///         VpcId = backendServerNetwork.Id,
     ///         CidrBlock = "172.16.0.0/16",
-    ///         ZoneId = defaultZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
-    ///         VswitchName = name,
+    ///         ZoneId = backendServerZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
+    ///         VswitchName = slbBackendServerName,
     ///     });
     /// 
-    ///     var defaultSecurityGroup = new AliCloud.Ecs.SecurityGroup("defaultSecurityGroup", new()
+    ///     var backendServerSecurityGroup = new AliCloud.Ecs.SecurityGroup("backendServerSecurityGroup", new()
     ///     {
-    ///         VpcId = defaultNetwork.Id,
+    ///         VpcId = backendServerNetwork.Id,
     ///     });
     /// 
-    ///     var defaultInstance = new List&lt;AliCloud.Ecs.Instance&gt;();
+    ///     var backendServerInstance = new List&lt;AliCloud.Ecs.Instance&gt;();
     ///     for (var rangeIndex = 0; rangeIndex &lt; "2"; rangeIndex++)
     ///     {
     ///         var range = new { Value = rangeIndex };
-    ///         defaultInstance.Add(new AliCloud.Ecs.Instance($"defaultInstance-{range.Value}", new()
+    ///         backendServerInstance.Add(new AliCloud.Ecs.Instance($"backendServerInstance-{range.Value}", new()
     ///         {
-    ///             ImageId = defaultImages.Apply(getImagesResult =&gt; getImagesResult.Images[0]?.Id),
-    ///             InstanceType = defaultInstanceTypes.Apply(getInstanceTypesResult =&gt; getInstanceTypesResult.InstanceTypes[0]?.Id),
-    ///             InstanceName = name,
+    ///             ImageId = backendServerImages.Apply(getImagesResult =&gt; getImagesResult.Images[0]?.Id),
+    ///             InstanceType = backendServerInstanceTypes.Apply(getInstanceTypesResult =&gt; getInstanceTypesResult.InstanceTypes[0]?.Id),
+    ///             InstanceName = slbBackendServerName,
     ///             SecurityGroups = new[]
     ///             {
-    ///                 defaultSecurityGroup,
+    ///                 backendServerSecurityGroup,
     ///             }.Select(__item =&gt; __item.Id).ToList(),
     ///             InternetChargeType = "PayByTraffic",
     ///             InternetMaxBandwidthOut = 10,
-    ///             AvailabilityZone = defaultZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
+    ///             AvailabilityZone = backendServerZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
     ///             InstanceChargeType = "PostPaid",
     ///             SystemDiskCategory = "cloud_efficiency",
-    ///             VswitchId = defaultSwitch.Id,
+    ///             VswitchId = backendServerSwitch.Id,
     ///         }));
     ///     }
-    ///     var defaultApplicationLoadBalancer = new AliCloud.Slb.ApplicationLoadBalancer("defaultApplicationLoadBalancer", new()
+    ///     var backendServerApplicationLoadBalancer = new AliCloud.Slb.ApplicationLoadBalancer("backendServerApplicationLoadBalancer", new()
     ///     {
-    ///         LoadBalancerName = name,
-    ///         VswitchId = defaultSwitch.Id,
+    ///         LoadBalancerName = slbBackendServerName,
+    ///         VswitchId = backendServerSwitch.Id,
+    ///         InstanceChargeType = "PayByCLCU",
     ///     });
     /// 
-    ///     var defaultBackendServer = new AliCloud.Slb.BackendServer("defaultBackendServer", new()
+    ///     var backendServerBackendServer = new AliCloud.Slb.BackendServer("backendServerBackendServer", new()
     ///     {
-    ///         LoadBalancerId = defaultApplicationLoadBalancer.Id,
+    ///         LoadBalancerId = backendServerApplicationLoadBalancer.Id,
     ///         BackendServers = new[]
     ///         {
     ///             new AliCloud.Slb.Inputs.BackendServerBackendServerArgs
     ///             {
-    ///                 ServerId = defaultInstance[0].Id,
+    ///                 ServerId = backendServerInstance[0].Id,
     ///                 Weight = 100,
     ///             },
     ///             new AliCloud.Slb.Inputs.BackendServerBackendServerArgs
     ///             {
-    ///                 ServerId = defaultInstance[1].Id,
+    ///                 ServerId = backendServerInstance[1].Id,
     ///                 Weight = 100,
     ///             },
     ///         },

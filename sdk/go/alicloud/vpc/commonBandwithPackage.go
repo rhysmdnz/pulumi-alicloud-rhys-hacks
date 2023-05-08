@@ -68,7 +68,8 @@ type CommonBandwithPackage struct {
 	Force pulumi.StringPtrOutput `pulumi:"force"`
 	// The billing method of the common bandwidth package. Valid values are `PayByBandwidth` and `PayBy95` and `PayByTraffic`, `PayByDominantTraffic`. `PayBy95` is pay by classic 95th percentile pricing. International Account doesn't supports `PayByBandwidth` and `PayBy95`. Default to `PayByTraffic`. **NOTE:** From 1.176.0+, `PayByDominantTraffic` is available.
 	InternetChargeType pulumi.StringPtrOutput `pulumi:"internetChargeType"`
-	// The type of the Internet Service Provider. Valid values: `BGP` and `BGP_PRO`. Default to `BGP`.
+	// The type of the Internet Service Provider. Valid values: `BGP`, `BGP_PRO`, `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2` and `BGP_FinanceCloud`. Default to `BGP`.
+	// **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp pulumi.StringPtrOutput `pulumi:"isp"`
 	// Field `name` has been deprecated from provider version 1.120.0. New field `bandwidthPackageName` instead.
 	//
@@ -133,7 +134,8 @@ type commonBandwithPackageState struct {
 	Force *string `pulumi:"force"`
 	// The billing method of the common bandwidth package. Valid values are `PayByBandwidth` and `PayBy95` and `PayByTraffic`, `PayByDominantTraffic`. `PayBy95` is pay by classic 95th percentile pricing. International Account doesn't supports `PayByBandwidth` and `PayBy95`. Default to `PayByTraffic`. **NOTE:** From 1.176.0+, `PayByDominantTraffic` is available.
 	InternetChargeType *string `pulumi:"internetChargeType"`
-	// The type of the Internet Service Provider. Valid values: `BGP` and `BGP_PRO`. Default to `BGP`.
+	// The type of the Internet Service Provider. Valid values: `BGP`, `BGP_PRO`, `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2` and `BGP_FinanceCloud`. Default to `BGP`.
+	// **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp *string `pulumi:"isp"`
 	// Field `name` has been deprecated from provider version 1.120.0. New field `bandwidthPackageName` instead.
 	//
@@ -166,7 +168,8 @@ type CommonBandwithPackageState struct {
 	Force pulumi.StringPtrInput
 	// The billing method of the common bandwidth package. Valid values are `PayByBandwidth` and `PayBy95` and `PayByTraffic`, `PayByDominantTraffic`. `PayBy95` is pay by classic 95th percentile pricing. International Account doesn't supports `PayByBandwidth` and `PayBy95`. Default to `PayByTraffic`. **NOTE:** From 1.176.0+, `PayByDominantTraffic` is available.
 	InternetChargeType pulumi.StringPtrInput
-	// The type of the Internet Service Provider. Valid values: `BGP` and `BGP_PRO`. Default to `BGP`.
+	// The type of the Internet Service Provider. Valid values: `BGP`, `BGP_PRO`, `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2` and `BGP_FinanceCloud`. Default to `BGP`.
+	// **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp pulumi.StringPtrInput
 	// Field `name` has been deprecated from provider version 1.120.0. New field `bandwidthPackageName` instead.
 	//
@@ -203,7 +206,8 @@ type commonBandwithPackageArgs struct {
 	Force *string `pulumi:"force"`
 	// The billing method of the common bandwidth package. Valid values are `PayByBandwidth` and `PayBy95` and `PayByTraffic`, `PayByDominantTraffic`. `PayBy95` is pay by classic 95th percentile pricing. International Account doesn't supports `PayByBandwidth` and `PayBy95`. Default to `PayByTraffic`. **NOTE:** From 1.176.0+, `PayByDominantTraffic` is available.
 	InternetChargeType *string `pulumi:"internetChargeType"`
-	// The type of the Internet Service Provider. Valid values: `BGP` and `BGP_PRO`. Default to `BGP`.
+	// The type of the Internet Service Provider. Valid values: `BGP`, `BGP_PRO`, `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2` and `BGP_FinanceCloud`. Default to `BGP`.
+	// **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp *string `pulumi:"isp"`
 	// Field `name` has been deprecated from provider version 1.120.0. New field `bandwidthPackageName` instead.
 	//
@@ -235,7 +239,8 @@ type CommonBandwithPackageArgs struct {
 	Force pulumi.StringPtrInput
 	// The billing method of the common bandwidth package. Valid values are `PayByBandwidth` and `PayBy95` and `PayByTraffic`, `PayByDominantTraffic`. `PayBy95` is pay by classic 95th percentile pricing. International Account doesn't supports `PayByBandwidth` and `PayBy95`. Default to `PayByTraffic`. **NOTE:** From 1.176.0+, `PayByDominantTraffic` is available.
 	InternetChargeType pulumi.StringPtrInput
-	// The type of the Internet Service Provider. Valid values: `BGP` and `BGP_PRO`. Default to `BGP`.
+	// The type of the Internet Service Provider. Valid values: `BGP`, `BGP_PRO`, `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2` and `BGP_FinanceCloud`. Default to `BGP`.
+	// **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 	Isp pulumi.StringPtrInput
 	// Field `name` has been deprecated from provider version 1.120.0. New field `bandwidthPackageName` instead.
 	//
@@ -370,7 +375,8 @@ func (o CommonBandwithPackageOutput) InternetChargeType() pulumi.StringPtrOutput
 	return o.ApplyT(func(v *CommonBandwithPackage) pulumi.StringPtrOutput { return v.InternetChargeType }).(pulumi.StringPtrOutput)
 }
 
-// The type of the Internet Service Provider. Valid values: `BGP` and `BGP_PRO`. Default to `BGP`.
+// The type of the Internet Service Provider. Valid values: `BGP`, `BGP_PRO`, `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2` and `BGP_FinanceCloud`. Default to `BGP`.
+// **NOTE:** From version 1.203.0, `isp` can be set to `ChinaTelecom`, `ChinaUnicom`, `ChinaMobile`, `ChinaTelecom_L2`, `ChinaUnicom_L2`, `ChinaMobile_L2`, `BGP_FinanceCloud`.
 func (o CommonBandwithPackageOutput) Isp() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *CommonBandwithPackage) pulumi.StringPtrOutput { return v.Isp }).(pulumi.StringPtrOutput)
 }

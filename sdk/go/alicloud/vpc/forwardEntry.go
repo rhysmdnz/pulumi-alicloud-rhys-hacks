@@ -51,7 +51,7 @@ import (
 //			if err != nil {
 //				return err
 //			}
-//			_, err = vpc.NewSwitch(ctx, "defaultSwitch", &vpc.SwitchArgs{
+//			defaultSwitch, err := vpc.NewSwitch(ctx, "defaultSwitch", &vpc.SwitchArgs{
 //				VpcId:       defaultNetwork.ID(),
 //				CidrBlock:   pulumi.String("172.16.0.0/21"),
 //				ZoneId:      pulumi.String(defaultZones.Zones[0].Id),
@@ -61,8 +61,11 @@ import (
 //				return err
 //			}
 //			defaultNatGateway, err := vpc.NewNatGateway(ctx, "defaultNatGateway", &vpc.NatGatewayArgs{
-//				VpcId:         defaultNetwork.ID(),
-//				Specification: pulumi.String("Small"),
+//				VpcId:              defaultNetwork.ID(),
+//				InternetChargeType: pulumi.String("PayByLcu"),
+//				NatGatewayName:     pulumi.String(name),
+//				NatType:            pulumi.String("Enhanced"),
+//				VswitchId:          defaultSwitch.ID(),
 //			})
 //			if err != nil {
 //				return err

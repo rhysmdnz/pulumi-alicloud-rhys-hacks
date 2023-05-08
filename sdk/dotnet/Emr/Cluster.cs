@@ -10,10 +10,6 @@ using Pulumi.Serialization;
 namespace Pulumi.AliCloud.Emr
 {
     /// <summary>
-    /// Provides a EMR Cluster resource. With this you can create, read, and release  EMR Cluster.
-    /// 
-    /// &gt; **NOTE:** Available in 1.57.0+.
-    /// 
     /// ## Example Usage
     /// ### 1. Create A Cluster
     /// 

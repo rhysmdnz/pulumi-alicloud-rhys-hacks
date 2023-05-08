@@ -637,7 +637,7 @@ func (o BucketLifecycleRuleNoncurrentVersionExpirationArrayOutput) Index(i pulum
 type BucketLifecycleRuleNoncurrentVersionTransition struct {
 	// Specifies the number of days noncurrent object versions transition.
 	Days int `pulumi:"days"`
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass string `pulumi:"storageClass"`
 }
 
@@ -655,7 +655,7 @@ type BucketLifecycleRuleNoncurrentVersionTransitionInput interface {
 type BucketLifecycleRuleNoncurrentVersionTransitionArgs struct {
 	// Specifies the number of days noncurrent object versions transition.
 	Days pulumi.IntInput `pulumi:"days"`
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass pulumi.StringInput `pulumi:"storageClass"`
 }
 
@@ -715,7 +715,7 @@ func (o BucketLifecycleRuleNoncurrentVersionTransitionOutput) Days() pulumi.IntO
 	return o.ApplyT(func(v BucketLifecycleRuleNoncurrentVersionTransition) int { return v.Days }).(pulumi.IntOutput)
 }
 
-// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 func (o BucketLifecycleRuleNoncurrentVersionTransitionOutput) StorageClass() pulumi.StringOutput {
 	return o.ApplyT(func(v BucketLifecycleRuleNoncurrentVersionTransition) string { return v.StorageClass }).(pulumi.StringOutput)
 }
@@ -745,7 +745,7 @@ type BucketLifecycleRuleTransition struct {
 	CreatedBeforeDate *string `pulumi:"createdBeforeDate"`
 	// Specifies the number of days noncurrent object versions transition.
 	Days *int `pulumi:"days"`
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass *string `pulumi:"storageClass"`
 }
 
@@ -765,7 +765,7 @@ type BucketLifecycleRuleTransitionArgs struct {
 	CreatedBeforeDate pulumi.StringPtrInput `pulumi:"createdBeforeDate"`
 	// Specifies the number of days noncurrent object versions transition.
 	Days pulumi.IntPtrInput `pulumi:"days"`
-	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+	// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 	StorageClass pulumi.StringPtrInput `pulumi:"storageClass"`
 }
 
@@ -830,7 +830,7 @@ func (o BucketLifecycleRuleTransitionOutput) Days() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v BucketLifecycleRuleTransition) *int { return v.Days }).(pulumi.IntPtrOutput)
 }
 
-// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
 func (o BucketLifecycleRuleTransitionOutput) StorageClass() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v BucketLifecycleRuleTransition) *string { return v.StorageClass }).(pulumi.StringPtrOutput)
 }
@@ -2657,7 +2657,7 @@ type GetBucketObjectsObject struct {
 	ServerSideEncryption string `pulumi:"serverSideEncryption"`
 	// If present, specifies the ID of the Key Management Service(KMS) master encryption key that was used for the object.
 	SseKmsKeyId string `pulumi:"sseKmsKeyId"`
-	// Object storage type. Possible values: `Standard`, `IA` and `Archive`.
+	// Object storage type. Possible values: `Standard`, `IA`, `Archive` and `ColdArchive`.
 	StorageClass string `pulumi:"storageClass"`
 }
 
@@ -2699,7 +2699,7 @@ type GetBucketObjectsObjectArgs struct {
 	ServerSideEncryption pulumi.StringInput `pulumi:"serverSideEncryption"`
 	// If present, specifies the ID of the Key Management Service(KMS) master encryption key that was used for the object.
 	SseKmsKeyId pulumi.StringInput `pulumi:"sseKmsKeyId"`
-	// Object storage type. Possible values: `Standard`, `IA` and `Archive`.
+	// Object storage type. Possible values: `Standard`, `IA`, `Archive` and `ColdArchive`.
 	StorageClass pulumi.StringInput `pulumi:"storageClass"`
 }
 
@@ -2819,7 +2819,7 @@ func (o GetBucketObjectsObjectOutput) SseKmsKeyId() pulumi.StringOutput {
 	return o.ApplyT(func(v GetBucketObjectsObject) string { return v.SseKmsKeyId }).(pulumi.StringOutput)
 }
 
-// Object storage type. Possible values: `Standard`, `IA` and `Archive`.
+// Object storage type. Possible values: `Standard`, `IA`, `Archive` and `ColdArchive`.
 func (o GetBucketObjectsObjectOutput) StorageClass() pulumi.StringOutput {
 	return o.ApplyT(func(v GetBucketObjectsObject) string { return v.StorageClass }).(pulumi.StringOutput)
 }
@@ -2872,7 +2872,7 @@ type GetBucketsBucket struct {
 	RefererConfig GetBucketsBucketRefererConfig `pulumi:"refererConfig"`
 	// A configuration of default encryption for a bucket. It contains the following attributes:
 	ServerSideEncryptionRule GetBucketsBucketServerSideEncryptionRule `pulumi:"serverSideEncryptionRule"`
-	// Object storage type. Possible values: `Standard`, `IA` and `Archive`.
+	// Object storage type. Possible values: `Standard`, `IA`, `Archive` and `ColdArchive`.
 	StorageClass string `pulumi:"storageClass"`
 	// A mapping of tags.
 	Tags map[string]interface{} `pulumi:"tags"`
@@ -2921,7 +2921,7 @@ type GetBucketsBucketArgs struct {
 	RefererConfig GetBucketsBucketRefererConfigInput `pulumi:"refererConfig"`
 	// A configuration of default encryption for a bucket. It contains the following attributes:
 	ServerSideEncryptionRule GetBucketsBucketServerSideEncryptionRuleInput `pulumi:"serverSideEncryptionRule"`
-	// Object storage type. Possible values: `Standard`, `IA` and `Archive`.
+	// Object storage type. Possible values: `Standard`, `IA`, `Archive` and `ColdArchive`.
 	StorageClass pulumi.StringInput `pulumi:"storageClass"`
 	// A mapping of tags.
 	Tags pulumi.MapInput `pulumi:"tags"`
@@ -3051,7 +3051,7 @@ func (o GetBucketsBucketOutput) ServerSideEncryptionRule() GetBucketsBucketServe
 	return o.ApplyT(func(v GetBucketsBucket) GetBucketsBucketServerSideEncryptionRule { return v.ServerSideEncryptionRule }).(GetBucketsBucketServerSideEncryptionRuleOutput)
 }
 
-// Object storage type. Possible values: `Standard`, `IA` and `Archive`.
+// Object storage type. Possible values: `Standard`, `IA`, `Archive` and `ColdArchive`.
 func (o GetBucketsBucketOutput) StorageClass() pulumi.StringOutput {
 	return o.ApplyT(func(v GetBucketsBucket) string { return v.StorageClass }).(pulumi.StringOutput)
 }

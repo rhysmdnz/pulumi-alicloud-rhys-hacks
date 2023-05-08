@@ -44,7 +44,7 @@ namespace Pulumi.AliCloud.ResourceManager
         /// - `VSwitch`.
         /// - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
         /// - The following types are added after v1.192.0: `PrefixList` and `Image`.
-        /// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+        /// - The following types are added after v1.194.1: `PublicIpAddressPool`.
         /// </summary>
         [Output("resourceType")]
         public Output<string> ResourceType { get; private set; } = null!;
@@ -119,7 +119,7 @@ namespace Pulumi.AliCloud.ResourceManager
         /// - `VSwitch`.
         /// - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
         /// - The following types are added after v1.192.0: `PrefixList` and `Image`.
-        /// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+        /// - The following types are added after v1.194.1: `PublicIpAddressPool`.
         /// </summary>
         [Input("resourceType", required: true)]
         public Input<string> ResourceType { get; set; } = null!;
@@ -149,7 +149,7 @@ namespace Pulumi.AliCloud.ResourceManager
         /// - `VSwitch`.
         /// - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
         /// - The following types are added after v1.192.0: `PrefixList` and `Image`.
-        /// - The following types are added after v1.195.0: `PublicIpAddressPool`.
+        /// - The following types are added after v1.194.1: `PublicIpAddressPool`.
         /// </summary>
         [Input("resourceType")]
         public Input<string>? ResourceType { get; set; }

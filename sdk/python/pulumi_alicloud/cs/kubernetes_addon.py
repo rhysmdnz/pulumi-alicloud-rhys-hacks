@@ -514,7 +514,7 @@ class KubernetesAddon(pulumi.CustomResource):
 
     @property
     @pulumi.getter
-    def config(self) -> pulumi.Output[Optional[str]]:
+    def config(self) -> pulumi.Output[str]:
         """
         The custom configuration of addon. You can checkout the customizable configuration of the addon through datasource `cs.get_kubernetes_addon_metadata`, the returned format is the standard json schema. If return empty, it means that the addon does not support custom configuration yet. You can also checkout the current custom configuration through the data source `cs.get_kubernetes_addons`.
         """

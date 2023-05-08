@@ -36,7 +36,7 @@ namespace Pulumi.AliCloud.Vpn
         ///         IncludeReservationData = true,
         ///         NameRegex = "testAcc*",
         ///         OutputFile = "/tmp/vpns",
-        ///         Status = "active",
+        ///         Status = "Active",
         ///         VpcId = "fake-vpc-id",
         ///     });
         /// 
@@ -73,7 +73,7 @@ namespace Pulumi.AliCloud.Vpn
         ///         IncludeReservationData = true,
         ///         NameRegex = "testAcc*",
         ///         OutputFile = "/tmp/vpns",
-        ///         Status = "active",
+        ///         Status = "Active",
         ///         VpcId = "fake-vpc-id",
         ///     });
         /// 

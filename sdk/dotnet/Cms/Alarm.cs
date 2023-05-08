@@ -162,7 +162,7 @@ namespace Pulumi.AliCloud.Cms
         public Output<int?> StartTime { get; private set; } = null!;
 
         /// <summary>
-        /// Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        /// Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         /// </summary>
         [Output("statistics")]
         public Output<string> Statistics { get; private set; } = null!;
@@ -367,7 +367,7 @@ namespace Pulumi.AliCloud.Cms
         public Input<int>? StartTime { get; set; }
 
         /// <summary>
-        /// Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        /// Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         /// </summary>
         [Input("statistics")]
         public Input<string>? Statistics { get; set; }
@@ -533,7 +533,7 @@ namespace Pulumi.AliCloud.Cms
         public Input<int>? StartTime { get; set; }
 
         /// <summary>
-        /// Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        /// Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         /// </summary>
         [Input("statistics")]
         public Input<string>? Statistics { get; set; }

@@ -85,6 +85,9 @@ namespace Pulumi.AliCloud.ClickHouse
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
 
+        [Output("connectionString")]
+        public Output<string> ConnectionString { get; private set; } = null!;
+
         /// <summary>
         /// The db cluster access white list.
         /// </summary>
@@ -93,8 +96,8 @@ namespace Pulumi.AliCloud.ClickHouse
 
         /// <summary>
         /// The DBCluster class. According to the category, db_cluster_class has two value ranges:
-        /// * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-        /// * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+        /// * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+        /// * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         /// </summary>
         [Output("dbClusterClass")]
         public Output<string> DbClusterClass { get; private set; } = null!;
@@ -158,6 +161,12 @@ namespace Pulumi.AliCloud.ClickHouse
         /// </summary>
         [Output("period")]
         public Output<string?> Period { get; private set; } = null!;
+
+        /// <summary>
+        /// (Available in 1.196.0+) The connection port of the cluster.
+        /// </summary>
+        [Output("port")]
+        public Output<string> Port { get; private set; } = null!;
 
         /// <summary>
         /// The status of the resource. Valid values: `Running`,`Creating`,`Deleting`,`Restarting`,`Preparing`.
@@ -262,8 +271,8 @@ namespace Pulumi.AliCloud.ClickHouse
 
         /// <summary>
         /// The DBCluster class. According to the category, db_cluster_class has two value ranges:
-        /// * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-        /// * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+        /// * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+        /// * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         /// </summary>
         [Input("dbClusterClass", required: true)]
         public Input<string> DbClusterClass { get; set; } = null!;
@@ -378,6 +387,9 @@ namespace Pulumi.AliCloud.ClickHouse
         [Input("category")]
         public Input<string>? Category { get; set; }
 
+        [Input("connectionString")]
+        public Input<string>? ConnectionString { get; set; }
+
         [Input("dbClusterAccessWhiteLists")]
         private InputList<Inputs.DbClusterDbClusterAccessWhiteListGetArgs>? _dbClusterAccessWhiteLists;
 
@@ -392,8 +404,8 @@ namespace Pulumi.AliCloud.ClickHouse
 
         /// <summary>
         /// The DBCluster class. According to the category, db_cluster_class has two value ranges:
-        /// * Under the condition that the category is the `Basic`, Valid values: `S4-NEW`, `S8`, `S16`, `S32`, `S64`, `S104`.
-        /// * Under the condition that the category is the `HighAvailability`, Valid values: `C4-NEW`, `C8`, `C16`, `C32`, `C64`, `C104`.
+        /// * Under the condition that the category is the `Basic`, Valid values: `LS20`, `LS40`, `LS80`,`S8`, `S16`, `S32`, `S64`,`S80`, `S104`.
+        /// * Under the condition that the category is the `HighAvailability`, Valid values: `LC20`, `LC40`, `LC80`,`C8`, `C16`, `C32`, `C64`, `C80`, `C104`.
         /// </summary>
         [Input("dbClusterClass")]
         public Input<string>? DbClusterClass { get; set; }
@@ -457,6 +469,12 @@ namespace Pulumi.AliCloud.ClickHouse
         /// </summary>
         [Input("period")]
         public Input<string>? Period { get; set; }
+
+        /// <summary>
+        /// (Available in 1.196.0+) The connection port of the cluster.
+        /// </summary>
+        [Input("port")]
+        public Input<string>? Port { get; set; }
 
         /// <summary>
         /// The status of the resource. Valid values: `Running`,`Creating`,`Deleting`,`Restarting`,`Preparing`.

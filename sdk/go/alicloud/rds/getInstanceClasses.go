@@ -56,7 +56,7 @@ func GetInstanceClasses(ctx *pulumi.Context, args *GetInstanceClassesArgs, opts 
 
 // A collection of arguments for invoking getInstanceClasses.
 type GetInstanceClassesArgs struct {
-	// DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
+	// DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`, `serverlessBasic`, `cluster`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
 	Category *string `pulumi:"category"`
 	// The commodity code of the instance. Valid values:
 	// * **bards**: The instance is a pay-as-you-go primary instance. This value is available on the China site (aliyun.com).
@@ -67,6 +67,8 @@ type GetInstanceClassesArgs struct {
 	// * **rds_intl**: The instance is a subscription primary instance. This value is available on the International site (alibabacloud.com).
 	// * **rords_intl**: The instance is a pay-as-you-go read-only instance. This value is available on the International site (alibabacloud.com).
 	// * **rds_rordspre_public_intl**: The instance is a subscription read-only instance. This value is available on the International site (alibabacloud.com).
+	// * **rds_serverless_public_cn**: The instance is a subscription serverless instance. This value is available on the China site (aliyun.com).
+	// * **rds_serverless_public_intl**: The instance is a subscription serverless instance. This value is available on the International site (alibabacloud.com).
 	CommodityCode *string `pulumi:"commodityCode"`
 	// The DB instance class type by the user.
 	DbInstanceClass *string `pulumi:"dbInstanceClass"`
@@ -74,11 +76,11 @@ type GetInstanceClassesArgs struct {
 	DbInstanceId *string `pulumi:"dbInstanceId"`
 	// The DB instance storage space required by the user. Valid values: "cloudSsd", "localSsd", "cloudEssd", "cloudEssd2", "cloudEssd3".
 	DbInstanceStorageType *string `pulumi:"dbInstanceStorageType"`
-	// Database type. Valid values:"MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+	// Database type. Valid values:"MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
 	Engine *string `pulumi:"engine"`
 	// Database version required by the user. Value options can refer to the latest docs [detail info](https://www.alibabacloud.com/help/doc-detail/26228.htm) `EngineVersion`.
 	EngineVersion *string `pulumi:"engineVersion"`
-	// Filter the results by charge type. Valid values: `PrePaid` and `PostPaid`. Default to `PostPaid`.
+	// Filter the results by charge type. Valid values: `PrePaid` and `PostPaid` and `Serverless`. Default to `PostPaid`.
 	InstanceChargeType *string `pulumi:"instanceChargeType"`
 	// Whether to show multi available zone. Default false to not show multi availability zone.
 	MultiZone  *bool   `pulumi:"multiZone"`
@@ -128,7 +130,7 @@ func GetInstanceClassesOutput(ctx *pulumi.Context, args GetInstanceClassesOutput
 
 // A collection of arguments for invoking getInstanceClasses.
 type GetInstanceClassesOutputArgs struct {
-	// DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
+	// DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`, `serverlessBasic`, `cluster`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
 	Category pulumi.StringPtrInput `pulumi:"category"`
 	// The commodity code of the instance. Valid values:
 	// * **bards**: The instance is a pay-as-you-go primary instance. This value is available on the China site (aliyun.com).
@@ -139,6 +141,8 @@ type GetInstanceClassesOutputArgs struct {
 	// * **rds_intl**: The instance is a subscription primary instance. This value is available on the International site (alibabacloud.com).
 	// * **rords_intl**: The instance is a pay-as-you-go read-only instance. This value is available on the International site (alibabacloud.com).
 	// * **rds_rordspre_public_intl**: The instance is a subscription read-only instance. This value is available on the International site (alibabacloud.com).
+	// * **rds_serverless_public_cn**: The instance is a subscription serverless instance. This value is available on the China site (aliyun.com).
+	// * **rds_serverless_public_intl**: The instance is a subscription serverless instance. This value is available on the International site (alibabacloud.com).
 	CommodityCode pulumi.StringPtrInput `pulumi:"commodityCode"`
 	// The DB instance class type by the user.
 	DbInstanceClass pulumi.StringPtrInput `pulumi:"dbInstanceClass"`
@@ -146,11 +150,11 @@ type GetInstanceClassesOutputArgs struct {
 	DbInstanceId pulumi.StringPtrInput `pulumi:"dbInstanceId"`
 	// The DB instance storage space required by the user. Valid values: "cloudSsd", "localSsd", "cloudEssd", "cloudEssd2", "cloudEssd3".
 	DbInstanceStorageType pulumi.StringPtrInput `pulumi:"dbInstanceStorageType"`
-	// Database type. Valid values:"MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+	// Database type. Valid values:"MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
 	Engine pulumi.StringPtrInput `pulumi:"engine"`
 	// Database version required by the user. Value options can refer to the latest docs [detail info](https://www.alibabacloud.com/help/doc-detail/26228.htm) `EngineVersion`.
 	EngineVersion pulumi.StringPtrInput `pulumi:"engineVersion"`
-	// Filter the results by charge type. Valid values: `PrePaid` and `PostPaid`. Default to `PostPaid`.
+	// Filter the results by charge type. Valid values: `PrePaid` and `PostPaid` and `Serverless`. Default to `PostPaid`.
 	InstanceChargeType pulumi.StringPtrInput `pulumi:"instanceChargeType"`
 	// Whether to show multi available zone. Default false to not show multi availability zone.
 	MultiZone  pulumi.BoolPtrInput   `pulumi:"multiZone"`

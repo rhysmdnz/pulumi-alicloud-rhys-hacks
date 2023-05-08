@@ -88,6 +88,10 @@ export class PrefixList extends pulumi.CustomResource {
      * The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
      */
     public readonly prefixListName!: pulumi.Output<string | undefined>;
+    /**
+     * (Available in v1.196.0+) The status of the Prefix List.
+     */
+    public /*out*/ readonly status!: pulumi.Output<string>;
 
     /**
      * Create a PrefixList resource with the given unique name, arguments, and options.
@@ -107,6 +111,7 @@ export class PrefixList extends pulumi.CustomResource {
             resourceInputs["maxEntries"] = state ? state.maxEntries : undefined;
             resourceInputs["prefixListDescription"] = state ? state.prefixListDescription : undefined;
             resourceInputs["prefixListName"] = state ? state.prefixListName : undefined;
+            resourceInputs["status"] = state ? state.status : undefined;
         } else {
             const args = argsOrState as PrefixListArgs | undefined;
             resourceInputs["entrys"] = args ? args.entrys : undefined;
@@ -114,6 +119,7 @@ export class PrefixList extends pulumi.CustomResource {
             resourceInputs["maxEntries"] = args ? args.maxEntries : undefined;
             resourceInputs["prefixListDescription"] = args ? args.prefixListDescription : undefined;
             resourceInputs["prefixListName"] = args ? args.prefixListName : undefined;
+            resourceInputs["status"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(PrefixList.__pulumiType, name, resourceInputs, opts);
@@ -144,6 +150,10 @@ export interface PrefixListState {
      * The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
      */
     prefixListName?: pulumi.Input<string>;
+    /**
+     * (Available in v1.196.0+) The status of the Prefix List.
+     */
+    status?: pulumi.Input<string>;
 }
 
 /**

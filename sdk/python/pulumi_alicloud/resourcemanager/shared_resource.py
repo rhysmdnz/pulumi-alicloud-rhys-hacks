@@ -25,7 +25,7 @@ class SharedResourceArgs:
                - `VSwitch`.
                - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
                - The following types are added after v1.192.0: `PrefixList` and `Image`.
-               - The following types are added after v1.195.0: `PublicIpAddressPool`.
+               - The following types are added after v1.194.1: `PublicIpAddressPool`.
         """
         pulumi.set(__self__, "resource_id", resource_id)
         pulumi.set(__self__, "resource_share_id", resource_share_id)
@@ -63,7 +63,7 @@ class SharedResourceArgs:
         - `VSwitch`.
         - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
         - The following types are added after v1.192.0: `PrefixList` and `Image`.
-        - The following types are added after v1.195.0: `PublicIpAddressPool`.
+        - The following types are added after v1.194.1: `PublicIpAddressPool`.
         """
         return pulumi.get(self, "resource_type")
 
@@ -87,7 +87,7 @@ class _SharedResourceState:
                - `VSwitch`.
                - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
                - The following types are added after v1.192.0: `PrefixList` and `Image`.
-               - The following types are added after v1.195.0: `PublicIpAddressPool`.
+               - The following types are added after v1.194.1: `PublicIpAddressPool`.
         :param pulumi.Input[str] status: status.
         """
         if resource_id is not None:
@@ -131,7 +131,7 @@ class _SharedResourceState:
         - `VSwitch`.
         - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
         - The following types are added after v1.192.0: `PrefixList` and `Image`.
-        - The following types are added after v1.195.0: `PublicIpAddressPool`.
+        - The following types are added after v1.194.1: `PublicIpAddressPool`.
         """
         return pulumi.get(self, "resource_type")
 
@@ -184,7 +184,7 @@ class SharedResource(pulumi.CustomResource):
                - `VSwitch`.
                - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
                - The following types are added after v1.192.0: `PrefixList` and `Image`.
-               - The following types are added after v1.195.0: `PublicIpAddressPool`.
+               - The following types are added after v1.194.1: `PublicIpAddressPool`.
         """
         ...
     @overload
@@ -271,7 +271,7 @@ class SharedResource(pulumi.CustomResource):
                - `VSwitch`.
                - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
                - The following types are added after v1.192.0: `PrefixList` and `Image`.
-               - The following types are added after v1.195.0: `PublicIpAddressPool`.
+               - The following types are added after v1.194.1: `PublicIpAddressPool`.
         :param pulumi.Input[str] status: status.
         """
         opts = pulumi.ResourceOptions.merge(opts, pulumi.ResourceOptions(id=id))
@@ -308,7 +308,7 @@ class SharedResource(pulumi.CustomResource):
         - `VSwitch`.
         - The following types are added after v1.173.0: `ROSTemplate` and `ServiceCatalogPortfolio`.
         - The following types are added after v1.192.0: `PrefixList` and `Image`.
-        - The following types are added after v1.195.0: `PublicIpAddressPool`.
+        - The following types are added after v1.194.1: `PublicIpAddressPool`.
         """
         return pulumi.get(self, "resource_type")
 

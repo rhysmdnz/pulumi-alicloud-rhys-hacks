@@ -14,8 +14,10 @@ __all__ = [
     'InstanceBabelfishConfig',
     'InstanceParameter',
     'InstancePgHbaConf',
+    'InstanceServerlessConfig',
     'RdsCloneDbInstanceParameter',
     'RdsCloneDbInstancePgHbaConf',
+    'RdsCloneDbInstanceServerlessConfig',
     'RdsParameterGroupParamDetail',
     'RdsUpgradeDbInstanceParameter',
     'RdsUpgradeDbInstancePgHbaConf',
@@ -250,6 +252,88 @@ class InstancePgHbaConf(dict):
 
 
 @pulumi.output_type
+class InstanceServerlessConfig(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "autoPause":
+            suggest = "auto_pause"
+        elif key == "maxCapacity":
+            suggest = "max_capacity"
+        elif key == "minCapacity":
+            suggest = "min_capacity"
+        elif key == "switchForce":
+            suggest = "switch_force"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in InstanceServerlessConfig. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        InstanceServerlessConfig.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        InstanceServerlessConfig.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 auto_pause: bool,
+                 max_capacity: float,
+                 min_capacity: float,
+                 switch_force: bool):
+        """
+        :param bool auto_pause: Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+               - true: enables the feature.
+               - false: disables the feature. This is the default value.
+        :param float max_capacity: The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `min_capacity` parameter.
+        :param float min_capacity: The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `max_capacity` parameter.
+        :param bool switch_force: Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+               - true: enables the feature.
+               - false: disables the feature. This is the default value.
+        """
+        pulumi.set(__self__, "auto_pause", auto_pause)
+        pulumi.set(__self__, "max_capacity", max_capacity)
+        pulumi.set(__self__, "min_capacity", min_capacity)
+        pulumi.set(__self__, "switch_force", switch_force)
+
+    @property
+    @pulumi.getter(name="autoPause")
+    def auto_pause(self) -> bool:
+        """
+        Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+        - true: enables the feature.
+        - false: disables the feature. This is the default value.
+        """
+        return pulumi.get(self, "auto_pause")
+
+    @property
+    @pulumi.getter(name="maxCapacity")
+    def max_capacity(self) -> float:
+        """
+        The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `min_capacity` parameter.
+        """
+        return pulumi.get(self, "max_capacity")
+
+    @property
+    @pulumi.getter(name="minCapacity")
+    def min_capacity(self) -> float:
+        """
+        The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `max_capacity` parameter.
+        """
+        return pulumi.get(self, "min_capacity")
+
+    @property
+    @pulumi.getter(name="switchForce")
+    def switch_force(self) -> bool:
+        """
+        Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+        - true: enables the feature.
+        - false: disables the feature. This is the default value.
+        """
+        return pulumi.get(self, "switch_force")
+
+
+@pulumi.output_type
 class RdsCloneDbInstanceParameter(dict):
     def __init__(__self__, *,
                  name: str,
@@ -386,6 +470,88 @@ class RdsCloneDbInstancePgHbaConf(dict):
         Optional. The value of this parameter is based on the value of the HbaItem.N.Method parameter. In this topic, LDAP is used as an example. You must configure this parameter. For more information, see [Authentication Methods](https://www.postgresql.org/docs/11/auth-methods.html).
         """
         return pulumi.get(self, "option")
+
+
+@pulumi.output_type
+class RdsCloneDbInstanceServerlessConfig(dict):
+    @staticmethod
+    def __key_warning(key: str):
+        suggest = None
+        if key == "autoPause":
+            suggest = "auto_pause"
+        elif key == "maxCapacity":
+            suggest = "max_capacity"
+        elif key == "minCapacity":
+            suggest = "min_capacity"
+        elif key == "switchForce":
+            suggest = "switch_force"
+
+        if suggest:
+            pulumi.log.warn(f"Key '{key}' not found in RdsCloneDbInstanceServerlessConfig. Access the value via the '{suggest}' property getter instead.")
+
+    def __getitem__(self, key: str) -> Any:
+        RdsCloneDbInstanceServerlessConfig.__key_warning(key)
+        return super().__getitem__(key)
+
+    def get(self, key: str, default = None) -> Any:
+        RdsCloneDbInstanceServerlessConfig.__key_warning(key)
+        return super().get(key, default)
+
+    def __init__(__self__, *,
+                 auto_pause: bool,
+                 max_capacity: float,
+                 min_capacity: float,
+                 switch_force: bool):
+        """
+        :param bool auto_pause: Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+               - true: enables the feature.
+               - false: disables the feature. This is the default value.
+        :param float max_capacity: The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `min_capacity` parameter.
+        :param float min_capacity: The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `max_capacity` parameter.
+        :param bool switch_force: Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+               - true: enables the feature.
+               - false: disables the feature. This is the default value.
+        """
+        pulumi.set(__self__, "auto_pause", auto_pause)
+        pulumi.set(__self__, "max_capacity", max_capacity)
+        pulumi.set(__self__, "min_capacity", min_capacity)
+        pulumi.set(__self__, "switch_force", switch_force)
+
+    @property
+    @pulumi.getter(name="autoPause")
+    def auto_pause(self) -> bool:
+        """
+        Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+        - true: enables the feature.
+        - false: disables the feature. This is the default value.
+        """
+        return pulumi.get(self, "auto_pause")
+
+    @property
+    @pulumi.getter(name="maxCapacity")
+    def max_capacity(self) -> float:
+        """
+        The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `min_capacity` parameter.
+        """
+        return pulumi.get(self, "max_capacity")
+
+    @property
+    @pulumi.getter(name="minCapacity")
+    def min_capacity(self) -> float:
+        """
+        The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `max_capacity` parameter.
+        """
+        return pulumi.get(self, "min_capacity")
+
+    @property
+    @pulumi.getter(name="switchForce")
+    def switch_force(self) -> bool:
+        """
+        Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+        - true: enables the feature.
+        - false: disables the feature. This is the default value.
+        """
+        return pulumi.get(self, "switch_force")
 
 
 @pulumi.output_type
@@ -843,7 +1009,7 @@ class GetInstanceEnginesInstanceEngineResult(dict):
                  zone_ids: Sequence['outputs.GetInstanceEnginesInstanceEngineZoneIdResult']):
         """
         :param str category: DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
-        :param str engine: Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+        :param str engine: Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
         :param str engine_version: Database version required by the user. Value options can refer to the latest docs [detail info](https://www.alibabacloud.com/help/doc-detail/26228.htm) `EngineVersion`.
         :param Sequence['GetInstanceEnginesInstanceEngineZoneIdArgs'] zone_ids: A list of Zone to launch the DB instance.
         """
@@ -864,7 +1030,7 @@ class GetInstanceEnginesInstanceEngineResult(dict):
     @pulumi.getter
     def engine(self) -> str:
         """
-        Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+        Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
         """
         return pulumi.get(self, "engine")
 
@@ -929,6 +1095,7 @@ class GetInstancesInstanceResult(dict):
                  create_time: str,
                  creator: str,
                  db_instance_storage_type: str,
+                 db_instance_type: str,
                  db_type: str,
                  delete_date: str,
                  deletion_protection: bool,
@@ -989,6 +1156,7 @@ class GetInstancesInstanceResult(dict):
         :param str create_time: Creation time of the instance.
         :param str creator: (Available in 1.124.3+) The creator of the encryption key.
         :param str db_instance_storage_type: (Available in 1.70.3+) The storage type of the instance.
+        :param str db_instance_type: (Available in 1.197.0+) The type of instance.
         :param str db_type: `Primary` for primary instance, `Readonly` for read-only instance, `Guard` for disaster recovery instance, and `Temp` for temporary instance.
         :param str delete_date: (Available in 1.124.3+) The estimated time when the encryption key will be deleted. The time follows the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. The time is displayed in UTC.
         :param bool deletion_protection: (Available in 1.167.0+) Indicates whether the release protection feature is enabled for the instance. Valid values:
@@ -999,7 +1167,7 @@ class GetInstancesInstanceResult(dict):
         :param str encryption_key_status: (Available in 1.124.3+) The status of the encryption key. Valid values:
                - Enabled
                - Disabled
-        :param str engine: Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+        :param str engine: Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
         :param str engine_version: Database version.
         :param str expire_time: Expiration time. Pay-As-You-Go instances never expire.
         :param str guard_instance_id: If a disaster recovery instance is attached to the current instance, the ID of the disaster recovery instance applies.
@@ -1063,6 +1231,7 @@ class GetInstancesInstanceResult(dict):
         pulumi.set(__self__, "create_time", create_time)
         pulumi.set(__self__, "creator", creator)
         pulumi.set(__self__, "db_instance_storage_type", db_instance_storage_type)
+        pulumi.set(__self__, "db_instance_type", db_instance_type)
         pulumi.set(__self__, "db_type", db_type)
         pulumi.set(__self__, "delete_date", delete_date)
         pulumi.set(__self__, "deletion_protection", deletion_protection)
@@ -1206,6 +1375,14 @@ class GetInstancesInstanceResult(dict):
         return pulumi.get(self, "db_instance_storage_type")
 
     @property
+    @pulumi.getter(name="dbInstanceType")
+    def db_instance_type(self) -> str:
+        """
+        (Available in 1.197.0+) The type of instance.
+        """
+        return pulumi.get(self, "db_instance_type")
+
+    @property
     @pulumi.getter(name="dbType")
     def db_type(self) -> str:
         """
@@ -1261,7 +1438,7 @@ class GetInstancesInstanceResult(dict):
     @pulumi.getter
     def engine(self) -> str:
         """
-        Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+        Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
         """
         return pulumi.get(self, "engine")
 

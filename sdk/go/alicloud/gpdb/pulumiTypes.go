@@ -262,7 +262,7 @@ type GetInstancesInstance struct {
 	// Instance availability zone.
 	AvailabilityZone string `pulumi:"availabilityZone"`
 	ChargeType       string `pulumi:"chargeType"`
-	// The endpoint of the instance.
+	// The connection string of the instance.
 	ConnectionString string `pulumi:"connectionString"`
 	// The number of CPU cores of the computing node. Unit: Core.
 	CpuCores string `pulumi:"cpuCores"`
@@ -334,7 +334,7 @@ type GetInstancesInstanceArgs struct {
 	// Instance availability zone.
 	AvailabilityZone pulumi.StringInput `pulumi:"availabilityZone"`
 	ChargeType       pulumi.StringInput `pulumi:"chargeType"`
-	// The endpoint of the instance.
+	// The connection string of the instance.
 	ConnectionString pulumi.StringInput `pulumi:"connectionString"`
 	// The number of CPU cores of the computing node. Unit: Core.
 	CpuCores pulumi.StringInput `pulumi:"cpuCores"`
@@ -451,7 +451,7 @@ func (o GetInstancesInstanceOutput) ChargeType() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.ChargeType }).(pulumi.StringOutput)
 }
 
-// The endpoint of the instance.
+// The connection string of the instance.
 func (o GetInstancesInstanceOutput) ConnectionString() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.ConnectionString }).(pulumi.StringOutput)
 }

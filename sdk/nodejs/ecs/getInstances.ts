@@ -32,8 +32,10 @@ export function getInstances(args?: GetInstancesArgs, opts?: pulumi.InvokeOption
     opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
     return pulumi.runtime.invoke("alicloud:ecs/getInstances:getInstances", {
         "availabilityZone": args.availabilityZone,
+        "enableDetails": args.enableDetails,
         "ids": args.ids,
         "imageId": args.imageId,
+        "instanceName": args.instanceName,
         "nameRegex": args.nameRegex,
         "outputFile": args.outputFile,
         "pageNumber": args.pageNumber,
@@ -56,6 +58,10 @@ export interface GetInstancesArgs {
      */
     availabilityZone?: string;
     /**
+     * Default to `true`. If false, the attributes `ramRoleName` and `diskDeviceMappings` will not be fetched and output.
+     */
+    enableDetails?: boolean;
+    /**
      * A list of ECS instance IDs.
      */
     ids?: string[];
@@ -63,6 +69,10 @@ export interface GetInstancesArgs {
      * The image ID of some ECS instance used.
      */
     imageId?: string;
+    /**
+     * The name of the instance. Fuzzy search with the asterisk (*) wildcard characters is supported.
+     */
+    instanceName?: string;
     /**
      * A regex string to filter results by instance name.
      */
@@ -75,7 +85,7 @@ export interface GetInstancesArgs {
      */
     ramRoleName?: string;
     /**
-     * The Id of resource group which the instance belongs.
+     * The ID of resource group which the instance belongs.
      */
     resourceGroupId?: string;
     /**
@@ -115,6 +125,7 @@ export interface GetInstancesResult {
      * Availability zone the instance belongs to.
      */
     readonly availabilityZone?: string;
+    readonly enableDetails?: boolean;
     /**
      * The provider-assigned unique ID for this managed resource.
      */
@@ -127,6 +138,7 @@ export interface GetInstancesResult {
      * Image ID the instance is using.
      */
     readonly imageId?: string;
+    readonly instanceName?: string;
     /**
      * A list of instances. Each element contains the following attributes:
      */
@@ -179,6 +191,10 @@ export interface GetInstancesOutputArgs {
      */
     availabilityZone?: pulumi.Input<string>;
     /**
+     * Default to `true`. If false, the attributes `ramRoleName` and `diskDeviceMappings` will not be fetched and output.
+     */
+    enableDetails?: pulumi.Input<boolean>;
+    /**
      * A list of ECS instance IDs.
      */
     ids?: pulumi.Input<pulumi.Input<string>[]>;
@@ -186,6 +202,10 @@ export interface GetInstancesOutputArgs {
      * The image ID of some ECS instance used.
      */
     imageId?: pulumi.Input<string>;
+    /**
+     * The name of the instance. Fuzzy search with the asterisk (*) wildcard characters is supported.
+     */
+    instanceName?: pulumi.Input<string>;
     /**
      * A regex string to filter results by instance name.
      */
@@ -198,7 +218,7 @@ export interface GetInstancesOutputArgs {
      */
     ramRoleName?: pulumi.Input<string>;
     /**
-     * The Id of resource group which the instance belongs.
+     * The ID of resource group which the instance belongs.
      */
     resourceGroupId?: pulumi.Input<string>;
     /**

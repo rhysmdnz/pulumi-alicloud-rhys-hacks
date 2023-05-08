@@ -11,11 +11,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// Provides a AnalyticDB for PostgreSQL instance resource which storage type is flexible. Compared to the reserved storage ADB PG instance, you can scale up each disk and smoothly scale out nodes online.\
-// For more detail product introduction, see [here](https://www.alibabacloud.com/help/doc-detail/141368.htm).
-//
-// > **NOTE:**  Available in 1.127.0+
-//
 // ## Example Usage
 // ### Create a AnalyticDB for PostgreSQL instance
 //
@@ -116,6 +111,8 @@ type ElasticInstance struct {
 	PaymentDurationUnit pulumi.StringPtrOutput `pulumi:"paymentDurationUnit"`
 	// Valid values are `PayAsYouGo`, `Subscription`. Default to `PayAsYouGo`.
 	PaymentType pulumi.StringPtrOutput `pulumi:"paymentType"`
+	// (Available in 1.196.0+) The connection port of the instance.
+	Port pulumi.StringOutput `pulumi:"port"`
 	// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
 	SecurityIpLists pulumi.StringArrayOutput `pulumi:"securityIpLists"`
 	// The number of segment nodes. Minimum is `4`, max is `256`, step is `4`.
@@ -213,6 +210,8 @@ type elasticInstanceState struct {
 	PaymentDurationUnit *string `pulumi:"paymentDurationUnit"`
 	// Valid values are `PayAsYouGo`, `Subscription`. Default to `PayAsYouGo`.
 	PaymentType *string `pulumi:"paymentType"`
+	// (Available in 1.196.0+) The connection port of the instance.
+	Port *string `pulumi:"port"`
 	// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
 	SecurityIpLists []string `pulumi:"securityIpLists"`
 	// The number of segment nodes. Minimum is `4`, max is `256`, step is `4`.
@@ -260,6 +259,8 @@ type ElasticInstanceState struct {
 	PaymentDurationUnit pulumi.StringPtrInput
 	// Valid values are `PayAsYouGo`, `Subscription`. Default to `PayAsYouGo`.
 	PaymentType pulumi.StringPtrInput
+	// (Available in 1.196.0+) The connection port of the instance.
+	Port pulumi.StringPtrInput
 	// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
 	SecurityIpLists pulumi.StringArrayInput
 	// The number of segment nodes. Minimum is `4`, max is `256`, step is `4`.
@@ -518,6 +519,11 @@ func (o ElasticInstanceOutput) PaymentDurationUnit() pulumi.StringPtrOutput {
 // Valid values are `PayAsYouGo`, `Subscription`. Default to `PayAsYouGo`.
 func (o ElasticInstanceOutput) PaymentType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *ElasticInstance) pulumi.StringPtrOutput { return v.PaymentType }).(pulumi.StringPtrOutput)
+}
+
+// (Available in 1.196.0+) The connection port of the instance.
+func (o ElasticInstanceOutput) Port() pulumi.StringOutput {
+	return o.ApplyT(func(v *ElasticInstance) pulumi.StringOutput { return v.Port }).(pulumi.StringOutput)
 }
 
 // List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).

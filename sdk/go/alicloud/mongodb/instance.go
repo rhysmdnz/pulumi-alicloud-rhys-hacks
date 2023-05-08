@@ -40,6 +40,8 @@ type Instance struct {
 	DbInstanceStorage pulumi.IntOutput `pulumi:"dbInstanceStorage"`
 	// Database version. Value options can refer to the latest docs [CreateDBInstance](https://www.alibabacloud.com/help/doc-detail/61763.htm) `EngineVersion`.
 	EngineVersion pulumi.StringOutput `pulumi:"engineVersion"`
+	// Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+	HiddenZoneId pulumi.StringPtrOutput `pulumi:"hiddenZoneId"`
 	// Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
 	InstanceChargeType pulumi.StringPtrOutput `pulumi:"instanceChargeType"`
 	// An KMS encrypts password used to a instance. If the `accountPassword` is filled in, this field will be ignored.
@@ -50,7 +52,7 @@ type Instance struct {
 	MaintainEndTime pulumi.StringOutput `pulumi:"maintainEndTime"`
 	// The start time of the operation and maintenance time period of the instance, in the format of HH:mmZ (UTC time).
 	MaintainStartTime pulumi.StringOutput `pulumi:"maintainStartTime"`
-	// The name of DB instance. It a string of 2 to 256 characters.
+	// The name of the parameter.
 	Name pulumi.StringOutput `pulumi:"name"`
 	// The network type of the instance. Valid values:`Classic` or `VPC`. Default value: `Classic`.
 	NetworkType pulumi.StringOutput `pulumi:"networkType"`
@@ -59,8 +61,12 @@ type Instance struct {
 	// * DOWNGRADE: The specifications are downgraded.
 	//   Note: This parameter is only applicable to instances when `instanceChargeType` is PrePaid.
 	OrderType pulumi.StringPtrOutput `pulumi:"orderType"`
+	// Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+	Parameters InstanceParameterArrayOutput `pulumi:"parameters"`
 	// The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
 	Period pulumi.IntOutput `pulumi:"period"`
+	// The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+	ReadonlyReplicas pulumi.IntOutput `pulumi:"readonlyReplicas"`
 	// The name of the mongo replica set
 	ReplicaSetName pulumi.StringOutput `pulumi:"replicaSetName"`
 	// Replica set instance information. The details see Block replica_sets. **NOTE:** Available in v1.140+.
@@ -71,6 +77,8 @@ type Instance struct {
 	ResourceGroupId pulumi.StringOutput `pulumi:"resourceGroupId"`
 	// Instance log backup retention days. Available in 1.42.0+.
 	RetentionPeriod pulumi.IntOutput `pulumi:"retentionPeriod"`
+	// Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+	SecondaryZoneId pulumi.StringPtrOutput `pulumi:"secondaryZoneId"`
 	// The Security Group ID of ECS.
 	SecurityGroupId pulumi.StringOutput `pulumi:"securityGroupId"`
 	// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
@@ -81,6 +89,8 @@ type Instance struct {
 	SslStatus pulumi.StringOutput `pulumi:"sslStatus"`
 	// Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
 	StorageEngine pulumi.StringOutput `pulumi:"storageEngine"`
+	// The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+	StorageType pulumi.StringOutput `pulumi:"storageType"`
 	// A mapping of tags to assign to the resource.
 	Tags pulumi.MapOutput `pulumi:"tags"`
 	// The TDE(Transparent Data Encryption) status.
@@ -151,6 +161,8 @@ type instanceState struct {
 	DbInstanceStorage *int `pulumi:"dbInstanceStorage"`
 	// Database version. Value options can refer to the latest docs [CreateDBInstance](https://www.alibabacloud.com/help/doc-detail/61763.htm) `EngineVersion`.
 	EngineVersion *string `pulumi:"engineVersion"`
+	// Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+	HiddenZoneId *string `pulumi:"hiddenZoneId"`
 	// Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
 	InstanceChargeType *string `pulumi:"instanceChargeType"`
 	// An KMS encrypts password used to a instance. If the `accountPassword` is filled in, this field will be ignored.
@@ -161,7 +173,7 @@ type instanceState struct {
 	MaintainEndTime *string `pulumi:"maintainEndTime"`
 	// The start time of the operation and maintenance time period of the instance, in the format of HH:mmZ (UTC time).
 	MaintainStartTime *string `pulumi:"maintainStartTime"`
-	// The name of DB instance. It a string of 2 to 256 characters.
+	// The name of the parameter.
 	Name *string `pulumi:"name"`
 	// The network type of the instance. Valid values:`Classic` or `VPC`. Default value: `Classic`.
 	NetworkType *string `pulumi:"networkType"`
@@ -170,8 +182,12 @@ type instanceState struct {
 	// * DOWNGRADE: The specifications are downgraded.
 	//   Note: This parameter is only applicable to instances when `instanceChargeType` is PrePaid.
 	OrderType *string `pulumi:"orderType"`
+	// Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+	Parameters []InstanceParameter `pulumi:"parameters"`
 	// The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
 	Period *int `pulumi:"period"`
+	// The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+	ReadonlyReplicas *int `pulumi:"readonlyReplicas"`
 	// The name of the mongo replica set
 	ReplicaSetName *string `pulumi:"replicaSetName"`
 	// Replica set instance information. The details see Block replica_sets. **NOTE:** Available in v1.140+.
@@ -182,6 +198,8 @@ type instanceState struct {
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
 	// Instance log backup retention days. Available in 1.42.0+.
 	RetentionPeriod *int `pulumi:"retentionPeriod"`
+	// Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+	SecondaryZoneId *string `pulumi:"secondaryZoneId"`
 	// The Security Group ID of ECS.
 	SecurityGroupId *string `pulumi:"securityGroupId"`
 	// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
@@ -192,6 +210,8 @@ type instanceState struct {
 	SslStatus *string `pulumi:"sslStatus"`
 	// Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
 	StorageEngine *string `pulumi:"storageEngine"`
+	// The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+	StorageType *string `pulumi:"storageType"`
 	// A mapping of tags to assign to the resource.
 	Tags map[string]interface{} `pulumi:"tags"`
 	// The TDE(Transparent Data Encryption) status.
@@ -224,6 +244,8 @@ type InstanceState struct {
 	DbInstanceStorage pulumi.IntPtrInput
 	// Database version. Value options can refer to the latest docs [CreateDBInstance](https://www.alibabacloud.com/help/doc-detail/61763.htm) `EngineVersion`.
 	EngineVersion pulumi.StringPtrInput
+	// Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+	HiddenZoneId pulumi.StringPtrInput
 	// Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
 	InstanceChargeType pulumi.StringPtrInput
 	// An KMS encrypts password used to a instance. If the `accountPassword` is filled in, this field will be ignored.
@@ -234,7 +256,7 @@ type InstanceState struct {
 	MaintainEndTime pulumi.StringPtrInput
 	// The start time of the operation and maintenance time period of the instance, in the format of HH:mmZ (UTC time).
 	MaintainStartTime pulumi.StringPtrInput
-	// The name of DB instance. It a string of 2 to 256 characters.
+	// The name of the parameter.
 	Name pulumi.StringPtrInput
 	// The network type of the instance. Valid values:`Classic` or `VPC`. Default value: `Classic`.
 	NetworkType pulumi.StringPtrInput
@@ -243,8 +265,12 @@ type InstanceState struct {
 	// * DOWNGRADE: The specifications are downgraded.
 	//   Note: This parameter is only applicable to instances when `instanceChargeType` is PrePaid.
 	OrderType pulumi.StringPtrInput
+	// Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+	Parameters InstanceParameterArrayInput
 	// The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
 	Period pulumi.IntPtrInput
+	// The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+	ReadonlyReplicas pulumi.IntPtrInput
 	// The name of the mongo replica set
 	ReplicaSetName pulumi.StringPtrInput
 	// Replica set instance information. The details see Block replica_sets. **NOTE:** Available in v1.140+.
@@ -255,6 +281,8 @@ type InstanceState struct {
 	ResourceGroupId pulumi.StringPtrInput
 	// Instance log backup retention days. Available in 1.42.0+.
 	RetentionPeriod pulumi.IntPtrInput
+	// Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+	SecondaryZoneId pulumi.StringPtrInput
 	// The Security Group ID of ECS.
 	SecurityGroupId pulumi.StringPtrInput
 	// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
@@ -265,6 +293,8 @@ type InstanceState struct {
 	SslStatus pulumi.StringPtrInput
 	// Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
 	StorageEngine pulumi.StringPtrInput
+	// The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+	StorageType pulumi.StringPtrInput
 	// A mapping of tags to assign to the resource.
 	Tags pulumi.MapInput
 	// The TDE(Transparent Data Encryption) status.
@@ -301,6 +331,8 @@ type instanceArgs struct {
 	DbInstanceStorage int `pulumi:"dbInstanceStorage"`
 	// Database version. Value options can refer to the latest docs [CreateDBInstance](https://www.alibabacloud.com/help/doc-detail/61763.htm) `EngineVersion`.
 	EngineVersion string `pulumi:"engineVersion"`
+	// Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+	HiddenZoneId *string `pulumi:"hiddenZoneId"`
 	// Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
 	InstanceChargeType *string `pulumi:"instanceChargeType"`
 	// An KMS encrypts password used to a instance. If the `accountPassword` is filled in, this field will be ignored.
@@ -311,7 +343,7 @@ type instanceArgs struct {
 	MaintainEndTime *string `pulumi:"maintainEndTime"`
 	// The start time of the operation and maintenance time period of the instance, in the format of HH:mmZ (UTC time).
 	MaintainStartTime *string `pulumi:"maintainStartTime"`
-	// The name of DB instance. It a string of 2 to 256 characters.
+	// The name of the parameter.
 	Name *string `pulumi:"name"`
 	// The network type of the instance. Valid values:`Classic` or `VPC`. Default value: `Classic`.
 	NetworkType *string `pulumi:"networkType"`
@@ -320,12 +352,18 @@ type instanceArgs struct {
 	// * DOWNGRADE: The specifications are downgraded.
 	//   Note: This parameter is only applicable to instances when `instanceChargeType` is PrePaid.
 	OrderType *string `pulumi:"orderType"`
+	// Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+	Parameters []InstanceParameter `pulumi:"parameters"`
 	// The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
 	Period *int `pulumi:"period"`
+	// The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+	ReadonlyReplicas *int `pulumi:"readonlyReplicas"`
 	// Number of replica set nodes. Valid values: [1, 3, 5, 7]
 	ReplicationFactor *int `pulumi:"replicationFactor"`
 	// The ID of the Resource Group.
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
+	// Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+	SecondaryZoneId *string `pulumi:"secondaryZoneId"`
 	// The Security Group ID of ECS.
 	SecurityGroupId *string `pulumi:"securityGroupId"`
 	// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
@@ -334,6 +372,8 @@ type instanceArgs struct {
 	SslAction *string `pulumi:"sslAction"`
 	// Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
 	StorageEngine *string `pulumi:"storageEngine"`
+	// The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+	StorageType *string `pulumi:"storageType"`
 	// A mapping of tags to assign to the resource.
 	Tags map[string]interface{} `pulumi:"tags"`
 	// The TDE(Transparent Data Encryption) status.
@@ -367,6 +407,8 @@ type InstanceArgs struct {
 	DbInstanceStorage pulumi.IntInput
 	// Database version. Value options can refer to the latest docs [CreateDBInstance](https://www.alibabacloud.com/help/doc-detail/61763.htm) `EngineVersion`.
 	EngineVersion pulumi.StringInput
+	// Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+	HiddenZoneId pulumi.StringPtrInput
 	// Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
 	InstanceChargeType pulumi.StringPtrInput
 	// An KMS encrypts password used to a instance. If the `accountPassword` is filled in, this field will be ignored.
@@ -377,7 +419,7 @@ type InstanceArgs struct {
 	MaintainEndTime pulumi.StringPtrInput
 	// The start time of the operation and maintenance time period of the instance, in the format of HH:mmZ (UTC time).
 	MaintainStartTime pulumi.StringPtrInput
-	// The name of DB instance. It a string of 2 to 256 characters.
+	// The name of the parameter.
 	Name pulumi.StringPtrInput
 	// The network type of the instance. Valid values:`Classic` or `VPC`. Default value: `Classic`.
 	NetworkType pulumi.StringPtrInput
@@ -386,12 +428,18 @@ type InstanceArgs struct {
 	// * DOWNGRADE: The specifications are downgraded.
 	//   Note: This parameter is only applicable to instances when `instanceChargeType` is PrePaid.
 	OrderType pulumi.StringPtrInput
+	// Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+	Parameters InstanceParameterArrayInput
 	// The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
 	Period pulumi.IntPtrInput
+	// The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+	ReadonlyReplicas pulumi.IntPtrInput
 	// Number of replica set nodes. Valid values: [1, 3, 5, 7]
 	ReplicationFactor pulumi.IntPtrInput
 	// The ID of the Resource Group.
 	ResourceGroupId pulumi.StringPtrInput
+	// Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+	SecondaryZoneId pulumi.StringPtrInput
 	// The Security Group ID of ECS.
 	SecurityGroupId pulumi.StringPtrInput
 	// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
@@ -400,6 +448,8 @@ type InstanceArgs struct {
 	SslAction pulumi.StringPtrInput
 	// Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
 	StorageEngine pulumi.StringPtrInput
+	// The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+	StorageType pulumi.StringPtrInput
 	// A mapping of tags to assign to the resource.
 	Tags pulumi.MapInput
 	// The TDE(Transparent Data Encryption) status.
@@ -539,6 +589,11 @@ func (o InstanceOutput) EngineVersion() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.EngineVersion }).(pulumi.StringOutput)
 }
 
+// Configure the zone where the hidden node is located to deploy multiple zones. **NOTE:** This parameter value cannot be the same as `zoneId` and `secondaryZoneId` parameter values.
+func (o InstanceOutput) HiddenZoneId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.HiddenZoneId }).(pulumi.StringPtrOutput)
+}
+
 // Valid values are `PrePaid`, `PostPaid`, System default to `PostPaid`. **NOTE:** It can be modified from `PostPaid` to `PrePaid` after version 1.63.0.
 func (o InstanceOutput) InstanceChargeType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.InstanceChargeType }).(pulumi.StringPtrOutput)
@@ -564,7 +619,7 @@ func (o InstanceOutput) MaintainStartTime() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.MaintainStartTime }).(pulumi.StringOutput)
 }
 
-// The name of DB instance. It a string of 2 to 256 characters.
+// The name of the parameter.
 func (o InstanceOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
@@ -582,9 +637,19 @@ func (o InstanceOutput) OrderType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.OrderType }).(pulumi.StringPtrOutput)
 }
 
+// Set of parameters needs to be set after mongodb instance was launched. See the following `Block parameters`.
+func (o InstanceOutput) Parameters() InstanceParameterArrayOutput {
+	return o.ApplyT(func(v *Instance) InstanceParameterArrayOutput { return v.Parameters }).(InstanceParameterArrayOutput)
+}
+
 // The duration that you will buy DB instance (in month). It is valid when instanceChargeType is `PrePaid`. Valid values: [1~9], 12, 24, 36. System default to 1.
 func (o InstanceOutput) Period() pulumi.IntOutput {
 	return o.ApplyT(func(v *Instance) pulumi.IntOutput { return v.Period }).(pulumi.IntOutput)
+}
+
+// The number of read-only nodes in the replica set instance. Default value: 0. Valid values: 0 to 5.
+func (o InstanceOutput) ReadonlyReplicas() pulumi.IntOutput {
+	return o.ApplyT(func(v *Instance) pulumi.IntOutput { return v.ReadonlyReplicas }).(pulumi.IntOutput)
 }
 
 // The name of the mongo replica set
@@ -612,6 +677,11 @@ func (o InstanceOutput) RetentionPeriod() pulumi.IntOutput {
 	return o.ApplyT(func(v *Instance) pulumi.IntOutput { return v.RetentionPeriod }).(pulumi.IntOutput)
 }
 
+// Configure the available area where the slave node (Secondary node) is located to realize multi-available area deployment. **NOTE:** This parameter value cannot be the same as `zoneId` and `hiddenZoneId` parameter values.
+func (o InstanceOutput) SecondaryZoneId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.SecondaryZoneId }).(pulumi.StringPtrOutput)
+}
+
 // The Security Group ID of ECS.
 func (o InstanceOutput) SecurityGroupId() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.SecurityGroupId }).(pulumi.StringOutput)
@@ -635,6 +705,11 @@ func (o InstanceOutput) SslStatus() pulumi.StringOutput {
 // Storage engine: WiredTiger or RocksDB. System Default value: WiredTiger.
 func (o InstanceOutput) StorageEngine() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.StorageEngine }).(pulumi.StringOutput)
+}
+
+// The storage type of the instance. Valid values: `cloudEssd1`, `cloudEssd2`, `cloudEssd3`, `localSsd`.
+func (o InstanceOutput) StorageType() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.StorageType }).(pulumi.StringOutput)
 }
 
 // A mapping of tags to assign to the resource.

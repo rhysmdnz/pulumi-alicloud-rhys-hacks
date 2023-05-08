@@ -122,9 +122,12 @@ export class User extends pulumi.CustomResource {
      */
     public readonly password!: pulumi.Output<string | undefined>;
     /**
-     * Specify the New of the User That Created the Source. Valid Values: 
+     * Specify the New of the User That Created the Source. Valid Values:
      * * Local: Local User
-     * * RAM: Ram User
+     * * Ram: Ram User
+     * * AD: AD-authenticated User
+     * * LDAP: LDAP-authenticated User
+     * > **NOTE:** From version 1.199.0, `source` can be set to `AD`, `LDAP`.
      */
     public readonly source!: pulumi.Output<string>;
     /**
@@ -250,9 +253,12 @@ export interface UserState {
      */
     password?: pulumi.Input<string>;
     /**
-     * Specify the New of the User That Created the Source. Valid Values: 
+     * Specify the New of the User That Created the Source. Valid Values:
      * * Local: Local User
-     * * RAM: Ram User
+     * * Ram: Ram User
+     * * AD: AD-authenticated User
+     * * LDAP: LDAP-authenticated User
+     * > **NOTE:** From version 1.199.0, `source` can be set to `AD`, `LDAP`.
      */
     source?: pulumi.Input<string>;
     /**
@@ -325,9 +331,12 @@ export interface UserArgs {
      */
     password?: pulumi.Input<string>;
     /**
-     * Specify the New of the User That Created the Source. Valid Values: 
+     * Specify the New of the User That Created the Source. Valid Values:
      * * Local: Local User
-     * * RAM: Ram User
+     * * Ram: Ram User
+     * * AD: AD-authenticated User
+     * * LDAP: LDAP-authenticated User
+     * > **NOTE:** From version 1.199.0, `source` can be set to `AD`, `LDAP`.
      */
     source: pulumi.Input<string>;
     /**

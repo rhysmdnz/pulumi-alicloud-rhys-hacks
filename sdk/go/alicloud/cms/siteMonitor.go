@@ -80,7 +80,7 @@ type SiteMonitor struct {
 	// The name of the site monitoring task. The name must be 4 to 100 characters in length. The name can contain the following types of characters: letters, digits, and underscores.
 	TaskName  pulumi.StringOutput `pulumi:"taskName"`
 	TaskState pulumi.StringOutput `pulumi:"taskState"`
-	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, Ping, TCP, UDP, DNS, SMTP, POP3, and FTP.
+	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, PING, TCP, UDP, DNS, SMTP, POP3, and FTP.
 	TaskType   pulumi.StringOutput `pulumi:"taskType"`
 	UpdateTime pulumi.StringOutput `pulumi:"updateTime"`
 }
@@ -138,7 +138,7 @@ type siteMonitorState struct {
 	// The name of the site monitoring task. The name must be 4 to 100 characters in length. The name can contain the following types of characters: letters, digits, and underscores.
 	TaskName  *string `pulumi:"taskName"`
 	TaskState *string `pulumi:"taskState"`
-	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, Ping, TCP, UDP, DNS, SMTP, POP3, and FTP.
+	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, PING, TCP, UDP, DNS, SMTP, POP3, and FTP.
 	TaskType   *string `pulumi:"taskType"`
 	UpdateTime *string `pulumi:"updateTime"`
 }
@@ -158,7 +158,7 @@ type SiteMonitorState struct {
 	// The name of the site monitoring task. The name must be 4 to 100 characters in length. The name can contain the following types of characters: letters, digits, and underscores.
 	TaskName  pulumi.StringPtrInput
 	TaskState pulumi.StringPtrInput
-	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, Ping, TCP, UDP, DNS, SMTP, POP3, and FTP.
+	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, PING, TCP, UDP, DNS, SMTP, POP3, and FTP.
 	TaskType   pulumi.StringPtrInput
 	UpdateTime pulumi.StringPtrInput
 }
@@ -180,7 +180,7 @@ type siteMonitorArgs struct {
 	OptionsJson *string `pulumi:"optionsJson"`
 	// The name of the site monitoring task. The name must be 4 to 100 characters in length. The name can contain the following types of characters: letters, digits, and underscores.
 	TaskName string `pulumi:"taskName"`
-	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, Ping, TCP, UDP, DNS, SMTP, POP3, and FTP.
+	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, PING, TCP, UDP, DNS, SMTP, POP3, and FTP.
 	TaskType string `pulumi:"taskType"`
 }
 
@@ -198,7 +198,7 @@ type SiteMonitorArgs struct {
 	OptionsJson pulumi.StringPtrInput
 	// The name of the site monitoring task. The name must be 4 to 100 characters in length. The name can contain the following types of characters: letters, digits, and underscores.
 	TaskName pulumi.StringInput
-	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, Ping, TCP, UDP, DNS, SMTP, POP3, and FTP.
+	// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, PING, TCP, UDP, DNS, SMTP, POP3, and FTP.
 	TaskType pulumi.StringInput
 }
 
@@ -327,7 +327,7 @@ func (o SiteMonitorOutput) TaskState() pulumi.StringOutput {
 	return o.ApplyT(func(v *SiteMonitor) pulumi.StringOutput { return v.TaskState }).(pulumi.StringOutput)
 }
 
-// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, Ping, TCP, UDP, DNS, SMTP, POP3, and FTP.
+// The protocol of the site monitoring task. Currently, site monitoring supports the following protocols: HTTP, PING, TCP, UDP, DNS, SMTP, POP3, and FTP.
 func (o SiteMonitorOutput) TaskType() pulumi.StringOutput {
 	return o.ApplyT(func(v *SiteMonitor) pulumi.StringOutput { return v.TaskType }).(pulumi.StringOutput)
 }

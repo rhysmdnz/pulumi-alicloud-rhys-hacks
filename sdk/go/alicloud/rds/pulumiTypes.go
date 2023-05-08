@@ -403,6 +403,142 @@ func (o InstancePgHbaConfArrayOutput) Index(i pulumi.IntInput) InstancePgHbaConf
 	}).(InstancePgHbaConfOutput)
 }
 
+type InstanceServerlessConfig struct {
+	// Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+	// - true: enables the feature.
+	// - false: disables the feature. This is the default value.
+	AutoPause bool `pulumi:"autoPause"`
+	// The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+	MaxCapacity float64 `pulumi:"maxCapacity"`
+	// The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+	MinCapacity float64 `pulumi:"minCapacity"`
+	// Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+	// - true: enables the feature.
+	// - false: disables the feature. This is the default value.
+	SwitchForce bool `pulumi:"switchForce"`
+}
+
+// InstanceServerlessConfigInput is an input type that accepts InstanceServerlessConfigArgs and InstanceServerlessConfigOutput values.
+// You can construct a concrete instance of `InstanceServerlessConfigInput` via:
+//
+//	InstanceServerlessConfigArgs{...}
+type InstanceServerlessConfigInput interface {
+	pulumi.Input
+
+	ToInstanceServerlessConfigOutput() InstanceServerlessConfigOutput
+	ToInstanceServerlessConfigOutputWithContext(context.Context) InstanceServerlessConfigOutput
+}
+
+type InstanceServerlessConfigArgs struct {
+	// Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+	// - true: enables the feature.
+	// - false: disables the feature. This is the default value.
+	AutoPause pulumi.BoolInput `pulumi:"autoPause"`
+	// The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+	MaxCapacity pulumi.Float64Input `pulumi:"maxCapacity"`
+	// The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+	MinCapacity pulumi.Float64Input `pulumi:"minCapacity"`
+	// Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+	// - true: enables the feature.
+	// - false: disables the feature. This is the default value.
+	SwitchForce pulumi.BoolInput `pulumi:"switchForce"`
+}
+
+func (InstanceServerlessConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*InstanceServerlessConfig)(nil)).Elem()
+}
+
+func (i InstanceServerlessConfigArgs) ToInstanceServerlessConfigOutput() InstanceServerlessConfigOutput {
+	return i.ToInstanceServerlessConfigOutputWithContext(context.Background())
+}
+
+func (i InstanceServerlessConfigArgs) ToInstanceServerlessConfigOutputWithContext(ctx context.Context) InstanceServerlessConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InstanceServerlessConfigOutput)
+}
+
+// InstanceServerlessConfigArrayInput is an input type that accepts InstanceServerlessConfigArray and InstanceServerlessConfigArrayOutput values.
+// You can construct a concrete instance of `InstanceServerlessConfigArrayInput` via:
+//
+//	InstanceServerlessConfigArray{ InstanceServerlessConfigArgs{...} }
+type InstanceServerlessConfigArrayInput interface {
+	pulumi.Input
+
+	ToInstanceServerlessConfigArrayOutput() InstanceServerlessConfigArrayOutput
+	ToInstanceServerlessConfigArrayOutputWithContext(context.Context) InstanceServerlessConfigArrayOutput
+}
+
+type InstanceServerlessConfigArray []InstanceServerlessConfigInput
+
+func (InstanceServerlessConfigArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InstanceServerlessConfig)(nil)).Elem()
+}
+
+func (i InstanceServerlessConfigArray) ToInstanceServerlessConfigArrayOutput() InstanceServerlessConfigArrayOutput {
+	return i.ToInstanceServerlessConfigArrayOutputWithContext(context.Background())
+}
+
+func (i InstanceServerlessConfigArray) ToInstanceServerlessConfigArrayOutputWithContext(ctx context.Context) InstanceServerlessConfigArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(InstanceServerlessConfigArrayOutput)
+}
+
+type InstanceServerlessConfigOutput struct{ *pulumi.OutputState }
+
+func (InstanceServerlessConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*InstanceServerlessConfig)(nil)).Elem()
+}
+
+func (o InstanceServerlessConfigOutput) ToInstanceServerlessConfigOutput() InstanceServerlessConfigOutput {
+	return o
+}
+
+func (o InstanceServerlessConfigOutput) ToInstanceServerlessConfigOutputWithContext(ctx context.Context) InstanceServerlessConfigOutput {
+	return o
+}
+
+// Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+// - true: enables the feature.
+// - false: disables the feature. This is the default value.
+func (o InstanceServerlessConfigOutput) AutoPause() pulumi.BoolOutput {
+	return o.ApplyT(func(v InstanceServerlessConfig) bool { return v.AutoPause }).(pulumi.BoolOutput)
+}
+
+// The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+func (o InstanceServerlessConfigOutput) MaxCapacity() pulumi.Float64Output {
+	return o.ApplyT(func(v InstanceServerlessConfig) float64 { return v.MaxCapacity }).(pulumi.Float64Output)
+}
+
+// The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+func (o InstanceServerlessConfigOutput) MinCapacity() pulumi.Float64Output {
+	return o.ApplyT(func(v InstanceServerlessConfig) float64 { return v.MinCapacity }).(pulumi.Float64Output)
+}
+
+// Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+// - true: enables the feature.
+// - false: disables the feature. This is the default value.
+func (o InstanceServerlessConfigOutput) SwitchForce() pulumi.BoolOutput {
+	return o.ApplyT(func(v InstanceServerlessConfig) bool { return v.SwitchForce }).(pulumi.BoolOutput)
+}
+
+type InstanceServerlessConfigArrayOutput struct{ *pulumi.OutputState }
+
+func (InstanceServerlessConfigArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]InstanceServerlessConfig)(nil)).Elem()
+}
+
+func (o InstanceServerlessConfigArrayOutput) ToInstanceServerlessConfigArrayOutput() InstanceServerlessConfigArrayOutput {
+	return o
+}
+
+func (o InstanceServerlessConfigArrayOutput) ToInstanceServerlessConfigArrayOutputWithContext(ctx context.Context) InstanceServerlessConfigArrayOutput {
+	return o
+}
+
+func (o InstanceServerlessConfigArrayOutput) Index(i pulumi.IntInput) InstanceServerlessConfigOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) InstanceServerlessConfig {
+		return vs[0].([]InstanceServerlessConfig)[vs[1].(int)]
+	}).(InstanceServerlessConfigOutput)
+}
+
 type RdsCloneDbInstanceParameter struct {
 	Name  string `pulumi:"name"`
 	Value string `pulumi:"value"`
@@ -670,6 +806,142 @@ func (o RdsCloneDbInstancePgHbaConfArrayOutput) Index(i pulumi.IntInput) RdsClon
 	return pulumi.All(o, i).ApplyT(func(vs []interface{}) RdsCloneDbInstancePgHbaConf {
 		return vs[0].([]RdsCloneDbInstancePgHbaConf)[vs[1].(int)]
 	}).(RdsCloneDbInstancePgHbaConfOutput)
+}
+
+type RdsCloneDbInstanceServerlessConfig struct {
+	// Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+	// - true: enables the feature.
+	// - false: disables the feature. This is the default value.
+	AutoPause bool `pulumi:"autoPause"`
+	// The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+	MaxCapacity float64 `pulumi:"maxCapacity"`
+	// The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+	MinCapacity float64 `pulumi:"minCapacity"`
+	// Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+	// - true: enables the feature.
+	// - false: disables the feature. This is the default value.
+	SwitchForce bool `pulumi:"switchForce"`
+}
+
+// RdsCloneDbInstanceServerlessConfigInput is an input type that accepts RdsCloneDbInstanceServerlessConfigArgs and RdsCloneDbInstanceServerlessConfigOutput values.
+// You can construct a concrete instance of `RdsCloneDbInstanceServerlessConfigInput` via:
+//
+//	RdsCloneDbInstanceServerlessConfigArgs{...}
+type RdsCloneDbInstanceServerlessConfigInput interface {
+	pulumi.Input
+
+	ToRdsCloneDbInstanceServerlessConfigOutput() RdsCloneDbInstanceServerlessConfigOutput
+	ToRdsCloneDbInstanceServerlessConfigOutputWithContext(context.Context) RdsCloneDbInstanceServerlessConfigOutput
+}
+
+type RdsCloneDbInstanceServerlessConfigArgs struct {
+	// Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+	// - true: enables the feature.
+	// - false: disables the feature. This is the default value.
+	AutoPause pulumi.BoolInput `pulumi:"autoPause"`
+	// The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+	MaxCapacity pulumi.Float64Input `pulumi:"maxCapacity"`
+	// The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+	MinCapacity pulumi.Float64Input `pulumi:"minCapacity"`
+	// Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+	// - true: enables the feature.
+	// - false: disables the feature. This is the default value.
+	SwitchForce pulumi.BoolInput `pulumi:"switchForce"`
+}
+
+func (RdsCloneDbInstanceServerlessConfigArgs) ElementType() reflect.Type {
+	return reflect.TypeOf((*RdsCloneDbInstanceServerlessConfig)(nil)).Elem()
+}
+
+func (i RdsCloneDbInstanceServerlessConfigArgs) ToRdsCloneDbInstanceServerlessConfigOutput() RdsCloneDbInstanceServerlessConfigOutput {
+	return i.ToRdsCloneDbInstanceServerlessConfigOutputWithContext(context.Background())
+}
+
+func (i RdsCloneDbInstanceServerlessConfigArgs) ToRdsCloneDbInstanceServerlessConfigOutputWithContext(ctx context.Context) RdsCloneDbInstanceServerlessConfigOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RdsCloneDbInstanceServerlessConfigOutput)
+}
+
+// RdsCloneDbInstanceServerlessConfigArrayInput is an input type that accepts RdsCloneDbInstanceServerlessConfigArray and RdsCloneDbInstanceServerlessConfigArrayOutput values.
+// You can construct a concrete instance of `RdsCloneDbInstanceServerlessConfigArrayInput` via:
+//
+//	RdsCloneDbInstanceServerlessConfigArray{ RdsCloneDbInstanceServerlessConfigArgs{...} }
+type RdsCloneDbInstanceServerlessConfigArrayInput interface {
+	pulumi.Input
+
+	ToRdsCloneDbInstanceServerlessConfigArrayOutput() RdsCloneDbInstanceServerlessConfigArrayOutput
+	ToRdsCloneDbInstanceServerlessConfigArrayOutputWithContext(context.Context) RdsCloneDbInstanceServerlessConfigArrayOutput
+}
+
+type RdsCloneDbInstanceServerlessConfigArray []RdsCloneDbInstanceServerlessConfigInput
+
+func (RdsCloneDbInstanceServerlessConfigArray) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]RdsCloneDbInstanceServerlessConfig)(nil)).Elem()
+}
+
+func (i RdsCloneDbInstanceServerlessConfigArray) ToRdsCloneDbInstanceServerlessConfigArrayOutput() RdsCloneDbInstanceServerlessConfigArrayOutput {
+	return i.ToRdsCloneDbInstanceServerlessConfigArrayOutputWithContext(context.Background())
+}
+
+func (i RdsCloneDbInstanceServerlessConfigArray) ToRdsCloneDbInstanceServerlessConfigArrayOutputWithContext(ctx context.Context) RdsCloneDbInstanceServerlessConfigArrayOutput {
+	return pulumi.ToOutputWithContext(ctx, i).(RdsCloneDbInstanceServerlessConfigArrayOutput)
+}
+
+type RdsCloneDbInstanceServerlessConfigOutput struct{ *pulumi.OutputState }
+
+func (RdsCloneDbInstanceServerlessConfigOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*RdsCloneDbInstanceServerlessConfig)(nil)).Elem()
+}
+
+func (o RdsCloneDbInstanceServerlessConfigOutput) ToRdsCloneDbInstanceServerlessConfigOutput() RdsCloneDbInstanceServerlessConfigOutput {
+	return o
+}
+
+func (o RdsCloneDbInstanceServerlessConfigOutput) ToRdsCloneDbInstanceServerlessConfigOutputWithContext(ctx context.Context) RdsCloneDbInstanceServerlessConfigOutput {
+	return o
+}
+
+// Specifies whether to enable the smart startup and stop feature for the serverless instance. After the smart startup and stop feature is enabled, if no connections to the instance are established within 10 minutes, the instance is stopped. After a connection is established to the instance, the instance is automatically woken up. Valid values:
+// - true: enables the feature.
+// - false: disables the feature. This is the default value.
+func (o RdsCloneDbInstanceServerlessConfigOutput) AutoPause() pulumi.BoolOutput {
+	return o.ApplyT(func(v RdsCloneDbInstanceServerlessConfig) bool { return v.AutoPause }).(pulumi.BoolOutput)
+}
+
+// The maximum number of RDS Capacity Units (RCUs). Valid values: 0.5 to 8. The value of this parameter must be greater than or equal to the value of the `minCapacity` parameter.
+func (o RdsCloneDbInstanceServerlessConfigOutput) MaxCapacity() pulumi.Float64Output {
+	return o.ApplyT(func(v RdsCloneDbInstanceServerlessConfig) float64 { return v.MaxCapacity }).(pulumi.Float64Output)
+}
+
+// The minimum number of RCUs. Valid values: 0.5 to 8. The value of this parameter must be less than or equal to the value of the `maxCapacity` parameter.
+func (o RdsCloneDbInstanceServerlessConfigOutput) MinCapacity() pulumi.Float64Output {
+	return o.ApplyT(func(v RdsCloneDbInstanceServerlessConfig) float64 { return v.MinCapacity }).(pulumi.Float64Output)
+}
+
+// Specifies whether to enable the forced scaling feature for the serverless instance. If you set this parameter to true, a transient connection that lasts approximately 1 minute occurs during the forced scaling process. Process with caution. The RCU scaling for a serverless instance immediately takes effect. In some cases, such as the execution of large transactions, the scaling does not immediately take effect. In this case, you can enable this feature to forcefully scale the RCUs of the instance. Valid values:
+// - true: enables the feature.
+// - false: disables the feature. This is the default value.
+func (o RdsCloneDbInstanceServerlessConfigOutput) SwitchForce() pulumi.BoolOutput {
+	return o.ApplyT(func(v RdsCloneDbInstanceServerlessConfig) bool { return v.SwitchForce }).(pulumi.BoolOutput)
+}
+
+type RdsCloneDbInstanceServerlessConfigArrayOutput struct{ *pulumi.OutputState }
+
+func (RdsCloneDbInstanceServerlessConfigArrayOutput) ElementType() reflect.Type {
+	return reflect.TypeOf((*[]RdsCloneDbInstanceServerlessConfig)(nil)).Elem()
+}
+
+func (o RdsCloneDbInstanceServerlessConfigArrayOutput) ToRdsCloneDbInstanceServerlessConfigArrayOutput() RdsCloneDbInstanceServerlessConfigArrayOutput {
+	return o
+}
+
+func (o RdsCloneDbInstanceServerlessConfigArrayOutput) ToRdsCloneDbInstanceServerlessConfigArrayOutputWithContext(ctx context.Context) RdsCloneDbInstanceServerlessConfigArrayOutput {
+	return o
+}
+
+func (o RdsCloneDbInstanceServerlessConfigArrayOutput) Index(i pulumi.IntInput) RdsCloneDbInstanceServerlessConfigOutput {
+	return pulumi.All(o, i).ApplyT(func(vs []interface{}) RdsCloneDbInstanceServerlessConfig {
+		return vs[0].([]RdsCloneDbInstanceServerlessConfig)[vs[1].(int)]
+	}).(RdsCloneDbInstanceServerlessConfigOutput)
 }
 
 type RdsParameterGroupParamDetail struct {
@@ -1715,7 +1987,7 @@ func (o GetInstanceClassesInstanceClassZoneIdArrayOutput) Index(i pulumi.IntInpu
 type GetInstanceEnginesInstanceEngine struct {
 	// DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
 	Category string `pulumi:"category"`
-	// Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+	// Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
 	Engine string `pulumi:"engine"`
 	// Database version required by the user. Value options can refer to the latest docs [detail info](https://www.alibabacloud.com/help/doc-detail/26228.htm) `EngineVersion`.
 	EngineVersion string `pulumi:"engineVersion"`
@@ -1737,7 +2009,7 @@ type GetInstanceEnginesInstanceEngineInput interface {
 type GetInstanceEnginesInstanceEngineArgs struct {
 	// DB Instance category. the value like [`Basic`, `HighAvailability`, `Finance`, `AlwaysOn`], [detail info](https://www.alibabacloud.com/help/doc-detail/69795.htm).
 	Category pulumi.StringInput `pulumi:"category"`
-	// Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+	// Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
 	Engine pulumi.StringInput `pulumi:"engine"`
 	// Database version required by the user. Value options can refer to the latest docs [detail info](https://www.alibabacloud.com/help/doc-detail/26228.htm) `EngineVersion`.
 	EngineVersion pulumi.StringInput `pulumi:"engineVersion"`
@@ -1801,7 +2073,7 @@ func (o GetInstanceEnginesInstanceEngineOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstanceEnginesInstanceEngine) string { return v.Category }).(pulumi.StringOutput)
 }
 
-// Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "PPAS", "MariaDB". If not set, it will match all of engines.
+// Database type. Valid values: "MySQL", "SQLServer", "PostgreSQL", "MariaDB". If not set, it will match all of engines.
 func (o GetInstanceEnginesInstanceEngineOutput) Engine() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstanceEnginesInstanceEngine) string { return v.Engine }).(pulumi.StringOutput)
 }
@@ -1972,6 +2244,8 @@ type GetInstancesInstance struct {
 	Creator string `pulumi:"creator"`
 	// (Available in 1.70.3+) The storage type of the instance.
 	DbInstanceStorageType string `pulumi:"dbInstanceStorageType"`
+	// (Available in 1.197.0+) The type of instance.
+	DbInstanceType string `pulumi:"dbInstanceType"`
 	// `Primary` for primary instance, `Readonly` for read-only instance, `Guard` for disaster recovery instance, and `Temp` for temporary instance.
 	DbType string `pulumi:"dbType"`
 	// (Available in 1.124.3+) The estimated time when the encryption key will be deleted. The time follows the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. The time is displayed in UTC.
@@ -1988,7 +2262,7 @@ type GetInstancesInstance struct {
 	// - Enabled
 	// - Disabled
 	EncryptionKeyStatus string `pulumi:"encryptionKeyStatus"`
-	// Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+	// Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
 	Engine string `pulumi:"engine"`
 	// Database version.
 	EngineVersion string `pulumi:"engineVersion"`
@@ -2118,6 +2392,8 @@ type GetInstancesInstanceArgs struct {
 	Creator pulumi.StringInput `pulumi:"creator"`
 	// (Available in 1.70.3+) The storage type of the instance.
 	DbInstanceStorageType pulumi.StringInput `pulumi:"dbInstanceStorageType"`
+	// (Available in 1.197.0+) The type of instance.
+	DbInstanceType pulumi.StringInput `pulumi:"dbInstanceType"`
 	// `Primary` for primary instance, `Readonly` for read-only instance, `Guard` for disaster recovery instance, and `Temp` for temporary instance.
 	DbType pulumi.StringInput `pulumi:"dbType"`
 	// (Available in 1.124.3+) The estimated time when the encryption key will be deleted. The time follows the ISO 8601 standard in the yyyy-MM-ddTHH:mm:ssZ format. The time is displayed in UTC.
@@ -2134,7 +2410,7 @@ type GetInstancesInstanceArgs struct {
 	// - Enabled
 	// - Disabled
 	EncryptionKeyStatus pulumi.StringInput `pulumi:"encryptionKeyStatus"`
-	// Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+	// Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
 	Engine pulumi.StringInput `pulumi:"engine"`
 	// Database version.
 	EngineVersion pulumi.StringInput `pulumi:"engineVersion"`
@@ -2339,6 +2615,11 @@ func (o GetInstancesInstanceOutput) DbInstanceStorageType() pulumi.StringOutput 
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.DbInstanceStorageType }).(pulumi.StringOutput)
 }
 
+// (Available in 1.197.0+) The type of instance.
+func (o GetInstancesInstanceOutput) DbInstanceType() pulumi.StringOutput {
+	return o.ApplyT(func(v GetInstancesInstance) string { return v.DbInstanceType }).(pulumi.StringOutput)
+}
+
 // `Primary` for primary instance, `Readonly` for read-only instance, `Guard` for disaster recovery instance, and `Temp` for temporary instance.
 func (o GetInstancesInstanceOutput) DbType() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.DbType }).(pulumi.StringOutput)
@@ -2373,7 +2654,7 @@ func (o GetInstancesInstanceOutput) EncryptionKeyStatus() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.EncryptionKeyStatus }).(pulumi.StringOutput)
 }
 
-// Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL` and `PPAS`. If no value is specified, all types are returned.
+// Database type. Options are `MySQL`, `SQLServer`, `PostgreSQL`, `MariaDB`. If no value is specified, all types are returned.
 func (o GetInstancesInstanceOutput) Engine() pulumi.StringOutput {
 	return o.ApplyT(func(v GetInstancesInstance) string { return v.Engine }).(pulumi.StringOutput)
 }
@@ -3561,10 +3842,14 @@ func init() {
 	pulumi.RegisterInputType(reflect.TypeOf((*InstanceParameterArrayInput)(nil)).Elem(), InstanceParameterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*InstancePgHbaConfInput)(nil)).Elem(), InstancePgHbaConfArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*InstancePgHbaConfArrayInput)(nil)).Elem(), InstancePgHbaConfArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*InstanceServerlessConfigInput)(nil)).Elem(), InstanceServerlessConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*InstanceServerlessConfigArrayInput)(nil)).Elem(), InstanceServerlessConfigArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RdsCloneDbInstanceParameterInput)(nil)).Elem(), RdsCloneDbInstanceParameterArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RdsCloneDbInstanceParameterArrayInput)(nil)).Elem(), RdsCloneDbInstanceParameterArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RdsCloneDbInstancePgHbaConfInput)(nil)).Elem(), RdsCloneDbInstancePgHbaConfArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RdsCloneDbInstancePgHbaConfArrayInput)(nil)).Elem(), RdsCloneDbInstancePgHbaConfArray{})
+	pulumi.RegisterInputType(reflect.TypeOf((*RdsCloneDbInstanceServerlessConfigInput)(nil)).Elem(), RdsCloneDbInstanceServerlessConfigArgs{})
+	pulumi.RegisterInputType(reflect.TypeOf((*RdsCloneDbInstanceServerlessConfigArrayInput)(nil)).Elem(), RdsCloneDbInstanceServerlessConfigArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RdsParameterGroupParamDetailInput)(nil)).Elem(), RdsParameterGroupParamDetailArgs{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RdsParameterGroupParamDetailArrayInput)(nil)).Elem(), RdsParameterGroupParamDetailArray{})
 	pulumi.RegisterInputType(reflect.TypeOf((*RdsUpgradeDbInstanceParameterInput)(nil)).Elem(), RdsUpgradeDbInstanceParameterArgs{})
@@ -3606,10 +3891,14 @@ func init() {
 	pulumi.RegisterOutputType(InstanceParameterArrayOutput{})
 	pulumi.RegisterOutputType(InstancePgHbaConfOutput{})
 	pulumi.RegisterOutputType(InstancePgHbaConfArrayOutput{})
+	pulumi.RegisterOutputType(InstanceServerlessConfigOutput{})
+	pulumi.RegisterOutputType(InstanceServerlessConfigArrayOutput{})
 	pulumi.RegisterOutputType(RdsCloneDbInstanceParameterOutput{})
 	pulumi.RegisterOutputType(RdsCloneDbInstanceParameterArrayOutput{})
 	pulumi.RegisterOutputType(RdsCloneDbInstancePgHbaConfOutput{})
 	pulumi.RegisterOutputType(RdsCloneDbInstancePgHbaConfArrayOutput{})
+	pulumi.RegisterOutputType(RdsCloneDbInstanceServerlessConfigOutput{})
+	pulumi.RegisterOutputType(RdsCloneDbInstanceServerlessConfigArrayOutput{})
 	pulumi.RegisterOutputType(RdsParameterGroupParamDetailOutput{})
 	pulumi.RegisterOutputType(RdsParameterGroupParamDetailArrayOutput{})
 	pulumi.RegisterOutputType(RdsUpgradeDbInstanceParameterOutput{})

@@ -110,6 +110,14 @@ namespace Pulumi.AliCloud.Ga
         public Output<string?> Description { get; private set; } = null!;
 
         /// <summary>
+        /// The routing type of the listener. Default Value: `Standard`. Valid values:
+        /// - `Standard`: intelligent routing.
+        /// - `CustomRouting`: custom routing.
+        /// </summary>
+        [Output("listenerType")]
+        public Output<string> ListenerType { get; private set; } = null!;
+
+        /// <summary>
         /// The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
         /// </summary>
         [Output("name")]
@@ -242,6 +250,14 @@ namespace Pulumi.AliCloud.Ga
         public Input<string>? Description { get; set; }
 
         /// <summary>
+        /// The routing type of the listener. Default Value: `Standard`. Valid values:
+        /// - `Standard`: intelligent routing.
+        /// - `CustomRouting`: custom routing.
+        /// </summary>
+        [Input("listenerType")]
+        public Input<string>? ListenerType { get; set; }
+
+        /// <summary>
         /// The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
         /// </summary>
         [Input("name")]
@@ -333,6 +349,14 @@ namespace Pulumi.AliCloud.Ga
         /// </summary>
         [Input("description")]
         public Input<string>? Description { get; set; }
+
+        /// <summary>
+        /// The routing type of the listener. Default Value: `Standard`. Valid values:
+        /// - `Standard`: intelligent routing.
+        /// - `CustomRouting`: custom routing.
+        /// </summary>
+        [Input("listenerType")]
+        public Input<string>? ListenerType { get; set; }
 
         /// <summary>
         /// The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.

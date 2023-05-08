@@ -103,6 +103,12 @@ export class Listener extends pulumi.CustomResource {
      */
     public readonly description!: pulumi.Output<string | undefined>;
     /**
+     * The routing type of the listener. Default Value: `Standard`. Valid values:
+     * - `Standard`: intelligent routing.
+     * - `CustomRouting`: custom routing.
+     */
+    public readonly listenerType!: pulumi.Output<string>;
+    /**
      * The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
      */
     public readonly name!: pulumi.Output<string>;
@@ -161,6 +167,7 @@ export class Listener extends pulumi.CustomResource {
             resourceInputs["certificates"] = state ? state.certificates : undefined;
             resourceInputs["clientAffinity"] = state ? state.clientAffinity : undefined;
             resourceInputs["description"] = state ? state.description : undefined;
+            resourceInputs["listenerType"] = state ? state.listenerType : undefined;
             resourceInputs["name"] = state ? state.name : undefined;
             resourceInputs["portRanges"] = state ? state.portRanges : undefined;
             resourceInputs["protocol"] = state ? state.protocol : undefined;
@@ -179,6 +186,7 @@ export class Listener extends pulumi.CustomResource {
             resourceInputs["certificates"] = args ? args.certificates : undefined;
             resourceInputs["clientAffinity"] = args ? args.clientAffinity : undefined;
             resourceInputs["description"] = args ? args.description : undefined;
+            resourceInputs["listenerType"] = args ? args.listenerType : undefined;
             resourceInputs["name"] = args ? args.name : undefined;
             resourceInputs["portRanges"] = args ? args.portRanges : undefined;
             resourceInputs["protocol"] = args ? args.protocol : undefined;
@@ -213,6 +221,12 @@ export interface ListenerState {
      * The description of the listener.
      */
     description?: pulumi.Input<string>;
+    /**
+     * The routing type of the listener. Default Value: `Standard`. Valid values:
+     * - `Standard`: intelligent routing.
+     * - `CustomRouting`: custom routing.
+     */
+    listenerType?: pulumi.Input<string>;
     /**
      * The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
      */
@@ -278,6 +292,12 @@ export interface ListenerArgs {
      * The description of the listener.
      */
     description?: pulumi.Input<string>;
+    /**
+     * The routing type of the listener. Default Value: `Standard`. Valid values:
+     * - `Standard`: intelligent routing.
+     * - `CustomRouting`: custom routing.
+     */
+    listenerType?: pulumi.Input<string>;
     /**
      * The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
      */

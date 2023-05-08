@@ -6,10 +6,6 @@ import { input as inputs, output as outputs } from "../types";
 import * as utilities from "../utilities";
 
 /**
- * This data source provides the Emr Clusters of the current Alibaba Cloud user.
- *
- * > **NOTE:** Available in v1.146.0+.
- *
  * ## Example Usage
  *
  * Basic Usage

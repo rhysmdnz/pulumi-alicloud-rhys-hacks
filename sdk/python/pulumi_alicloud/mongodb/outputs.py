@@ -11,6 +11,7 @@ from .. import _utilities
 from . import outputs
 
 __all__ = [
+    'InstanceParameter',
     'InstanceReplicaSet',
     'ServerlessInstanceSecurityIpGroup',
     'ShardingInstanceConfigServerList',
@@ -29,6 +30,35 @@ __all__ = [
     'GetShardingNetworkPublicAddressesAddressResult',
     'GetZonesZoneResult',
 ]
+
+@pulumi.output_type
+class InstanceParameter(dict):
+    def __init__(__self__, *,
+                 name: str,
+                 value: str):
+        """
+        :param str name: The name of the parameter.
+        :param str value: The value of the parameter.
+        """
+        pulumi.set(__self__, "name", name)
+        pulumi.set(__self__, "value", value)
+
+    @property
+    @pulumi.getter
+    def name(self) -> str:
+        """
+        The name of the parameter.
+        """
+        return pulumi.get(self, "name")
+
+    @property
+    @pulumi.getter
+    def value(self) -> str:
+        """
+        The value of the parameter.
+        """
+        return pulumi.get(self, "value")
+
 
 @pulumi.output_type
 class InstanceReplicaSet(dict):

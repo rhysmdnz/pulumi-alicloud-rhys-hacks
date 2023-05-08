@@ -62,7 +62,7 @@ namespace Pulumi.AliCloud.Vpc
         /// Whether the IPv4 gateway is active or not. Valid values are `true` and `false`.
         /// </summary>
         [Output("enabled")]
-        public Output<bool?> Enabled { get; private set; } = null!;
+        public Output<bool> Enabled { get; private set; } = null!;
 
         /// <summary>
         /// The description of the IPv4 gateway. The description must be `2` to `256` characters in length. It must start with a letter but cannot start with `http://` or `https://`.

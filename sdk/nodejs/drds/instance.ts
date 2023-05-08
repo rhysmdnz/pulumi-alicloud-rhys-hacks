@@ -68,6 +68,10 @@ export class Instance extends pulumi.CustomResource {
     }
 
     /**
+     * (Available in 1.196.0+) The connection string of the DRDS instance.
+     */
+    public /*out*/ readonly connectionString!: pulumi.Output<string>;
+    /**
      * Description of the DRDS instance, This description can have a string of 2 to 256 characters.
      */
     public readonly description!: pulumi.Output<string>;
@@ -82,6 +86,14 @@ export class Instance extends pulumi.CustomResource {
      * - `drds.sn2.16c64g` Enterprise Edition.
      */
     public readonly instanceSeries!: pulumi.Output<string>;
+    /**
+     * The MySQL version supported by the instance, with the following range of values. `5`: Fully compatible with MySQL 5.x (default) `8`: Fully compatible with MySQL 8.0. This parameter takes effect when the primary instance is created, and the read-only instance has the same MySQL version as the primary instance by default.
+     */
+    public readonly mysqlVersion!: pulumi.Output<number>;
+    /**
+     * (Available in 1.196.0+) The connection port of the DRDS instance.
+     */
+    public /*out*/ readonly port!: pulumi.Output<string>;
     /**
      * User-defined DRDS instance specification. Value range:
      * - `drds.sn1.4c8g` for DRDS instance Starter version;
@@ -120,9 +132,12 @@ export class Instance extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as InstanceState | undefined;
+            resourceInputs["connectionString"] = state ? state.connectionString : undefined;
             resourceInputs["description"] = state ? state.description : undefined;
             resourceInputs["instanceChargeType"] = state ? state.instanceChargeType : undefined;
             resourceInputs["instanceSeries"] = state ? state.instanceSeries : undefined;
+            resourceInputs["mysqlVersion"] = state ? state.mysqlVersion : undefined;
+            resourceInputs["port"] = state ? state.port : undefined;
             resourceInputs["specification"] = state ? state.specification : undefined;
             resourceInputs["vpcId"] = state ? state.vpcId : undefined;
             resourceInputs["vswitchId"] = state ? state.vswitchId : undefined;
@@ -147,10 +162,13 @@ export class Instance extends pulumi.CustomResource {
             resourceInputs["description"] = args ? args.description : undefined;
             resourceInputs["instanceChargeType"] = args ? args.instanceChargeType : undefined;
             resourceInputs["instanceSeries"] = args ? args.instanceSeries : undefined;
+            resourceInputs["mysqlVersion"] = args ? args.mysqlVersion : undefined;
             resourceInputs["specification"] = args ? args.specification : undefined;
             resourceInputs["vpcId"] = args ? args.vpcId : undefined;
             resourceInputs["vswitchId"] = args ? args.vswitchId : undefined;
             resourceInputs["zoneId"] = args ? args.zoneId : undefined;
+            resourceInputs["connectionString"] = undefined /*out*/;
+            resourceInputs["port"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(Instance.__pulumiType, name, resourceInputs, opts);
@@ -161,6 +179,10 @@ export class Instance extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Instance resources.
  */
 export interface InstanceState {
+    /**
+     * (Available in 1.196.0+) The connection string of the DRDS instance.
+     */
+    connectionString?: pulumi.Input<string>;
     /**
      * Description of the DRDS instance, This description can have a string of 2 to 256 characters.
      */
@@ -176,6 +198,14 @@ export interface InstanceState {
      * - `drds.sn2.16c64g` Enterprise Edition.
      */
     instanceSeries?: pulumi.Input<string>;
+    /**
+     * The MySQL version supported by the instance, with the following range of values. `5`: Fully compatible with MySQL 5.x (default) `8`: Fully compatible with MySQL 8.0. This parameter takes effect when the primary instance is created, and the read-only instance has the same MySQL version as the primary instance by default.
+     */
+    mysqlVersion?: pulumi.Input<number>;
+    /**
+     * (Available in 1.196.0+) The connection port of the DRDS instance.
+     */
+    port?: pulumi.Input<string>;
     /**
      * User-defined DRDS instance specification. Value range:
      * - `drds.sn1.4c8g` for DRDS instance Starter version;
@@ -221,6 +251,10 @@ export interface InstanceArgs {
      * - `drds.sn2.16c64g` Enterprise Edition.
      */
     instanceSeries: pulumi.Input<string>;
+    /**
+     * The MySQL version supported by the instance, with the following range of values. `5`: Fully compatible with MySQL 5.x (default) `8`: Fully compatible with MySQL 8.0. This parameter takes effect when the primary instance is created, and the read-only instance has the same MySQL version as the primary instance by default.
+     */
+    mysqlVersion?: pulumi.Input<number>;
     /**
      * User-defined DRDS instance specification. Value range:
      * - `drds.sn1.4c8g` for DRDS instance Starter version;

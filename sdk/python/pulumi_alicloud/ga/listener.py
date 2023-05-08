@@ -21,6 +21,7 @@ class ListenerArgs:
                  certificates: Optional[pulumi.Input[Sequence[pulumi.Input['ListenerCertificateArgs']]]] = None,
                  client_affinity: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 listener_type: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  protocol: Optional[pulumi.Input[str]] = None,
                  proxy_protocol: Optional[pulumi.Input[bool]] = None,
@@ -34,6 +35,9 @@ class ListenerArgs:
                `NONE`: client affinity is not maintained, that is, connection requests from the same client cannot always be directed to the same terminal node.
                `SOURCE_IP`: maintain client affinity. When a client accesses a stateful application, all requests from the same client can be directed to the same terminal node, regardless of the source port and protocol.
         :param pulumi.Input[str] description: The description of the listener.
+        :param pulumi.Input[str] listener_type: The routing type of the listener. Default Value: `Standard`. Valid values:
+               - `Standard`: intelligent routing.
+               - `CustomRouting`: custom routing.
         :param pulumi.Input[str] name: The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
         :param pulumi.Input[str] protocol: Type of network transport protocol monitored. Default value is `TCP`. Valid values: `TCP`, `UDP`, `HTTP`, `HTTPS`.
         :param pulumi.Input[bool] proxy_protocol: The proxy protocol of the listener. Default value is `false`. Valid value:
@@ -64,6 +68,8 @@ class ListenerArgs:
             pulumi.set(__self__, "client_affinity", client_affinity)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if listener_type is not None:
+            pulumi.set(__self__, "listener_type", listener_type)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if protocol is not None:
@@ -134,6 +140,20 @@ class ListenerArgs:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter(name="listenerType")
+    def listener_type(self) -> Optional[pulumi.Input[str]]:
+        """
+        The routing type of the listener. Default Value: `Standard`. Valid values:
+        - `Standard`: intelligent routing.
+        - `CustomRouting`: custom routing.
+        """
+        return pulumi.get(self, "listener_type")
+
+    @listener_type.setter
+    def listener_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "listener_type", value)
 
     @property
     @pulumi.getter
@@ -208,6 +228,7 @@ class _ListenerState:
                  certificates: Optional[pulumi.Input[Sequence[pulumi.Input['ListenerCertificateArgs']]]] = None,
                  client_affinity: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 listener_type: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  port_ranges: Optional[pulumi.Input[Sequence[pulumi.Input['ListenerPortRangeArgs']]]] = None,
                  protocol: Optional[pulumi.Input[str]] = None,
@@ -222,6 +243,9 @@ class _ListenerState:
                `NONE`: client affinity is not maintained, that is, connection requests from the same client cannot always be directed to the same terminal node.
                `SOURCE_IP`: maintain client affinity. When a client accesses a stateful application, all requests from the same client can be directed to the same terminal node, regardless of the source port and protocol.
         :param pulumi.Input[str] description: The description of the listener.
+        :param pulumi.Input[str] listener_type: The routing type of the listener. Default Value: `Standard`. Valid values:
+               - `Standard`: intelligent routing.
+               - `CustomRouting`: custom routing.
         :param pulumi.Input[str] name: The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
         :param pulumi.Input[Sequence[pulumi.Input['ListenerPortRangeArgs']]] port_ranges: The portRanges of the listener.
         :param pulumi.Input[str] protocol: Type of network transport protocol monitored. Default value is `TCP`. Valid values: `TCP`, `UDP`, `HTTP`, `HTTPS`.
@@ -254,6 +278,8 @@ class _ListenerState:
             pulumi.set(__self__, "client_affinity", client_affinity)
         if description is not None:
             pulumi.set(__self__, "description", description)
+        if listener_type is not None:
+            pulumi.set(__self__, "listener_type", listener_type)
         if name is not None:
             pulumi.set(__self__, "name", name)
         if port_ranges is not None:
@@ -316,6 +342,20 @@ class _ListenerState:
     @description.setter
     def description(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "description", value)
+
+    @property
+    @pulumi.getter(name="listenerType")
+    def listener_type(self) -> Optional[pulumi.Input[str]]:
+        """
+        The routing type of the listener. Default Value: `Standard`. Valid values:
+        - `Standard`: intelligent routing.
+        - `CustomRouting`: custom routing.
+        """
+        return pulumi.get(self, "listener_type")
+
+    @listener_type.setter
+    def listener_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "listener_type", value)
 
     @property
     @pulumi.getter
@@ -416,6 +456,7 @@ class Listener(pulumi.CustomResource):
                  certificates: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ListenerCertificateArgs']]]]] = None,
                  client_affinity: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 listener_type: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  port_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ListenerPortRangeArgs']]]]] = None,
                  protocol: Optional[pulumi.Input[str]] = None,
@@ -476,6 +517,9 @@ class Listener(pulumi.CustomResource):
                `NONE`: client affinity is not maintained, that is, connection requests from the same client cannot always be directed to the same terminal node.
                `SOURCE_IP`: maintain client affinity. When a client accesses a stateful application, all requests from the same client can be directed to the same terminal node, regardless of the source port and protocol.
         :param pulumi.Input[str] description: The description of the listener.
+        :param pulumi.Input[str] listener_type: The routing type of the listener. Default Value: `Standard`. Valid values:
+               - `Standard`: intelligent routing.
+               - `CustomRouting`: custom routing.
         :param pulumi.Input[str] name: The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ListenerPortRangeArgs']]]] port_ranges: The portRanges of the listener.
         :param pulumi.Input[str] protocol: Type of network transport protocol monitored. Default value is `TCP`. Valid values: `TCP`, `UDP`, `HTTP`, `HTTPS`.
@@ -570,6 +614,7 @@ class Listener(pulumi.CustomResource):
                  certificates: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ListenerCertificateArgs']]]]] = None,
                  client_affinity: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
+                 listener_type: Optional[pulumi.Input[str]] = None,
                  name: Optional[pulumi.Input[str]] = None,
                  port_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ListenerPortRangeArgs']]]]] = None,
                  protocol: Optional[pulumi.Input[str]] = None,
@@ -590,6 +635,7 @@ class Listener(pulumi.CustomResource):
             __props__.__dict__["certificates"] = certificates
             __props__.__dict__["client_affinity"] = client_affinity
             __props__.__dict__["description"] = description
+            __props__.__dict__["listener_type"] = listener_type
             __props__.__dict__["name"] = name
             if port_ranges is None and not opts.urn:
                 raise TypeError("Missing required property 'port_ranges'")
@@ -612,6 +658,7 @@ class Listener(pulumi.CustomResource):
             certificates: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ListenerCertificateArgs']]]]] = None,
             client_affinity: Optional[pulumi.Input[str]] = None,
             description: Optional[pulumi.Input[str]] = None,
+            listener_type: Optional[pulumi.Input[str]] = None,
             name: Optional[pulumi.Input[str]] = None,
             port_ranges: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ListenerPortRangeArgs']]]]] = None,
             protocol: Optional[pulumi.Input[str]] = None,
@@ -631,6 +678,9 @@ class Listener(pulumi.CustomResource):
                `NONE`: client affinity is not maintained, that is, connection requests from the same client cannot always be directed to the same terminal node.
                `SOURCE_IP`: maintain client affinity. When a client accesses a stateful application, all requests from the same client can be directed to the same terminal node, regardless of the source port and protocol.
         :param pulumi.Input[str] description: The description of the listener.
+        :param pulumi.Input[str] listener_type: The routing type of the listener. Default Value: `Standard`. Valid values:
+               - `Standard`: intelligent routing.
+               - `CustomRouting`: custom routing.
         :param pulumi.Input[str] name: The name of the listener. The length of the name is 2-128 characters. It starts with uppercase and lowercase letters or Chinese characters. It can contain numbers and underscores and dashes.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['ListenerPortRangeArgs']]]] port_ranges: The portRanges of the listener.
         :param pulumi.Input[str] protocol: Type of network transport protocol monitored. Default value is `TCP`. Valid values: `TCP`, `UDP`, `HTTP`, `HTTPS`.
@@ -663,6 +713,7 @@ class Listener(pulumi.CustomResource):
         __props__.__dict__["certificates"] = certificates
         __props__.__dict__["client_affinity"] = client_affinity
         __props__.__dict__["description"] = description
+        __props__.__dict__["listener_type"] = listener_type
         __props__.__dict__["name"] = name
         __props__.__dict__["port_ranges"] = port_ranges
         __props__.__dict__["protocol"] = protocol
@@ -704,6 +755,16 @@ class Listener(pulumi.CustomResource):
         The description of the listener.
         """
         return pulumi.get(self, "description")
+
+    @property
+    @pulumi.getter(name="listenerType")
+    def listener_type(self) -> pulumi.Output[str]:
+        """
+        The routing type of the listener. Default Value: `Standard`. Valid values:
+        - `Standard`: intelligent routing.
+        - `CustomRouting`: custom routing.
+        """
+        return pulumi.get(self, "listener_type")
 
     @property
     @pulumi.getter

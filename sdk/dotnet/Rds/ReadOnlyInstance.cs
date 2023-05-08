@@ -94,6 +94,18 @@ namespace Pulumi.AliCloud.Rds
         public Output<string> Acl { get; private set; } = null!;
 
         /// <summary>
+        /// Whether to renewal a DB instance automatically or not. It is valid when instance_charge_type is `PrePaid`. Default to `false`.
+        /// </summary>
+        [Output("autoRenew")]
+        public Output<bool?> AutoRenew { get; private set; } = null!;
+
+        /// <summary>
+        /// Auto-renewal period of an instance, in the unit of the month. It is valid when instance_charge_type is `PrePaid`. Valid value:[1~12], Default to 1.
+        /// </summary>
+        [Output("autoRenewPeriod")]
+        public Output<int?> AutoRenewPeriod { get; private set; } = null!;
+
+        /// <summary>
         /// The type of the server certificate. This parameter is supported only when the instance runs PostgreSQL with standard or enhanced SSDs. If you set the SSLEnabled parameter to 1, the default value of this parameter is aliyun. It is valid only when `ssl_enabled  = 1`. Value range:
         /// - aliyun: a cloud certificate
         /// - custom: a custom certificate
@@ -136,6 +148,29 @@ namespace Pulumi.AliCloud.Rds
         public Output<string> ConnectionString { get; private set; } = null!;
 
         /// <summary>
+        /// The attribute of the IP address whitelist. By default, this parameter is empty.
+        /// </summary>
+        [Output("dbInstanceIpArrayAttribute")]
+        public Output<string?> DbInstanceIpArrayAttribute { get; private set; } = null!;
+
+        /// <summary>
+        /// The name of the IP address whitelist. Default value: Default.
+        /// </summary>
+        [Output("dbInstanceIpArrayName")]
+        public Output<string?> DbInstanceIpArrayName { get; private set; } = null!;
+
+        /// <summary>
+        /// The storage type of the instance. Valid values:
+        /// - local_ssd: specifies to use local SSDs. This value is recommended.
+        /// - cloud_ssd: specifies to use standard SSDs.
+        /// - cloud_essd: specifies to use enhanced SSDs (ESSDs).
+        /// - cloud_essd2: specifies to use enhanced SSDs (ESSDs).
+        /// - cloud_essd3: specifies to use enhanced SSDs (ESSDs).
+        /// </summary>
+        [Output("dbInstanceStorageType")]
+        public Output<string> DbInstanceStorageType { get; private set; } = null!;
+
+        /// <summary>
         /// The switch of delete protection. Valid values:
         /// - true: delete protect.
         /// - false: no delete protect.
@@ -162,6 +197,12 @@ namespace Pulumi.AliCloud.Rds
         public Output<bool?> ForceRestart { get; private set; } = null!;
 
         /// <summary>
+        /// Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. The interval between the two conversion operations must be greater than 15 minutes. Only when this parameter is `Postpaid`, the instance can be released.
+        /// </summary>
+        [Output("instanceChargeType")]
+        public Output<string?> InstanceChargeType { get; private set; } = null!;
+
+        /// <summary>
         /// The name of DB instance. It a string of 2 to 256 characters.
         /// </summary>
         [Output("instanceName")]
@@ -186,10 +227,25 @@ namespace Pulumi.AliCloud.Rds
         public Output<string> MasterDbInstanceId { get; private set; } = null!;
 
         /// <summary>
+        /// The method that is used to modify the IP address whitelist. Default value: Cover. Valid values:
+        /// - Cover: Use the value of the SecurityIps parameter to overwrite the existing entries in the IP address whitelist.
+        /// - Append: Add the IP addresses and CIDR blocks that are specified in the SecurityIps parameter to the IP address whitelist.
+        /// - Delete: Delete IP addresses and CIDR blocks that are specified in the SecurityIps parameter from the IP address whitelist. You must retain at least one IP address or CIDR block.
+        /// </summary>
+        [Output("modifyMode")]
+        public Output<string?> ModifyMode { get; private set; } = null!;
+
+        /// <summary>
         /// Set of parameters needs to be set after DB instance was launched. Available parameters can refer to the latest docs [View database parameter templates](https://www.alibabacloud.com/help/doc-detail/26284.htm).
         /// </summary>
         [Output("parameters")]
         public Output<ImmutableArray<Outputs.ReadOnlyInstanceParameter>> Parameters { get; private set; } = null!;
+
+        /// <summary>
+        /// The duration that you will buy DB instance (in month). It is valid when instance_charge_type is `PrePaid`. Valid values: [1~9], 12, 24, 36.
+        /// </summary>
+        [Output("period")]
+        public Output<int?> Period { get; private set; } = null!;
 
         /// <summary>
         /// RDS database connection port.
@@ -213,6 +269,18 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Output("resourceGroupId")]
         public Output<string> ResourceGroupId { get; private set; } = null!;
+
+        /// <summary>
+        /// The type of IP address in the IP address whitelist.
+        /// </summary>
+        [Output("securityIpType")]
+        public Output<string?> SecurityIpType { get; private set; } = null!;
+
+        /// <summary>
+        /// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
+        /// </summary>
+        [Output("securityIps")]
+        public Output<ImmutableArray<string>> SecurityIps { get; private set; } = null!;
 
         /// <summary>
         /// The content of the server certificate. This parameter is supported only when the instance runs PostgreSQL with standard or enhanced SSDs. If you set the CAType parameter to custom, you must also specify this parameter. It is valid only when `ssl_enabled  = 1`.
@@ -284,6 +352,16 @@ namespace Pulumi.AliCloud.Rds
         public Output<string?> VswitchId { get; private set; } = null!;
 
         /// <summary>
+        /// The network type of the IP address whitelist. Default value: MIX. Valid values:
+        /// - Classic: classic network in enhanced whitelist mode
+        /// - VPC: virtual private cloud (VPC) in enhanced whitelist mode
+        /// - MIX: standard whitelist mode
+        /// &gt; **NOTE:** In standard whitelist mode, IP addresses and CIDR blocks can be added only to the default IP address whitelist. In enhanced whitelist mode, IP addresses and CIDR blocks can be added to both IP address whitelists of the classic network type and those of the VPC network type.
+        /// </summary>
+        [Output("whitelistNetworkType")]
+        public Output<string?> WhitelistNetworkType { get; private set; } = null!;
+
+        /// <summary>
         /// The Zone to launch the DB instance.
         /// </summary>
         [Output("zoneId")]
@@ -347,6 +425,18 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? Acl { get; set; }
 
         /// <summary>
+        /// Whether to renewal a DB instance automatically or not. It is valid when instance_charge_type is `PrePaid`. Default to `false`.
+        /// </summary>
+        [Input("autoRenew")]
+        public Input<bool>? AutoRenew { get; set; }
+
+        /// <summary>
+        /// Auto-renewal period of an instance, in the unit of the month. It is valid when instance_charge_type is `PrePaid`. Valid value:[1~12], Default to 1.
+        /// </summary>
+        [Input("autoRenewPeriod")]
+        public Input<int>? AutoRenewPeriod { get; set; }
+
+        /// <summary>
         /// The type of the server certificate. This parameter is supported only when the instance runs PostgreSQL with standard or enhanced SSDs. If you set the SSLEnabled parameter to 1, the default value of this parameter is aliyun. It is valid only when `ssl_enabled  = 1`. Value range:
         /// - aliyun: a cloud certificate
         /// - custom: a custom certificate
@@ -383,6 +473,29 @@ namespace Pulumi.AliCloud.Rds
         public Input<int>? ClientCrlEnabled { get; set; }
 
         /// <summary>
+        /// The attribute of the IP address whitelist. By default, this parameter is empty.
+        /// </summary>
+        [Input("dbInstanceIpArrayAttribute")]
+        public Input<string>? DbInstanceIpArrayAttribute { get; set; }
+
+        /// <summary>
+        /// The name of the IP address whitelist. Default value: Default.
+        /// </summary>
+        [Input("dbInstanceIpArrayName")]
+        public Input<string>? DbInstanceIpArrayName { get; set; }
+
+        /// <summary>
+        /// The storage type of the instance. Valid values:
+        /// - local_ssd: specifies to use local SSDs. This value is recommended.
+        /// - cloud_ssd: specifies to use standard SSDs.
+        /// - cloud_essd: specifies to use enhanced SSDs (ESSDs).
+        /// - cloud_essd2: specifies to use enhanced SSDs (ESSDs).
+        /// - cloud_essd3: specifies to use enhanced SSDs (ESSDs).
+        /// </summary>
+        [Input("dbInstanceStorageType")]
+        public Input<string>? DbInstanceStorageType { get; set; }
+
+        /// <summary>
         /// The switch of delete protection. Valid values:
         /// - true: delete protect.
         /// - false: no delete protect.
@@ -401,6 +514,12 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("forceRestart")]
         public Input<bool>? ForceRestart { get; set; }
+
+        /// <summary>
+        /// Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. The interval between the two conversion operations must be greater than 15 minutes. Only when this parameter is `Postpaid`, the instance can be released.
+        /// </summary>
+        [Input("instanceChargeType")]
+        public Input<string>? InstanceChargeType { get; set; }
 
         /// <summary>
         /// The name of DB instance. It a string of 2 to 256 characters.
@@ -426,6 +545,15 @@ namespace Pulumi.AliCloud.Rds
         [Input("masterDbInstanceId", required: true)]
         public Input<string> MasterDbInstanceId { get; set; } = null!;
 
+        /// <summary>
+        /// The method that is used to modify the IP address whitelist. Default value: Cover. Valid values:
+        /// - Cover: Use the value of the SecurityIps parameter to overwrite the existing entries in the IP address whitelist.
+        /// - Append: Add the IP addresses and CIDR blocks that are specified in the SecurityIps parameter to the IP address whitelist.
+        /// - Delete: Delete IP addresses and CIDR blocks that are specified in the SecurityIps parameter from the IP address whitelist. You must retain at least one IP address or CIDR block.
+        /// </summary>
+        [Input("modifyMode")]
+        public Input<string>? ModifyMode { get; set; }
+
         [Input("parameters")]
         private InputList<Inputs.ReadOnlyInstanceParameterArgs>? _parameters;
 
@@ -437,6 +565,12 @@ namespace Pulumi.AliCloud.Rds
             get => _parameters ?? (_parameters = new InputList<Inputs.ReadOnlyInstanceParameterArgs>());
             set => _parameters = value;
         }
+
+        /// <summary>
+        /// The duration that you will buy DB instance (in month). It is valid when instance_charge_type is `PrePaid`. Valid values: [1~9], 12, 24, 36.
+        /// </summary>
+        [Input("period")]
+        public Input<int>? Period { get; set; }
 
         /// <summary>
         /// The method that is used to verify the replication permission. This parameter is supported only when the instance runs PostgreSQL with standard or enhanced SSDs. In addition, this parameter is available only when the public key of the CA that issues client certificates is enabled. It is valid only when `ssl_enabled  = 1`. Valid values:
@@ -454,6 +588,24 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("resourceGroupId")]
         public Input<string>? ResourceGroupId { get; set; }
+
+        /// <summary>
+        /// The type of IP address in the IP address whitelist.
+        /// </summary>
+        [Input("securityIpType")]
+        public Input<string>? SecurityIpType { get; set; }
+
+        [Input("securityIps")]
+        private InputList<string>? _securityIps;
+
+        /// <summary>
+        /// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
+        /// </summary>
+        public InputList<string> SecurityIps
+        {
+            get => _securityIps ?? (_securityIps = new InputList<string>());
+            set => _securityIps = value;
+        }
 
         /// <summary>
         /// The content of the server certificate. This parameter is supported only when the instance runs PostgreSQL with standard or enhanced SSDs. If you set the CAType parameter to custom, you must also specify this parameter. It is valid only when `ssl_enabled  = 1`.
@@ -531,6 +683,16 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? VswitchId { get; set; }
 
         /// <summary>
+        /// The network type of the IP address whitelist. Default value: MIX. Valid values:
+        /// - Classic: classic network in enhanced whitelist mode
+        /// - VPC: virtual private cloud (VPC) in enhanced whitelist mode
+        /// - MIX: standard whitelist mode
+        /// &gt; **NOTE:** In standard whitelist mode, IP addresses and CIDR blocks can be added only to the default IP address whitelist. In enhanced whitelist mode, IP addresses and CIDR blocks can be added to both IP address whitelists of the classic network type and those of the VPC network type.
+        /// </summary>
+        [Input("whitelistNetworkType")]
+        public Input<string>? WhitelistNetworkType { get; set; }
+
+        /// <summary>
         /// The Zone to launch the DB instance.
         /// </summary>
         [Input("zoneId")]
@@ -553,6 +715,18 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("acl")]
         public Input<string>? Acl { get; set; }
+
+        /// <summary>
+        /// Whether to renewal a DB instance automatically or not. It is valid when instance_charge_type is `PrePaid`. Default to `false`.
+        /// </summary>
+        [Input("autoRenew")]
+        public Input<bool>? AutoRenew { get; set; }
+
+        /// <summary>
+        /// Auto-renewal period of an instance, in the unit of the month. It is valid when instance_charge_type is `PrePaid`. Valid value:[1~12], Default to 1.
+        /// </summary>
+        [Input("autoRenewPeriod")]
+        public Input<int>? AutoRenewPeriod { get; set; }
 
         /// <summary>
         /// The type of the server certificate. This parameter is supported only when the instance runs PostgreSQL with standard or enhanced SSDs. If you set the SSLEnabled parameter to 1, the default value of this parameter is aliyun. It is valid only when `ssl_enabled  = 1`. Value range:
@@ -597,6 +771,29 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? ConnectionString { get; set; }
 
         /// <summary>
+        /// The attribute of the IP address whitelist. By default, this parameter is empty.
+        /// </summary>
+        [Input("dbInstanceIpArrayAttribute")]
+        public Input<string>? DbInstanceIpArrayAttribute { get; set; }
+
+        /// <summary>
+        /// The name of the IP address whitelist. Default value: Default.
+        /// </summary>
+        [Input("dbInstanceIpArrayName")]
+        public Input<string>? DbInstanceIpArrayName { get; set; }
+
+        /// <summary>
+        /// The storage type of the instance. Valid values:
+        /// - local_ssd: specifies to use local SSDs. This value is recommended.
+        /// - cloud_ssd: specifies to use standard SSDs.
+        /// - cloud_essd: specifies to use enhanced SSDs (ESSDs).
+        /// - cloud_essd2: specifies to use enhanced SSDs (ESSDs).
+        /// - cloud_essd3: specifies to use enhanced SSDs (ESSDs).
+        /// </summary>
+        [Input("dbInstanceStorageType")]
+        public Input<string>? DbInstanceStorageType { get; set; }
+
+        /// <summary>
         /// The switch of delete protection. Valid values:
         /// - true: delete protect.
         /// - false: no delete protect.
@@ -623,6 +820,12 @@ namespace Pulumi.AliCloud.Rds
         public Input<bool>? ForceRestart { get; set; }
 
         /// <summary>
+        /// Valid values are `Prepaid`, `Postpaid`, Default to `Postpaid`. The interval between the two conversion operations must be greater than 15 minutes. Only when this parameter is `Postpaid`, the instance can be released.
+        /// </summary>
+        [Input("instanceChargeType")]
+        public Input<string>? InstanceChargeType { get; set; }
+
+        /// <summary>
         /// The name of DB instance. It a string of 2 to 256 characters.
         /// </summary>
         [Input("instanceName")]
@@ -646,6 +849,15 @@ namespace Pulumi.AliCloud.Rds
         [Input("masterDbInstanceId")]
         public Input<string>? MasterDbInstanceId { get; set; }
 
+        /// <summary>
+        /// The method that is used to modify the IP address whitelist. Default value: Cover. Valid values:
+        /// - Cover: Use the value of the SecurityIps parameter to overwrite the existing entries in the IP address whitelist.
+        /// - Append: Add the IP addresses and CIDR blocks that are specified in the SecurityIps parameter to the IP address whitelist.
+        /// - Delete: Delete IP addresses and CIDR blocks that are specified in the SecurityIps parameter from the IP address whitelist. You must retain at least one IP address or CIDR block.
+        /// </summary>
+        [Input("modifyMode")]
+        public Input<string>? ModifyMode { get; set; }
+
         [Input("parameters")]
         private InputList<Inputs.ReadOnlyInstanceParameterGetArgs>? _parameters;
 
@@ -657,6 +869,12 @@ namespace Pulumi.AliCloud.Rds
             get => _parameters ?? (_parameters = new InputList<Inputs.ReadOnlyInstanceParameterGetArgs>());
             set => _parameters = value;
         }
+
+        /// <summary>
+        /// The duration that you will buy DB instance (in month). It is valid when instance_charge_type is `PrePaid`. Valid values: [1~9], 12, 24, 36.
+        /// </summary>
+        [Input("period")]
+        public Input<int>? Period { get; set; }
 
         /// <summary>
         /// RDS database connection port.
@@ -680,6 +898,24 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("resourceGroupId")]
         public Input<string>? ResourceGroupId { get; set; }
+
+        /// <summary>
+        /// The type of IP address in the IP address whitelist.
+        /// </summary>
+        [Input("securityIpType")]
+        public Input<string>? SecurityIpType { get; set; }
+
+        [Input("securityIps")]
+        private InputList<string>? _securityIps;
+
+        /// <summary>
+        /// List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
+        /// </summary>
+        public InputList<string> SecurityIps
+        {
+            get => _securityIps ?? (_securityIps = new InputList<string>());
+            set => _securityIps = value;
+        }
 
         /// <summary>
         /// The content of the server certificate. This parameter is supported only when the instance runs PostgreSQL with standard or enhanced SSDs. If you set the CAType parameter to custom, you must also specify this parameter. It is valid only when `ssl_enabled  = 1`.
@@ -755,6 +991,16 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("vswitchId")]
         public Input<string>? VswitchId { get; set; }
+
+        /// <summary>
+        /// The network type of the IP address whitelist. Default value: MIX. Valid values:
+        /// - Classic: classic network in enhanced whitelist mode
+        /// - VPC: virtual private cloud (VPC) in enhanced whitelist mode
+        /// - MIX: standard whitelist mode
+        /// &gt; **NOTE:** In standard whitelist mode, IP addresses and CIDR blocks can be added only to the default IP address whitelist. In enhanced whitelist mode, IP addresses and CIDR blocks can be added to both IP address whitelists of the classic network type and those of the VPC network type.
+        /// </summary>
+        [Input("whitelistNetworkType")]
+        public Input<string>? WhitelistNetworkType { get; set; }
 
         /// <summary>
         /// The Zone to launch the DB instance.

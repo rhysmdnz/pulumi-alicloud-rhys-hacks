@@ -20,6 +20,14 @@ namespace Pulumi.AliCloud.Vpn.Outputs
         public readonly string CustomerGatewayId;
         public readonly bool EffectImmediately;
         /// <summary>
+        /// Specifies whether to enable the dead peer detection (DPD) feature.
+        /// </summary>
+        public readonly bool EnableDpd;
+        /// <summary>
+        /// Specifies whether to enable NAT traversal.
+        /// </summary>
+        public readonly bool EnableNatTraversal;
+        /// <summary>
         /// ID of the VPN connection.
         /// </summary>
         public readonly string Id;
@@ -44,9 +52,14 @@ namespace Pulumi.AliCloud.Vpn.Outputs
         /// </summary>
         public readonly string RemoteSubnet;
         /// <summary>
-        /// The status of the VPN connection, valid value:ike_sa_not_established, ike_sa_established, ipsec_sa_not_established, ipsec_sa_established.
+        /// The negotiation status of the BGP routing protocol. Valid values: `success`, `false`.
         /// </summary>
         public readonly string Status;
+        public readonly ImmutableArray<Outputs.GetConnectionsConnectionVcoHealthCheckResult> VcoHealthChecks;
+        /// <summary>
+        /// The configuration information for BGP.
+        /// </summary>
+        public readonly ImmutableArray<Outputs.GetConnectionsConnectionVpnBgpConfigResult> VpnBgpConfigs;
         /// <summary>
         /// Use the VPN gateway ID as the search key.
         /// </summary>
@@ -59,6 +72,10 @@ namespace Pulumi.AliCloud.Vpn.Outputs
             string customerGatewayId,
 
             bool effectImmediately,
+
+            bool enableDpd,
+
+            bool enableNatTraversal,
 
             string id,
 
@@ -74,11 +91,17 @@ namespace Pulumi.AliCloud.Vpn.Outputs
 
             string status,
 
+            ImmutableArray<Outputs.GetConnectionsConnectionVcoHealthCheckResult> vcoHealthChecks,
+
+            ImmutableArray<Outputs.GetConnectionsConnectionVpnBgpConfigResult> vpnBgpConfigs,
+
             string vpnGatewayId)
         {
             CreateTime = createTime;
             CustomerGatewayId = customerGatewayId;
             EffectImmediately = effectImmediately;
+            EnableDpd = enableDpd;
+            EnableNatTraversal = enableNatTraversal;
             Id = id;
             IkeConfigs = ikeConfigs;
             IpsecConfigs = ipsecConfigs;
@@ -86,6 +109,8 @@ namespace Pulumi.AliCloud.Vpn.Outputs
             Name = name;
             RemoteSubnet = remoteSubnet;
             Status = status;
+            VcoHealthChecks = vcoHealthChecks;
+            VpnBgpConfigs = vpnBgpConfigs;
             VpnGatewayId = vpnGatewayId;
         }
     }

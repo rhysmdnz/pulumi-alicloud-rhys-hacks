@@ -58,7 +58,7 @@ class AlarmArgs:
         :param pulumi.Input[Sequence[pulumi.Input['AlarmPrometheusArgs']]] prometheuses: The Prometheus alert rule. See the following `Block prometheus`. **Note:** This parameter is required only when you create a Prometheus alert rule for Hybrid Cloud Monitoring.
         :param pulumi.Input[int] silence_time: Notification silence period in the alarm state, in seconds. Valid value range: [300, 86400]. Default to 86400
         :param pulumi.Input[int] start_time: It has been deprecated from provider version 1.50.0 and 'effective_interval' instead.
-        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         :param pulumi.Input[Mapping[str, Any]] tags: A mapping of tags to assign to the resource.
         :param pulumi.Input[str] threshold: Critical level alarm threshold value, which must be a numeric value currently.
         :param pulumi.Input[int] triggered_count: It has been deprecated from provider version 1.94.0 and 'escalations_critical.times' instead.
@@ -336,7 +336,7 @@ class AlarmArgs:
     @pulumi.getter
     def statistics(self) -> Optional[pulumi.Input[str]]:
         """
-        Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         """
         return pulumi.get(self, "statistics")
 
@@ -439,7 +439,7 @@ class _AlarmState:
         :param pulumi.Input[Sequence[pulumi.Input['AlarmPrometheusArgs']]] prometheuses: The Prometheus alert rule. See the following `Block prometheus`. **Note:** This parameter is required only when you create a Prometheus alert rule for Hybrid Cloud Monitoring.
         :param pulumi.Input[int] silence_time: Notification silence period in the alarm state, in seconds. Valid value range: [300, 86400]. Default to 86400
         :param pulumi.Input[int] start_time: It has been deprecated from provider version 1.50.0 and 'effective_interval' instead.
-        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         :param pulumi.Input[str] status: The current alarm rule status.
         :param pulumi.Input[Mapping[str, Any]] tags: A mapping of tags to assign to the resource.
         :param pulumi.Input[str] threshold: Critical level alarm threshold value, which must be a numeric value currently.
@@ -723,7 +723,7 @@ class _AlarmState:
     @pulumi.getter
     def statistics(self) -> Optional[pulumi.Input[str]]:
         """
-        Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         """
         return pulumi.get(self, "statistics")
 
@@ -875,7 +875,7 @@ class Alarm(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['AlarmPrometheusArgs']]]] prometheuses: The Prometheus alert rule. See the following `Block prometheus`. **Note:** This parameter is required only when you create a Prometheus alert rule for Hybrid Cloud Monitoring.
         :param pulumi.Input[int] silence_time: Notification silence period in the alarm state, in seconds. Valid value range: [300, 86400]. Default to 86400
         :param pulumi.Input[int] start_time: It has been deprecated from provider version 1.50.0 and 'effective_interval' instead.
-        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         :param pulumi.Input[Mapping[str, Any]] tags: A mapping of tags to assign to the resource.
         :param pulumi.Input[str] threshold: Critical level alarm threshold value, which must be a numeric value currently.
         :param pulumi.Input[int] triggered_count: It has been deprecated from provider version 1.94.0 and 'escalations_critical.times' instead.
@@ -1076,7 +1076,7 @@ class Alarm(pulumi.CustomResource):
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['AlarmPrometheusArgs']]]] prometheuses: The Prometheus alert rule. See the following `Block prometheus`. **Note:** This parameter is required only when you create a Prometheus alert rule for Hybrid Cloud Monitoring.
         :param pulumi.Input[int] silence_time: Notification silence period in the alarm state, in seconds. Valid value range: [300, 86400]. Default to 86400
         :param pulumi.Input[int] start_time: It has been deprecated from provider version 1.50.0 and 'effective_interval' instead.
-        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        :param pulumi.Input[str] statistics: Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         :param pulumi.Input[str] status: The current alarm rule status.
         :param pulumi.Input[Mapping[str, Any]] tags: A mapping of tags to assign to the resource.
         :param pulumi.Input[str] threshold: Critical level alarm threshold value, which must be a numeric value currently.
@@ -1253,7 +1253,7 @@ class Alarm(pulumi.CustomResource):
     @pulumi.getter
     def statistics(self) -> pulumi.Output[str]:
         """
-        Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         """
         return pulumi.get(self, "statistics")
 

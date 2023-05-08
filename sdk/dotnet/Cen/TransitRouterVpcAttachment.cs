@@ -66,18 +66,18 @@ namespace Pulumi.AliCloud.Cen
     ///     var defaultTransitRouterVpcAttachment = new AliCloud.Cen.TransitRouterVpcAttachment("defaultTransitRouterVpcAttachment", new()
     ///     {
     ///         CenId = defaultInstance.Id,
-    ///         TransitRouterId = defaultTransitRouter.Id,
+    ///         TransitRouterId = defaultTransitRouter.TransitRouterId,
     ///         VpcId = defaultNetwork.Id,
     ///         ZoneMappings = new[]
     ///         {
     ///             new AliCloud.Cen.Inputs.TransitRouterVpcAttachmentZoneMappingArgs
     ///             {
-    ///                 ZoneId = data.Alicloud_cen_transit_router_available_resource.Default.Zones[0].Master_zones[0],
+    ///                 ZoneId = defaultTransitRouterAvailableResources.Apply(getTransitRouterAvailableResourcesResult =&gt; getTransitRouterAvailableResourcesResult.Resources[0]?.MasterZones[0]),
     ///                 VswitchId = defaultMaster.Id,
     ///             },
     ///             new AliCloud.Cen.Inputs.TransitRouterVpcAttachmentZoneMappingArgs
     ///             {
-    ///                 ZoneId = data.Alicloud_cen_transit_router_available_resource.Default.Zones[0].Slave_zones[0],
+    ///                 ZoneId = defaultTransitRouterAvailableResources.Apply(getTransitRouterAvailableResourcesResult =&gt; getTransitRouterAvailableResourcesResult.Resources[0]?.SlaveZones[1]),
     ///                 VswitchId = defaultSlave.Id,
     ///             },
     ///         },
@@ -99,6 +99,14 @@ namespace Pulumi.AliCloud.Cen
     [AliCloudResourceType("alicloud:cen/transitRouterVpcAttachment:TransitRouterVpcAttachment")]
     public partial class TransitRouterVpcAttachment : global::Pulumi.CustomResource
     {
+        /// <summary>
+        /// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+        /// - `true`: Enable.
+        /// - `false`: Disable.
+        /// </summary>
+        [Output("autoPublishRouteEnabled")]
+        public Output<bool> AutoPublishRouteEnabled { get; private set; } = null!;
+
         /// <summary>
         /// The ID of the CEN.
         /// </summary>
@@ -232,6 +240,14 @@ namespace Pulumi.AliCloud.Cen
     public sealed class TransitRouterVpcAttachmentArgs : global::Pulumi.ResourceArgs
     {
         /// <summary>
+        /// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+        /// - `true`: Enable.
+        /// - `false`: Disable.
+        /// </summary>
+        [Input("autoPublishRouteEnabled")]
+        public Input<bool>? AutoPublishRouteEnabled { get; set; }
+
+        /// <summary>
         /// The ID of the CEN.
         /// </summary>
         [Input("cenId", required: true)]
@@ -324,6 +340,14 @@ namespace Pulumi.AliCloud.Cen
 
     public sealed class TransitRouterVpcAttachmentState : global::Pulumi.ResourceArgs
     {
+        /// <summary>
+        /// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+        /// - `true`: Enable.
+        /// - `false`: Disable.
+        /// </summary>
+        [Input("autoPublishRouteEnabled")]
+        public Input<bool>? AutoPublishRouteEnabled { get; set; }
+
         /// <summary>
         /// The ID of the CEN.
         /// </summary>

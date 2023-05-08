@@ -76,6 +76,8 @@ type PrefixList struct {
 	PrefixListDescription pulumi.StringPtrOutput `pulumi:"prefixListDescription"`
 	// The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
 	PrefixListName pulumi.StringPtrOutput `pulumi:"prefixListName"`
+	// (Available in v1.196.0+) The status of the Prefix List.
+	Status pulumi.StringOutput `pulumi:"status"`
 }
 
 // NewPrefixList registers a new resource with the given unique name, arguments, and options.
@@ -118,6 +120,8 @@ type prefixListState struct {
 	PrefixListDescription *string `pulumi:"prefixListDescription"`
 	// The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
 	PrefixListName *string `pulumi:"prefixListName"`
+	// (Available in v1.196.0+) The status of the Prefix List.
+	Status *string `pulumi:"status"`
 }
 
 type PrefixListState struct {
@@ -131,6 +135,8 @@ type PrefixListState struct {
 	PrefixListDescription pulumi.StringPtrInput
 	// The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
 	PrefixListName pulumi.StringPtrInput
+	// (Available in v1.196.0+) The status of the Prefix List.
+	Status pulumi.StringPtrInput
 }
 
 func (PrefixListState) ElementType() reflect.Type {
@@ -274,6 +280,11 @@ func (o PrefixListOutput) PrefixListDescription() pulumi.StringPtrOutput {
 // The name of the prefix list. The name must be 2 to 128 characters in length and must start with a letter. It can contain digits, periods (.), underscores (_), and hyphens (-).
 func (o PrefixListOutput) PrefixListName() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *PrefixList) pulumi.StringPtrOutput { return v.PrefixListName }).(pulumi.StringPtrOutput)
+}
+
+// (Available in v1.196.0+) The status of the Prefix List.
+func (o PrefixListOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v *PrefixList) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
 type PrefixListArrayOutput struct{ *pulumi.OutputState }

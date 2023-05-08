@@ -25,6 +25,7 @@ class InstanceArgs:
                  availability_zone: Optional[pulumi.Input[str]] = None,
                  credit_specification: Optional[pulumi.Input[str]] = None,
                  data_disks: Optional[pulumi.Input[Sequence[pulumi.Input['InstanceDataDiskArgs']]]] = None,
+                 dedicated_host_id: Optional[pulumi.Input[str]] = None,
                  deletion_protection: Optional[pulumi.Input[bool]] = None,
                  deployment_set_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
@@ -97,6 +98,7 @@ class InstanceArgs:
         :param pulumi.Input[str] availability_zone: The Zone to start the instance in. It is ignored and will be computed when set `vswitch_id`.
         :param pulumi.Input[str] credit_specification: Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
         :param pulumi.Input[Sequence[pulumi.Input['InstanceDataDiskArgs']]] data_disks: The list of data disks created with instance.
+        :param pulumi.Input[str] dedicated_host_id: The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
         :param pulumi.Input[bool] deletion_protection: Whether enable the deletion protection or not. Default value: `false`.
                - true: Enable deletion protection.
                - false: Disable deletion protection.
@@ -152,7 +154,9 @@ class InstanceArgs:
                - SpotWithPriceLimit: A price threshold for a spot instance
                - SpotAsPriceGo: A price that is based on the highest Pay-As-You-Go instance
         :param pulumi.Input[str] status: The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
-        :param pulumi.Input[str] stopped_mode: The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        :param pulumi.Input[str] stopped_mode: The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+               * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+               * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         :param pulumi.Input[str] system_disk_auto_snapshot_policy_id: The ID of the automatic snapshot policy applied to the system disk.
         :param pulumi.Input[str] system_disk_category: Valid values are `ephemeral_ssd`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`, `cloud`, `cloud_auto`. only is used to some none I/O optimized instance. Default to `cloud_efficiency`. Valid values `cloud_auto` Available in 1.184.0+.
         :param pulumi.Input[str] system_disk_description: The description of the system disk. The description must be 2 to 256 characters in length and cannot start with http:// or https://.
@@ -168,7 +172,10 @@ class InstanceArgs:
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: A mapping of tags to assign to the resource.
                - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
                - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
-        :param pulumi.Input[str] user_data: User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        :param pulumi.Input[str] user_data: User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+               It supports to setting a base64-encoded value, and it is the recommended usage.
+               From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+               Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         :param pulumi.Input[Mapping[str, Any]] volume_tags: A mapping of tags to assign to the devices created by the instance at launch time.
                - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
                - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
@@ -192,6 +199,8 @@ class InstanceArgs:
             pulumi.set(__self__, "credit_specification", credit_specification)
         if data_disks is not None:
             pulumi.set(__self__, "data_disks", data_disks)
+        if dedicated_host_id is not None:
+            pulumi.set(__self__, "dedicated_host_id", dedicated_host_id)
         if deletion_protection is not None:
             pulumi.set(__self__, "deletion_protection", deletion_protection)
         if deployment_set_id is not None:
@@ -427,6 +436,18 @@ class InstanceArgs:
     @data_disks.setter
     def data_disks(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InstanceDataDiskArgs']]]]):
         pulumi.set(self, "data_disks", value)
+
+    @property
+    @pulumi.getter(name="dedicatedHostId")
+    def dedicated_host_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+        """
+        return pulumi.get(self, "dedicated_host_id")
+
+    @dedicated_host_id.setter
+    def dedicated_host_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "dedicated_host_id", value)
 
     @property
     @pulumi.getter(name="deletionProtection")
@@ -934,7 +955,9 @@ class InstanceArgs:
     @pulumi.getter(name="stoppedMode")
     def stopped_mode(self) -> Optional[pulumi.Input[str]]:
         """
-        The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+        * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         """
         return pulumi.get(self, "stopped_mode")
 
@@ -1091,7 +1114,10 @@ class InstanceArgs:
     @pulumi.getter(name="userData")
     def user_data(self) -> Optional[pulumi.Input[str]]:
         """
-        User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+        It supports to setting a base64-encoded value, and it is the recommended usage.
+        From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+        Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         """
         return pulumi.get(self, "user_data")
 
@@ -1133,8 +1159,10 @@ class _InstanceState:
                  auto_release_time: Optional[pulumi.Input[str]] = None,
                  auto_renew_period: Optional[pulumi.Input[int]] = None,
                  availability_zone: Optional[pulumi.Input[str]] = None,
+                 cpu: Optional[pulumi.Input[int]] = None,
                  credit_specification: Optional[pulumi.Input[str]] = None,
                  data_disks: Optional[pulumi.Input[Sequence[pulumi.Input['InstanceDataDiskArgs']]]] = None,
+                 dedicated_host_id: Optional[pulumi.Input[str]] = None,
                  deletion_protection: Optional[pulumi.Input[bool]] = None,
                  deployment_set_group_no: Optional[pulumi.Input[str]] = None,
                  deployment_set_id: Optional[pulumi.Input[str]] = None,
@@ -1164,10 +1192,14 @@ class _InstanceState:
                  maintenance_action: Optional[pulumi.Input[str]] = None,
                  maintenance_notify: Optional[pulumi.Input[bool]] = None,
                  maintenance_time: Optional[pulumi.Input['InstanceMaintenanceTimeArgs']] = None,
+                 memory: Optional[pulumi.Input[int]] = None,
                  operator_type: Optional[pulumi.Input[str]] = None,
+                 os_name: Optional[pulumi.Input[str]] = None,
+                 os_type: Optional[pulumi.Input[str]] = None,
                  password: Optional[pulumi.Input[str]] = None,
                  period: Optional[pulumi.Input[int]] = None,
                  period_unit: Optional[pulumi.Input[str]] = None,
+                 primary_ip_address: Optional[pulumi.Input[str]] = None,
                  private_ip: Optional[pulumi.Input[str]] = None,
                  public_ip: Optional[pulumi.Input[str]] = None,
                  renewal_status: Optional[pulumi.Input[str]] = None,
@@ -1207,8 +1239,10 @@ class _InstanceState:
                - [1, 2, 3, 6, 12] when `period_unit` in "Month"
                - [1, 2, 3] when `period_unit` in "Week"
         :param pulumi.Input[str] availability_zone: The Zone to start the instance in. It is ignored and will be computed when set `vswitch_id`.
+        :param pulumi.Input[int] cpu: The number of vCPUs.
         :param pulumi.Input[str] credit_specification: Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
         :param pulumi.Input[Sequence[pulumi.Input['InstanceDataDiskArgs']]] data_disks: The list of data disks created with instance.
+        :param pulumi.Input[str] dedicated_host_id: The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
         :param pulumi.Input[bool] deletion_protection: Whether enable the deletion protection or not. Default value: `false`.
                - true: Enable deletion protection.
                - false: Disable deletion protection.
@@ -1245,9 +1279,13 @@ class _InstanceState:
         :param pulumi.Input[str] maintenance_action: The maintenance action. Valid values: `Stop`, `AutoRecover` and `AutoRedeploy`.
         :param pulumi.Input[bool] maintenance_notify: Specifies whether to send an event notification before instance shutdown. Valid values: `true`, `false`. Default value: `false`.
         :param pulumi.Input['InstanceMaintenanceTimeArgs'] maintenance_time: The time of maintenance. See the following `Block maintenance_time`.
+        :param pulumi.Input[int] memory: The memory size of the instance. Unit: MiB.
         :param pulumi.Input[str] operator_type: The operation type. It is valid when `instance_charge_type` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instance_type` parameter has lower specifications than the current instance type, you must set `operator_type` to `downgrade`.
+        :param pulumi.Input[str] os_name: The name of the operating system of the instance.
+        :param pulumi.Input[str] os_type: The type of the operating system of the instance.
         :param pulumi.Input[str] password: Password to an instance is a string of 8 to 30 characters. It must contain uppercase/lowercase letters and numerals, but cannot contain special symbols. When it is changed, the instance will reboot to make the change take effect.
         :param pulumi.Input[str] period_unit: The duration unit that you will buy the resource. It is valid when `instance_charge_type` is 'PrePaid'. Valid value: ["Week", "Month"]. Default to "Month".
+        :param pulumi.Input[str] primary_ip_address: The primary private IP address of the ENI.
         :param pulumi.Input[str] private_ip: Instance private IP address can be specified when you creating new instance. It is valid when `vswitch_id` is specified. When it is changed, the instance will reboot to make the change take effect.
         :param pulumi.Input[str] public_ip: The instance public ip.
         :param pulumi.Input[str] renewal_status: Whether to renew an ECS instance automatically or not. It is valid when `instance_charge_type` is `PrePaid`. Default to "Normal". Valid values:
@@ -1269,7 +1307,9 @@ class _InstanceState:
                - SpotWithPriceLimit: A price threshold for a spot instance
                - SpotAsPriceGo: A price that is based on the highest Pay-As-You-Go instance
         :param pulumi.Input[str] status: The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
-        :param pulumi.Input[str] stopped_mode: The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        :param pulumi.Input[str] stopped_mode: The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+               * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+               * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         :param pulumi.Input[str] system_disk_auto_snapshot_policy_id: The ID of the automatic snapshot policy applied to the system disk.
         :param pulumi.Input[str] system_disk_category: Valid values are `ephemeral_ssd`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`, `cloud`, `cloud_auto`. only is used to some none I/O optimized instance. Default to `cloud_efficiency`. Valid values `cloud_auto` Available in 1.184.0+.
         :param pulumi.Input[str] system_disk_description: The description of the system disk. The description must be 2 to 256 characters in length and cannot start with http:// or https://.
@@ -1285,7 +1325,10 @@ class _InstanceState:
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: A mapping of tags to assign to the resource.
                - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
                - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
-        :param pulumi.Input[str] user_data: User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        :param pulumi.Input[str] user_data: User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+               It supports to setting a base64-encoded value, and it is the recommended usage.
+               From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+               Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         :param pulumi.Input[Mapping[str, Any]] volume_tags: A mapping of tags to assign to the devices created by the instance at launch time.
                - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
                - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
@@ -1302,10 +1345,14 @@ class _InstanceState:
             pulumi.set(__self__, "auto_renew_period", auto_renew_period)
         if availability_zone is not None:
             pulumi.set(__self__, "availability_zone", availability_zone)
+        if cpu is not None:
+            pulumi.set(__self__, "cpu", cpu)
         if credit_specification is not None:
             pulumi.set(__self__, "credit_specification", credit_specification)
         if data_disks is not None:
             pulumi.set(__self__, "data_disks", data_disks)
+        if dedicated_host_id is not None:
+            pulumi.set(__self__, "dedicated_host_id", dedicated_host_id)
         if deletion_protection is not None:
             pulumi.set(__self__, "deletion_protection", deletion_protection)
         if deployment_set_group_no is not None:
@@ -1370,14 +1417,22 @@ class _InstanceState:
             pulumi.set(__self__, "maintenance_notify", maintenance_notify)
         if maintenance_time is not None:
             pulumi.set(__self__, "maintenance_time", maintenance_time)
+        if memory is not None:
+            pulumi.set(__self__, "memory", memory)
         if operator_type is not None:
             pulumi.set(__self__, "operator_type", operator_type)
+        if os_name is not None:
+            pulumi.set(__self__, "os_name", os_name)
+        if os_type is not None:
+            pulumi.set(__self__, "os_type", os_type)
         if password is not None:
             pulumi.set(__self__, "password", password)
         if period is not None:
             pulumi.set(__self__, "period", period)
         if period_unit is not None:
             pulumi.set(__self__, "period_unit", period_unit)
+        if primary_ip_address is not None:
+            pulumi.set(__self__, "primary_ip_address", primary_ip_address)
         if private_ip is not None:
             pulumi.set(__self__, "private_ip", private_ip)
         if public_ip is not None:
@@ -1493,6 +1548,18 @@ class _InstanceState:
         pulumi.set(self, "availability_zone", value)
 
     @property
+    @pulumi.getter
+    def cpu(self) -> Optional[pulumi.Input[int]]:
+        """
+        The number of vCPUs.
+        """
+        return pulumi.get(self, "cpu")
+
+    @cpu.setter
+    def cpu(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "cpu", value)
+
+    @property
     @pulumi.getter(name="creditSpecification")
     def credit_specification(self) -> Optional[pulumi.Input[str]]:
         """
@@ -1515,6 +1582,18 @@ class _InstanceState:
     @data_disks.setter
     def data_disks(self, value: Optional[pulumi.Input[Sequence[pulumi.Input['InstanceDataDiskArgs']]]]):
         pulumi.set(self, "data_disks", value)
+
+    @property
+    @pulumi.getter(name="dedicatedHostId")
+    def dedicated_host_id(self) -> Optional[pulumi.Input[str]]:
+        """
+        The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+        """
+        return pulumi.get(self, "dedicated_host_id")
+
+    @dedicated_host_id.setter
+    def dedicated_host_id(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "dedicated_host_id", value)
 
     @property
     @pulumi.getter(name="deletionProtection")
@@ -1870,6 +1949,18 @@ class _InstanceState:
         pulumi.set(self, "maintenance_time", value)
 
     @property
+    @pulumi.getter
+    def memory(self) -> Optional[pulumi.Input[int]]:
+        """
+        The memory size of the instance. Unit: MiB.
+        """
+        return pulumi.get(self, "memory")
+
+    @memory.setter
+    def memory(self, value: Optional[pulumi.Input[int]]):
+        pulumi.set(self, "memory", value)
+
+    @property
     @pulumi.getter(name="operatorType")
     def operator_type(self) -> Optional[pulumi.Input[str]]:
         """
@@ -1880,6 +1971,30 @@ class _InstanceState:
     @operator_type.setter
     def operator_type(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "operator_type", value)
+
+    @property
+    @pulumi.getter(name="osName")
+    def os_name(self) -> Optional[pulumi.Input[str]]:
+        """
+        The name of the operating system of the instance.
+        """
+        return pulumi.get(self, "os_name")
+
+    @os_name.setter
+    def os_name(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "os_name", value)
+
+    @property
+    @pulumi.getter(name="osType")
+    def os_type(self) -> Optional[pulumi.Input[str]]:
+        """
+        The type of the operating system of the instance.
+        """
+        return pulumi.get(self, "os_type")
+
+    @os_type.setter
+    def os_type(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "os_type", value)
 
     @property
     @pulumi.getter
@@ -1913,6 +2028,18 @@ class _InstanceState:
     @period_unit.setter
     def period_unit(self, value: Optional[pulumi.Input[str]]):
         pulumi.set(self, "period_unit", value)
+
+    @property
+    @pulumi.getter(name="primaryIpAddress")
+    def primary_ip_address(self) -> Optional[pulumi.Input[str]]:
+        """
+        The primary private IP address of the ENI.
+        """
+        return pulumi.get(self, "primary_ip_address")
+
+    @primary_ip_address.setter
+    def primary_ip_address(self, value: Optional[pulumi.Input[str]]):
+        pulumi.set(self, "primary_ip_address", value)
 
     @property
     @pulumi.getter(name="privateIp")
@@ -2082,7 +2209,9 @@ class _InstanceState:
     @pulumi.getter(name="stoppedMode")
     def stopped_mode(self) -> Optional[pulumi.Input[str]]:
         """
-        The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+        * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         """
         return pulumi.get(self, "stopped_mode")
 
@@ -2239,7 +2368,10 @@ class _InstanceState:
     @pulumi.getter(name="userData")
     def user_data(self) -> Optional[pulumi.Input[str]]:
         """
-        User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+        It supports to setting a base64-encoded value, and it is the recommended usage.
+        From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+        Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         """
         return pulumi.get(self, "user_data")
 
@@ -2285,6 +2417,7 @@ class Instance(pulumi.CustomResource):
                  availability_zone: Optional[pulumi.Input[str]] = None,
                  credit_specification: Optional[pulumi.Input[str]] = None,
                  data_disks: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['InstanceDataDiskArgs']]]]] = None,
+                 dedicated_host_id: Optional[pulumi.Input[str]] = None,
                  deletion_protection: Optional[pulumi.Input[bool]] = None,
                  deployment_set_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
@@ -2367,6 +2500,7 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[str] availability_zone: The Zone to start the instance in. It is ignored and will be computed when set `vswitch_id`.
         :param pulumi.Input[str] credit_specification: Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['InstanceDataDiskArgs']]]] data_disks: The list of data disks created with instance.
+        :param pulumi.Input[str] dedicated_host_id: The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
         :param pulumi.Input[bool] deletion_protection: Whether enable the deletion protection or not. Default value: `false`.
                - true: Enable deletion protection.
                - false: Disable deletion protection.
@@ -2425,7 +2559,9 @@ class Instance(pulumi.CustomResource):
                - SpotWithPriceLimit: A price threshold for a spot instance
                - SpotAsPriceGo: A price that is based on the highest Pay-As-You-Go instance
         :param pulumi.Input[str] status: The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
-        :param pulumi.Input[str] stopped_mode: The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        :param pulumi.Input[str] stopped_mode: The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+               * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+               * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         :param pulumi.Input[str] system_disk_auto_snapshot_policy_id: The ID of the automatic snapshot policy applied to the system disk.
         :param pulumi.Input[str] system_disk_category: Valid values are `ephemeral_ssd`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`, `cloud`, `cloud_auto`. only is used to some none I/O optimized instance. Default to `cloud_efficiency`. Valid values `cloud_auto` Available in 1.184.0+.
         :param pulumi.Input[str] system_disk_description: The description of the system disk. The description must be 2 to 256 characters in length and cannot start with http:// or https://.
@@ -2441,7 +2577,10 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: A mapping of tags to assign to the resource.
                - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
                - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
-        :param pulumi.Input[str] user_data: User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        :param pulumi.Input[str] user_data: User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+               It supports to setting a base64-encoded value, and it is the recommended usage.
+               From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+               Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         :param pulumi.Input[Mapping[str, Any]] volume_tags: A mapping of tags to assign to the devices created by the instance at launch time.
                - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
                - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
@@ -2483,6 +2622,7 @@ class Instance(pulumi.CustomResource):
                  availability_zone: Optional[pulumi.Input[str]] = None,
                  credit_specification: Optional[pulumi.Input[str]] = None,
                  data_disks: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['InstanceDataDiskArgs']]]]] = None,
+                 dedicated_host_id: Optional[pulumi.Input[str]] = None,
                  deletion_protection: Optional[pulumi.Input[bool]] = None,
                  deployment_set_id: Optional[pulumi.Input[str]] = None,
                  description: Optional[pulumi.Input[str]] = None,
@@ -2561,6 +2701,7 @@ class Instance(pulumi.CustomResource):
             __props__.__dict__["availability_zone"] = availability_zone
             __props__.__dict__["credit_specification"] = credit_specification
             __props__.__dict__["data_disks"] = data_disks
+            __props__.__dict__["dedicated_host_id"] = dedicated_host_id
             __props__.__dict__["deletion_protection"] = deletion_protection
             __props__.__dict__["deployment_set_id"] = deployment_set_id
             __props__.__dict__["description"] = description
@@ -2636,7 +2777,12 @@ class Instance(pulumi.CustomResource):
             __props__.__dict__["user_data"] = user_data
             __props__.__dict__["volume_tags"] = volume_tags
             __props__.__dict__["vswitch_id"] = vswitch_id
+            __props__.__dict__["cpu"] = None
             __props__.__dict__["deployment_set_group_no"] = None
+            __props__.__dict__["memory"] = None
+            __props__.__dict__["os_name"] = None
+            __props__.__dict__["os_type"] = None
+            __props__.__dict__["primary_ip_address"] = None
             __props__.__dict__["public_ip"] = None
         super(Instance, __self__).__init__(
             'alicloud:ecs/instance:Instance',
@@ -2652,8 +2798,10 @@ class Instance(pulumi.CustomResource):
             auto_release_time: Optional[pulumi.Input[str]] = None,
             auto_renew_period: Optional[pulumi.Input[int]] = None,
             availability_zone: Optional[pulumi.Input[str]] = None,
+            cpu: Optional[pulumi.Input[int]] = None,
             credit_specification: Optional[pulumi.Input[str]] = None,
             data_disks: Optional[pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['InstanceDataDiskArgs']]]]] = None,
+            dedicated_host_id: Optional[pulumi.Input[str]] = None,
             deletion_protection: Optional[pulumi.Input[bool]] = None,
             deployment_set_group_no: Optional[pulumi.Input[str]] = None,
             deployment_set_id: Optional[pulumi.Input[str]] = None,
@@ -2683,10 +2831,14 @@ class Instance(pulumi.CustomResource):
             maintenance_action: Optional[pulumi.Input[str]] = None,
             maintenance_notify: Optional[pulumi.Input[bool]] = None,
             maintenance_time: Optional[pulumi.Input[pulumi.InputType['InstanceMaintenanceTimeArgs']]] = None,
+            memory: Optional[pulumi.Input[int]] = None,
             operator_type: Optional[pulumi.Input[str]] = None,
+            os_name: Optional[pulumi.Input[str]] = None,
+            os_type: Optional[pulumi.Input[str]] = None,
             password: Optional[pulumi.Input[str]] = None,
             period: Optional[pulumi.Input[int]] = None,
             period_unit: Optional[pulumi.Input[str]] = None,
+            primary_ip_address: Optional[pulumi.Input[str]] = None,
             private_ip: Optional[pulumi.Input[str]] = None,
             public_ip: Optional[pulumi.Input[str]] = None,
             renewal_status: Optional[pulumi.Input[str]] = None,
@@ -2731,8 +2883,10 @@ class Instance(pulumi.CustomResource):
                - [1, 2, 3, 6, 12] when `period_unit` in "Month"
                - [1, 2, 3] when `period_unit` in "Week"
         :param pulumi.Input[str] availability_zone: The Zone to start the instance in. It is ignored and will be computed when set `vswitch_id`.
+        :param pulumi.Input[int] cpu: The number of vCPUs.
         :param pulumi.Input[str] credit_specification: Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
         :param pulumi.Input[Sequence[pulumi.Input[pulumi.InputType['InstanceDataDiskArgs']]]] data_disks: The list of data disks created with instance.
+        :param pulumi.Input[str] dedicated_host_id: The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
         :param pulumi.Input[bool] deletion_protection: Whether enable the deletion protection or not. Default value: `false`.
                - true: Enable deletion protection.
                - false: Disable deletion protection.
@@ -2769,9 +2923,13 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[str] maintenance_action: The maintenance action. Valid values: `Stop`, `AutoRecover` and `AutoRedeploy`.
         :param pulumi.Input[bool] maintenance_notify: Specifies whether to send an event notification before instance shutdown. Valid values: `true`, `false`. Default value: `false`.
         :param pulumi.Input[pulumi.InputType['InstanceMaintenanceTimeArgs']] maintenance_time: The time of maintenance. See the following `Block maintenance_time`.
+        :param pulumi.Input[int] memory: The memory size of the instance. Unit: MiB.
         :param pulumi.Input[str] operator_type: The operation type. It is valid when `instance_charge_type` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instance_type` parameter has lower specifications than the current instance type, you must set `operator_type` to `downgrade`.
+        :param pulumi.Input[str] os_name: The name of the operating system of the instance.
+        :param pulumi.Input[str] os_type: The type of the operating system of the instance.
         :param pulumi.Input[str] password: Password to an instance is a string of 8 to 30 characters. It must contain uppercase/lowercase letters and numerals, but cannot contain special symbols. When it is changed, the instance will reboot to make the change take effect.
         :param pulumi.Input[str] period_unit: The duration unit that you will buy the resource. It is valid when `instance_charge_type` is 'PrePaid'. Valid value: ["Week", "Month"]. Default to "Month".
+        :param pulumi.Input[str] primary_ip_address: The primary private IP address of the ENI.
         :param pulumi.Input[str] private_ip: Instance private IP address can be specified when you creating new instance. It is valid when `vswitch_id` is specified. When it is changed, the instance will reboot to make the change take effect.
         :param pulumi.Input[str] public_ip: The instance public ip.
         :param pulumi.Input[str] renewal_status: Whether to renew an ECS instance automatically or not. It is valid when `instance_charge_type` is `PrePaid`. Default to "Normal". Valid values:
@@ -2793,7 +2951,9 @@ class Instance(pulumi.CustomResource):
                - SpotWithPriceLimit: A price threshold for a spot instance
                - SpotAsPriceGo: A price that is based on the highest Pay-As-You-Go instance
         :param pulumi.Input[str] status: The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
-        :param pulumi.Input[str] stopped_mode: The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        :param pulumi.Input[str] stopped_mode: The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+               * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+               * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         :param pulumi.Input[str] system_disk_auto_snapshot_policy_id: The ID of the automatic snapshot policy applied to the system disk.
         :param pulumi.Input[str] system_disk_category: Valid values are `ephemeral_ssd`, `cloud_efficiency`, `cloud_ssd`, `cloud_essd`, `cloud`, `cloud_auto`. only is used to some none I/O optimized instance. Default to `cloud_efficiency`. Valid values `cloud_auto` Available in 1.184.0+.
         :param pulumi.Input[str] system_disk_description: The description of the system disk. The description must be 2 to 256 characters in length and cannot start with http:// or https://.
@@ -2809,7 +2969,10 @@ class Instance(pulumi.CustomResource):
         :param pulumi.Input[Mapping[str, pulumi.Input[str]]] tags: A mapping of tags to assign to the resource.
                - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
                - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
-        :param pulumi.Input[str] user_data: User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        :param pulumi.Input[str] user_data: User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+               It supports to setting a base64-encoded value, and it is the recommended usage.
+               From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+               Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         :param pulumi.Input[Mapping[str, Any]] volume_tags: A mapping of tags to assign to the devices created by the instance at launch time.
                - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
                - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
@@ -2823,8 +2986,10 @@ class Instance(pulumi.CustomResource):
         __props__.__dict__["auto_release_time"] = auto_release_time
         __props__.__dict__["auto_renew_period"] = auto_renew_period
         __props__.__dict__["availability_zone"] = availability_zone
+        __props__.__dict__["cpu"] = cpu
         __props__.__dict__["credit_specification"] = credit_specification
         __props__.__dict__["data_disks"] = data_disks
+        __props__.__dict__["dedicated_host_id"] = dedicated_host_id
         __props__.__dict__["deletion_protection"] = deletion_protection
         __props__.__dict__["deployment_set_group_no"] = deployment_set_group_no
         __props__.__dict__["deployment_set_id"] = deployment_set_id
@@ -2854,10 +3019,14 @@ class Instance(pulumi.CustomResource):
         __props__.__dict__["maintenance_action"] = maintenance_action
         __props__.__dict__["maintenance_notify"] = maintenance_notify
         __props__.__dict__["maintenance_time"] = maintenance_time
+        __props__.__dict__["memory"] = memory
         __props__.__dict__["operator_type"] = operator_type
+        __props__.__dict__["os_name"] = os_name
+        __props__.__dict__["os_type"] = os_type
         __props__.__dict__["password"] = password
         __props__.__dict__["period"] = period
         __props__.__dict__["period_unit"] = period_unit
+        __props__.__dict__["primary_ip_address"] = primary_ip_address
         __props__.__dict__["private_ip"] = private_ip
         __props__.__dict__["public_ip"] = public_ip
         __props__.__dict__["renewal_status"] = renewal_status
@@ -2926,6 +3095,14 @@ class Instance(pulumi.CustomResource):
         return pulumi.get(self, "availability_zone")
 
     @property
+    @pulumi.getter
+    def cpu(self) -> pulumi.Output[int]:
+        """
+        The number of vCPUs.
+        """
+        return pulumi.get(self, "cpu")
+
+    @property
     @pulumi.getter(name="creditSpecification")
     def credit_specification(self) -> pulumi.Output[str]:
         """
@@ -2940,6 +3117,14 @@ class Instance(pulumi.CustomResource):
         The list of data disks created with instance.
         """
         return pulumi.get(self, "data_disks")
+
+    @property
+    @pulumi.getter(name="dedicatedHostId")
+    def dedicated_host_id(self) -> pulumi.Output[Optional[str]]:
+        """
+        The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spot_strategy` and `spot_price_limit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+        """
+        return pulumi.get(self, "dedicated_host_id")
 
     @property
     @pulumi.getter(name="deletionProtection")
@@ -3179,12 +3364,36 @@ class Instance(pulumi.CustomResource):
         return pulumi.get(self, "maintenance_time")
 
     @property
+    @pulumi.getter
+    def memory(self) -> pulumi.Output[int]:
+        """
+        The memory size of the instance. Unit: MiB.
+        """
+        return pulumi.get(self, "memory")
+
+    @property
     @pulumi.getter(name="operatorType")
     def operator_type(self) -> pulumi.Output[Optional[str]]:
         """
         The operation type. It is valid when `instance_charge_type` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instance_type` parameter has lower specifications than the current instance type, you must set `operator_type` to `downgrade`.
         """
         return pulumi.get(self, "operator_type")
+
+    @property
+    @pulumi.getter(name="osName")
+    def os_name(self) -> pulumi.Output[str]:
+        """
+        The name of the operating system of the instance.
+        """
+        return pulumi.get(self, "os_name")
+
+    @property
+    @pulumi.getter(name="osType")
+    def os_type(self) -> pulumi.Output[str]:
+        """
+        The type of the operating system of the instance.
+        """
+        return pulumi.get(self, "os_type")
 
     @property
     @pulumi.getter
@@ -3206,6 +3415,14 @@ class Instance(pulumi.CustomResource):
         The duration unit that you will buy the resource. It is valid when `instance_charge_type` is 'PrePaid'. Valid value: ["Week", "Month"]. Default to "Month".
         """
         return pulumi.get(self, "period_unit")
+
+    @property
+    @pulumi.getter(name="primaryIpAddress")
+    def primary_ip_address(self) -> pulumi.Output[str]:
+        """
+        The primary private IP address of the ENI.
+        """
+        return pulumi.get(self, "primary_ip_address")
 
     @property
     @pulumi.getter(name="privateIp")
@@ -3302,7 +3519,7 @@ class Instance(pulumi.CustomResource):
 
     @property
     @pulumi.getter(name="spotStrategy")
-    def spot_strategy(self) -> pulumi.Output[Optional[str]]:
+    def spot_strategy(self) -> pulumi.Output[str]:
         """
         The spot strategy of a Pay-As-You-Go instance, and it takes effect only when parameter `instance_charge_type` is 'PostPaid'. Value range:
         - NoSpot: A regular Pay-As-You-Go instance.
@@ -3323,7 +3540,9 @@ class Instance(pulumi.CustomResource):
     @pulumi.getter(name="stoppedMode")
     def stopped_mode(self) -> pulumi.Output[str]:
         """
-        The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+        * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+        * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
         """
         return pulumi.get(self, "stopped_mode")
 
@@ -3428,7 +3647,10 @@ class Instance(pulumi.CustomResource):
     @pulumi.getter(name="userData")
     def user_data(self) -> pulumi.Output[Optional[str]]:
         """
-        User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+        User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+        It supports to setting a base64-encoded value, and it is the recommended usage.
+        From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+        Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
         """
         return pulumi.get(self, "user_data")
 

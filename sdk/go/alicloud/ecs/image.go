@@ -83,8 +83,12 @@ type Image struct {
 	InstanceId pulumi.StringPtrOutput `pulumi:"instanceId"`
 	// Deprecated: Attribute 'name' has been deprecated from version 1.69.0. Use `image_name` instead.
 	Name pulumi.StringOutput `pulumi:"name"`
-	// Specifies the operating system platform of the system disk after you specify a data disk snapshot as the data source of the system disk for creating an image. Valid values: `CentOS`, `Ubuntu`, `SUSE`, `OpenSUSE`, `RedHat`, `Debian`, `CoreOS`, `Aliyun Linux`, `Windows Server 2003`, `Windows Server 2008`, `Windows Server 2012`, `Windows 7`, Default is `Others Linux`.
-	Platform pulumi.StringPtrOutput `pulumi:"platform"`
+	// The distribution of the operating system for the system disk in the custom image.
+	// If you specify a data disk snapshot to create the system disk of the custom image, you must use the Platform parameter
+	// to specify the distribution of the operating system for the system disk. Default value: Others Linux.
+	// More valid values refer to [CreateImage OpenAPI](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/createimage)
+	// **NOTE**: It's default value is Ubuntu before version 1.197.0.
+	Platform pulumi.StringOutput `pulumi:"platform"`
 	// The ID of the enterprise resource group to which a custom image belongs
 	ResourceGroupId pulumi.StringPtrOutput `pulumi:"resourceGroupId"`
 	// Specifies a snapshot that is used to create a combined custom image.
@@ -140,7 +144,11 @@ type imageState struct {
 	InstanceId *string `pulumi:"instanceId"`
 	// Deprecated: Attribute 'name' has been deprecated from version 1.69.0. Use `image_name` instead.
 	Name *string `pulumi:"name"`
-	// Specifies the operating system platform of the system disk after you specify a data disk snapshot as the data source of the system disk for creating an image. Valid values: `CentOS`, `Ubuntu`, `SUSE`, `OpenSUSE`, `RedHat`, `Debian`, `CoreOS`, `Aliyun Linux`, `Windows Server 2003`, `Windows Server 2008`, `Windows Server 2012`, `Windows 7`, Default is `Others Linux`.
+	// The distribution of the operating system for the system disk in the custom image.
+	// If you specify a data disk snapshot to create the system disk of the custom image, you must use the Platform parameter
+	// to specify the distribution of the operating system for the system disk. Default value: Others Linux.
+	// More valid values refer to [CreateImage OpenAPI](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/createimage)
+	// **NOTE**: It's default value is Ubuntu before version 1.197.0.
 	Platform *string `pulumi:"platform"`
 	// The ID of the enterprise resource group to which a custom image belongs
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
@@ -168,7 +176,11 @@ type ImageState struct {
 	InstanceId pulumi.StringPtrInput
 	// Deprecated: Attribute 'name' has been deprecated from version 1.69.0. Use `image_name` instead.
 	Name pulumi.StringPtrInput
-	// Specifies the operating system platform of the system disk after you specify a data disk snapshot as the data source of the system disk for creating an image. Valid values: `CentOS`, `Ubuntu`, `SUSE`, `OpenSUSE`, `RedHat`, `Debian`, `CoreOS`, `Aliyun Linux`, `Windows Server 2003`, `Windows Server 2008`, `Windows Server 2012`, `Windows 7`, Default is `Others Linux`.
+	// The distribution of the operating system for the system disk in the custom image.
+	// If you specify a data disk snapshot to create the system disk of the custom image, you must use the Platform parameter
+	// to specify the distribution of the operating system for the system disk. Default value: Others Linux.
+	// More valid values refer to [CreateImage OpenAPI](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/createimage)
+	// **NOTE**: It's default value is Ubuntu before version 1.197.0.
 	Platform pulumi.StringPtrInput
 	// The ID of the enterprise resource group to which a custom image belongs
 	ResourceGroupId pulumi.StringPtrInput
@@ -200,7 +212,11 @@ type imageArgs struct {
 	InstanceId *string `pulumi:"instanceId"`
 	// Deprecated: Attribute 'name' has been deprecated from version 1.69.0. Use `image_name` instead.
 	Name *string `pulumi:"name"`
-	// Specifies the operating system platform of the system disk after you specify a data disk snapshot as the data source of the system disk for creating an image. Valid values: `CentOS`, `Ubuntu`, `SUSE`, `OpenSUSE`, `RedHat`, `Debian`, `CoreOS`, `Aliyun Linux`, `Windows Server 2003`, `Windows Server 2008`, `Windows Server 2012`, `Windows 7`, Default is `Others Linux`.
+	// The distribution of the operating system for the system disk in the custom image.
+	// If you specify a data disk snapshot to create the system disk of the custom image, you must use the Platform parameter
+	// to specify the distribution of the operating system for the system disk. Default value: Others Linux.
+	// More valid values refer to [CreateImage OpenAPI](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/createimage)
+	// **NOTE**: It's default value is Ubuntu before version 1.197.0.
 	Platform *string `pulumi:"platform"`
 	// The ID of the enterprise resource group to which a custom image belongs
 	ResourceGroupId *string `pulumi:"resourceGroupId"`
@@ -229,7 +245,11 @@ type ImageArgs struct {
 	InstanceId pulumi.StringPtrInput
 	// Deprecated: Attribute 'name' has been deprecated from version 1.69.0. Use `image_name` instead.
 	Name pulumi.StringPtrInput
-	// Specifies the operating system platform of the system disk after you specify a data disk snapshot as the data source of the system disk for creating an image. Valid values: `CentOS`, `Ubuntu`, `SUSE`, `OpenSUSE`, `RedHat`, `Debian`, `CoreOS`, `Aliyun Linux`, `Windows Server 2003`, `Windows Server 2008`, `Windows Server 2012`, `Windows 7`, Default is `Others Linux`.
+	// The distribution of the operating system for the system disk in the custom image.
+	// If you specify a data disk snapshot to create the system disk of the custom image, you must use the Platform parameter
+	// to specify the distribution of the operating system for the system disk. Default value: Others Linux.
+	// More valid values refer to [CreateImage OpenAPI](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/createimage)
+	// **NOTE**: It's default value is Ubuntu before version 1.197.0.
 	Platform pulumi.StringPtrInput
 	// The ID of the enterprise resource group to which a custom image belongs
 	ResourceGroupId pulumi.StringPtrInput
@@ -367,9 +387,13 @@ func (o ImageOutput) Name() pulumi.StringOutput {
 	return o.ApplyT(func(v *Image) pulumi.StringOutput { return v.Name }).(pulumi.StringOutput)
 }
 
-// Specifies the operating system platform of the system disk after you specify a data disk snapshot as the data source of the system disk for creating an image. Valid values: `CentOS`, `Ubuntu`, `SUSE`, `OpenSUSE`, `RedHat`, `Debian`, `CoreOS`, `Aliyun Linux`, `Windows Server 2003`, `Windows Server 2008`, `Windows Server 2012`, `Windows 7`, Default is `Others Linux`.
-func (o ImageOutput) Platform() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Image) pulumi.StringPtrOutput { return v.Platform }).(pulumi.StringPtrOutput)
+// The distribution of the operating system for the system disk in the custom image.
+// If you specify a data disk snapshot to create the system disk of the custom image, you must use the Platform parameter
+// to specify the distribution of the operating system for the system disk. Default value: Others Linux.
+// More valid values refer to [CreateImage OpenAPI](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/createimage)
+// **NOTE**: It's default value is Ubuntu before version 1.197.0.
+func (o ImageOutput) Platform() pulumi.StringOutput {
+	return o.ApplyT(func(v *Image) pulumi.StringOutput { return v.Platform }).(pulumi.StringOutput)
 }
 
 // The ID of the enterprise resource group to which a custom image belongs

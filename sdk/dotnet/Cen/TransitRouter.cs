@@ -72,6 +72,12 @@ namespace Pulumi.AliCloud.Cen
         public Output<string> Status { get; private set; } = null!;
 
         /// <summary>
+        /// Specifies whether to enable the multicast feature for the Enterprise Edition transit router. Valid values: `false`, `true`. Default Value: `false`. The multicast feature is supported only in specific regions. You can call [ListTransitRouterAvailableResource](https://www.alibabacloud.com/help/en/cloud-enterprise-network/latest/api-doc-cbn-2017-09-12-api-doc-listtransitrouteravailableresource) to query the regions that support multicast.
+        /// </summary>
+        [Output("supportMulticast")]
+        public Output<bool?> SupportMulticast { get; private set; } = null!;
+
+        /// <summary>
         /// A mapping of tags to assign to the resource.
         /// </summary>
         [Output("tags")]
@@ -160,6 +166,12 @@ namespace Pulumi.AliCloud.Cen
         [Input("dryRun")]
         public Input<bool>? DryRun { get; set; }
 
+        /// <summary>
+        /// Specifies whether to enable the multicast feature for the Enterprise Edition transit router. Valid values: `false`, `true`. Default Value: `false`. The multicast feature is supported only in specific regions. You can call [ListTransitRouterAvailableResource](https://www.alibabacloud.com/help/en/cloud-enterprise-network/latest/api-doc-cbn-2017-09-12-api-doc-listtransitrouteravailableresource) to query the regions that support multicast.
+        /// </summary>
+        [Input("supportMulticast")]
+        public Input<bool>? SupportMulticast { get; set; }
+
         [Input("tags")]
         private InputMap<object>? _tags;
 
@@ -209,6 +221,12 @@ namespace Pulumi.AliCloud.Cen
         /// </summary>
         [Input("status")]
         public Input<string>? Status { get; set; }
+
+        /// <summary>
+        /// Specifies whether to enable the multicast feature for the Enterprise Edition transit router. Valid values: `false`, `true`. Default Value: `false`. The multicast feature is supported only in specific regions. You can call [ListTransitRouterAvailableResource](https://www.alibabacloud.com/help/en/cloud-enterprise-network/latest/api-doc-cbn-2017-09-12-api-doc-listtransitrouteravailableresource) to query the regions that support multicast.
+        /// </summary>
+        [Input("supportMulticast")]
+        public Input<bool>? SupportMulticast { get; set; }
 
         [Input("tags")]
         private InputMap<object>? _tags;

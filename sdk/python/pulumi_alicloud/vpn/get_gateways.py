@@ -186,7 +186,7 @@ def get_gateways(business_status: Optional[str] = None,
         include_reservation_data=True,
         name_regex="testAcc*",
         output_file="/tmp/vpns",
-        status="active",
+        status="Active",
         vpc_id="fake-vpc-id")
     ```
 
@@ -253,7 +253,7 @@ def get_gateways_output(business_status: Optional[pulumi.Input[Optional[str]]] =
         include_reservation_data=True,
         name_regex="testAcc*",
         output_file="/tmp/vpns",
-        status="active",
+        status="Active",
         vpc_id="fake-vpc-id")
     ```
 

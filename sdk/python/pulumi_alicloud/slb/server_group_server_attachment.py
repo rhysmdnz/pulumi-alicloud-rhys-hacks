@@ -243,59 +243,59 @@ class ServerGroupServerAttachment(pulumi.CustomResource):
         import pulumi_alicloud as alicloud
 
         config = pulumi.Config()
-        name = config.get("name")
-        if name is None:
-            name = "slbservergroupvpc"
-        num = config.get_float("num")
-        if num is None:
-            num = 5
-        default_zones = alicloud.get_zones(available_disk_category="cloud_efficiency",
+        slb_server_group_server_attachment = config.get("slbServerGroupServerAttachment")
+        if slb_server_group_server_attachment is None:
+            slb_server_group_server_attachment = "forSlbServerGroupServerAttachment"
+        slb_server_group_server_attachment_count = config.get_float("slbServerGroupServerAttachmentCount")
+        if slb_server_group_server_attachment_count is None:
+            slb_server_group_server_attachment_count = 5
+        server_attachment_zones = alicloud.get_zones(available_disk_category="cloud_efficiency",
             available_resource_creation="VSwitch")
-        default_instance_types = alicloud.ecs.get_instance_types(availability_zone=default_zones.zones[0].id,
+        server_attachment_instance_types = alicloud.ecs.get_instance_types(availability_zone=server_attachment_zones.zones[0].id,
             cpu_core_count=1,
             memory_size=2)
-        default_images = alicloud.ecs.get_images(name_regex="^ubuntu_[0-9]+_[0-9]+_x64*",
+        server_attachment_images = alicloud.ecs.get_images(name_regex="^ubuntu_[0-9]+_[0-9]+_x64*",
             most_recent=True,
             owners="system")
-        default_networks = alicloud.vpc.get_networks(name_regex="default-NODELETING")
-        default_switches = alicloud.vpc.get_switches(vpc_id=default_networks.ids[0],
-            zone_id=default_zones.zones[0].id)
-        default_security_group = alicloud.ecs.SecurityGroup("defaultSecurityGroup", vpc_id=default_networks.ids[0])
-        default_instance = []
-        for range in [{"value": i} for i in range(0, num)]:
-            default_instance.append(alicloud.ecs.Instance(f"defaultInstance-{range['value']}",
-                image_id=default_images.images[0].id,
-                instance_type=default_instance_types.instance_types[0].id,
-                instance_name=name,
-                security_groups=[__item.id for __item in [default_security_group]],
+        server_attachment_networks = alicloud.vpc.get_networks(name_regex="default-NODELETING")
+        server_attachment_switches = alicloud.vpc.get_switches(vpc_id=server_attachment_networks.ids[0],
+            zone_id=server_attachment_zones.zones[0].id)
+        server_attachment_security_group = alicloud.ecs.SecurityGroup("serverAttachmentSecurityGroup", vpc_id=server_attachment_networks.ids[0])
+        server_attachment_instance = []
+        for range in [{"value": i} for i in range(0, slb_server_group_server_attachment_count)]:
+            server_attachment_instance.append(alicloud.ecs.Instance(f"serverAttachmentInstance-{range['value']}",
+                image_id=server_attachment_images.images[0].id,
+                instance_type=server_attachment_instance_types.instance_types[0].id,
+                instance_name=slb_server_group_server_attachment,
+                security_groups=[__item.id for __item in [server_attachment_security_group]],
                 internet_charge_type="PayByTraffic",
                 internet_max_bandwidth_out=10,
-                availability_zone=default_zones.zones[0].id,
+                availability_zone=server_attachment_zones.zones[0].id,
                 instance_charge_type="PostPaid",
                 system_disk_category="cloud_efficiency",
-                vswitch_id=default_switches.ids[0]))
-        default_application_load_balancer = alicloud.slb.ApplicationLoadBalancer("defaultApplicationLoadBalancer",
-            load_balancer_name=name,
-            vswitch_id=default_switches.vswitches[0].id,
+                vswitch_id=server_attachment_switches.ids[0]))
+        server_attachment_application_load_balancer = alicloud.slb.ApplicationLoadBalancer("serverAttachmentApplicationLoadBalancer",
+            load_balancer_name=slb_server_group_server_attachment,
+            vswitch_id=server_attachment_switches.vswitches[0].id,
             load_balancer_spec="slb.s2.small",
             address_type="intranet")
-        default_server_group = alicloud.slb.ServerGroup("defaultServerGroup", load_balancer_id=default_application_load_balancer.id)
-        default_server_group_server_attachment = []
-        for range in [{"value": i} for i in range(0, num)]:
-            default_server_group_server_attachment.append(alicloud.slb.ServerGroupServerAttachment(f"defaultServerGroupServerAttachment-{range['value']}",
-                server_group_id=default_server_group.id,
-                server_id=default_instance[range["index"]].id,
+        server_attachment_server_group = alicloud.slb.ServerGroup("serverAttachmentServerGroup", load_balancer_id=server_attachment_application_load_balancer.id)
+        server_attachment_server_group_server_attachment = []
+        for range in [{"value": i} for i in range(0, slb_server_group_server_attachment_count)]:
+            server_attachment_server_group_server_attachment.append(alicloud.slb.ServerGroupServerAttachment(f"serverAttachmentServerGroupServerAttachment-{range['value']}",
+                server_group_id=server_attachment_server_group.id,
+                server_id=server_attachment_instance[range["index"]].id,
                 port=8080,
                 weight=0))
-        default_listener = alicloud.slb.Listener("defaultListener",
-            load_balancer_id=default_application_load_balancer.id,
+        server_attachment_listener = alicloud.slb.Listener("serverAttachmentListener",
+            load_balancer_id=server_attachment_application_load_balancer.id,
             backend_port=80,
             frontend_port=80,
             protocol="tcp",
             bandwidth=10,
             scheduler="rr",
-            server_group_id=default_server_group.id,
-            opts=pulumi.ResourceOptions(depends_on=[default_server_group_server_attachment]))
+            server_group_id=server_attachment_server_group.id,
+            opts=pulumi.ResourceOptions(depends_on=[server_attachment_server_group_server_attachment]))
         ```
 
         ## Import
@@ -336,59 +336,59 @@ class ServerGroupServerAttachment(pulumi.CustomResource):
         import pulumi_alicloud as alicloud
 
         config = pulumi.Config()
-        name = config.get("name")
-        if name is None:
-            name = "slbservergroupvpc"
-        num = config.get_float("num")
-        if num is None:
-            num = 5
-        default_zones = alicloud.get_zones(available_disk_category="cloud_efficiency",
+        slb_server_group_server_attachment = config.get("slbServerGroupServerAttachment")
+        if slb_server_group_server_attachment is None:
+            slb_server_group_server_attachment = "forSlbServerGroupServerAttachment"
+        slb_server_group_server_attachment_count = config.get_float("slbServerGroupServerAttachmentCount")
+        if slb_server_group_server_attachment_count is None:
+            slb_server_group_server_attachment_count = 5
+        server_attachment_zones = alicloud.get_zones(available_disk_category="cloud_efficiency",
             available_resource_creation="VSwitch")
-        default_instance_types = alicloud.ecs.get_instance_types(availability_zone=default_zones.zones[0].id,
+        server_attachment_instance_types = alicloud.ecs.get_instance_types(availability_zone=server_attachment_zones.zones[0].id,
             cpu_core_count=1,
             memory_size=2)
-        default_images = alicloud.ecs.get_images(name_regex="^ubuntu_[0-9]+_[0-9]+_x64*",
+        server_attachment_images = alicloud.ecs.get_images(name_regex="^ubuntu_[0-9]+_[0-9]+_x64*",
             most_recent=True,
             owners="system")
-        default_networks = alicloud.vpc.get_networks(name_regex="default-NODELETING")
-        default_switches = alicloud.vpc.get_switches(vpc_id=default_networks.ids[0],
-            zone_id=default_zones.zones[0].id)
-        default_security_group = alicloud.ecs.SecurityGroup("defaultSecurityGroup", vpc_id=default_networks.ids[0])
-        default_instance = []
-        for range in [{"value": i} for i in range(0, num)]:
-            default_instance.append(alicloud.ecs.Instance(f"defaultInstance-{range['value']}",
-                image_id=default_images.images[0].id,
-                instance_type=default_instance_types.instance_types[0].id,
-                instance_name=name,
-                security_groups=[__item.id for __item in [default_security_group]],
+        server_attachment_networks = alicloud.vpc.get_networks(name_regex="default-NODELETING")
+        server_attachment_switches = alicloud.vpc.get_switches(vpc_id=server_attachment_networks.ids[0],
+            zone_id=server_attachment_zones.zones[0].id)
+        server_attachment_security_group = alicloud.ecs.SecurityGroup("serverAttachmentSecurityGroup", vpc_id=server_attachment_networks.ids[0])
+        server_attachment_instance = []
+        for range in [{"value": i} for i in range(0, slb_server_group_server_attachment_count)]:
+            server_attachment_instance.append(alicloud.ecs.Instance(f"serverAttachmentInstance-{range['value']}",
+                image_id=server_attachment_images.images[0].id,
+                instance_type=server_attachment_instance_types.instance_types[0].id,
+                instance_name=slb_server_group_server_attachment,
+                security_groups=[__item.id for __item in [server_attachment_security_group]],
                 internet_charge_type="PayByTraffic",
                 internet_max_bandwidth_out=10,
-                availability_zone=default_zones.zones[0].id,
+                availability_zone=server_attachment_zones.zones[0].id,
                 instance_charge_type="PostPaid",
                 system_disk_category="cloud_efficiency",
-                vswitch_id=default_switches.ids[0]))
-        default_application_load_balancer = alicloud.slb.ApplicationLoadBalancer("defaultApplicationLoadBalancer",
-            load_balancer_name=name,
-            vswitch_id=default_switches.vswitches[0].id,
+                vswitch_id=server_attachment_switches.ids[0]))
+        server_attachment_application_load_balancer = alicloud.slb.ApplicationLoadBalancer("serverAttachmentApplicationLoadBalancer",
+            load_balancer_name=slb_server_group_server_attachment,
+            vswitch_id=server_attachment_switches.vswitches[0].id,
             load_balancer_spec="slb.s2.small",
             address_type="intranet")
-        default_server_group = alicloud.slb.ServerGroup("defaultServerGroup", load_balancer_id=default_application_load_balancer.id)
-        default_server_group_server_attachment = []
-        for range in [{"value": i} for i in range(0, num)]:
-            default_server_group_server_attachment.append(alicloud.slb.ServerGroupServerAttachment(f"defaultServerGroupServerAttachment-{range['value']}",
-                server_group_id=default_server_group.id,
-                server_id=default_instance[range["index"]].id,
+        server_attachment_server_group = alicloud.slb.ServerGroup("serverAttachmentServerGroup", load_balancer_id=server_attachment_application_load_balancer.id)
+        server_attachment_server_group_server_attachment = []
+        for range in [{"value": i} for i in range(0, slb_server_group_server_attachment_count)]:
+            server_attachment_server_group_server_attachment.append(alicloud.slb.ServerGroupServerAttachment(f"serverAttachmentServerGroupServerAttachment-{range['value']}",
+                server_group_id=server_attachment_server_group.id,
+                server_id=server_attachment_instance[range["index"]].id,
                 port=8080,
                 weight=0))
-        default_listener = alicloud.slb.Listener("defaultListener",
-            load_balancer_id=default_application_load_balancer.id,
+        server_attachment_listener = alicloud.slb.Listener("serverAttachmentListener",
+            load_balancer_id=server_attachment_application_load_balancer.id,
             backend_port=80,
             frontend_port=80,
             protocol="tcp",
             bandwidth=10,
             scheduler="rr",
-            server_group_id=default_server_group.id,
-            opts=pulumi.ResourceOptions(depends_on=[default_server_group_server_attachment]))
+            server_group_id=server_attachment_server_group.id,
+            opts=pulumi.ResourceOptions(depends_on=[server_attachment_server_group_server_attachment]))
         ```
 
         ## Import

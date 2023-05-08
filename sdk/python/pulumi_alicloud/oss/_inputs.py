@@ -389,7 +389,7 @@ class BucketLifecycleRuleNoncurrentVersionTransitionArgs:
                  storage_class: pulumi.Input[str]):
         """
         :param pulumi.Input[int] days: Specifies the number of days noncurrent object versions transition.
-        :param pulumi.Input[str] storage_class: Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+        :param pulumi.Input[str] storage_class: Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
         """
         pulumi.set(__self__, "days", days)
         pulumi.set(__self__, "storage_class", storage_class)
@@ -410,7 +410,7 @@ class BucketLifecycleRuleNoncurrentVersionTransitionArgs:
     @pulumi.getter(name="storageClass")
     def storage_class(self) -> pulumi.Input[str]:
         """
-        Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+        Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
         """
         return pulumi.get(self, "storage_class")
 
@@ -428,7 +428,7 @@ class BucketLifecycleRuleTransitionArgs:
         """
         :param pulumi.Input[str] created_before_date: Specifies the time before which the rules take effect. The date must conform to the ISO8601 format and always be UTC 00:00. For example: 2002-10-11T00:00:00.000Z indicates that parts created before 2002-10-11T00:00:00.000Z are deleted, and parts created after this time (including this time) are not deleted.
         :param pulumi.Input[int] days: Specifies the number of days noncurrent object versions transition.
-        :param pulumi.Input[str] storage_class: Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+        :param pulumi.Input[str] storage_class: Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
         """
         if created_before_date is not None:
             pulumi.set(__self__, "created_before_date", created_before_date)
@@ -465,7 +465,7 @@ class BucketLifecycleRuleTransitionArgs:
     @pulumi.getter(name="storageClass")
     def storage_class(self) -> Optional[pulumi.Input[str]]:
         """
-        Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+        Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
         """
         return pulumi.get(self, "storage_class")
 

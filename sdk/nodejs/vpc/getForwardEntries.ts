@@ -18,42 +18,42 @@ import * as utilities from "../utilities";
  *
  * const config = new pulumi.Config();
  * const name = config.get("name") || "forward-entry-config-example-name";
- *
- * const defaultZones = pulumi.output(alicloud.getZones({
+ * const defaultZones = alicloud.getZones({
  *     availableResourceCreation: "VSwitch",
- * }));
- * const defaultNetwork = new alicloud.vpc.Network("default", {
- *     cidrBlock: "172.16.0.0/12",
+ * });
+ * const defaultNetwork = new alicloud.vpc.Network("defaultNetwork", {
  *     vpcName: name,
+ *     cidrBlock: "172.16.0.0/12",
  * });
- * const defaultSwitch = new alicloud.vpc.Switch("default", {
+ * const defaultSwitch = new alicloud.vpc.Switch("defaultSwitch", {
+ *     vpcId: defaultNetwork.id,
  *     cidrBlock: "172.16.0.0/21",
- *     vpcId: defaultNetwork.id,
+ *     zoneId: defaultZones.then(defaultZones => defaultZones.zones?[0]?.id),
  *     vswitchName: name,
- *     zoneId: defaultZones.zones[0].id,
  * });
- * const defaultNatGateway = new alicloud.vpc.NatGateway("default", {
- *     specification: "Small",
+ * const defaultNatGateway = new alicloud.vpc.NatGateway("defaultNatGateway", {
  *     vpcId: defaultNetwork.id,
+ *     internetChargeType: "PayByLcu",
+ *     natGatewayName: name,
+ *     natType: "Enhanced",
+ *     vswitchId: defaultSwitch.id,
  * });
- * const defaultEipAddress = new alicloud.ecs.EipAddress("default", {
- *     addressName: name,
- * });
- * const defaultEipAssociation = new alicloud.ecs.EipAssociation("default", {
+ * const defaultEipAddress = new alicloud.ecs.EipAddress("defaultEipAddress", {addressName: name});
+ * const defaultEipAssociation = new alicloud.ecs.EipAssociation("defaultEipAssociation", {
  *     allocationId: defaultEipAddress.id,
  *     instanceId: defaultNatGateway.id,
  * });
- * const defaultForwardEntry = new alicloud.vpc.ForwardEntry("default", {
+ * const defaultForwardEntry = new alicloud.vpc.ForwardEntry("defaultForwardEntry", {
+ *     forwardTableId: defaultNatGateway.forwardTableIds,
  *     externalIp: defaultEipAddress.ipAddress,
  *     externalPort: "80",
- *     forwardTableId: defaultNatGateway.forwardTableIds,
+ *     ipProtocol: "tcp",
  *     internalIp: "172.16.0.3",
  *     internalPort: "8080",
- *     ipProtocol: "tcp",
  * });
- * const defaultForwardEntries = defaultForwardEntry.forwardTableId.apply(forwardTableId => alicloud.vpc.getForwardEntries({
- *     forwardTableId: forwardTableId,
- * }));
+ * const defaultForwardEntries = alicloud.vpc.getForwardEntriesOutput({
+ *     forwardTableId: defaultForwardEntry.forwardTableId,
+ * });
  * ```
  */
 export function getForwardEntries(args: GetForwardEntriesArgs, opts?: pulumi.InvokeOptions): Promise<GetForwardEntriesResult> {

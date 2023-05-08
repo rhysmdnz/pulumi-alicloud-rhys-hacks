@@ -45,6 +45,7 @@ import * as utilities from "../utilities";
  *     namespaceId: defaultNamespace.id,
  *     imageUrl: "registry-vpc.cn-hangzhou.aliyuncs.com/lxepoo/apache-php5",
  *     packageType: "Image",
+ *     vpcId: vsw.vpcId,
  *     vswitchId: vsw.id,
  *     timezone: "Asia/Beijing",
  *     replicas: 5,
@@ -185,6 +186,10 @@ export class Application extends pulumi.CustomResource {
      * The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
      */
     public readonly memory!: pulumi.Output<number | undefined>;
+    /**
+     * Select the Nacos registry. Valid values: `0`, `1`, `2`.
+     */
+    public readonly microRegistration!: pulumi.Output<string | undefined>;
     /**
      * Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows: 
      * * `-1`: Initialization value, indicating that percentages are not used.
@@ -353,6 +358,7 @@ export class Application extends pulumi.CustomResource {
             resourceInputs["jdk"] = state ? state.jdk : undefined;
             resourceInputs["liveness"] = state ? state.liveness : undefined;
             resourceInputs["memory"] = state ? state.memory : undefined;
+            resourceInputs["microRegistration"] = state ? state.microRegistration : undefined;
             resourceInputs["minReadyInstanceRatio"] = state ? state.minReadyInstanceRatio : undefined;
             resourceInputs["minReadyInstances"] = state ? state.minReadyInstances : undefined;
             resourceInputs["mountDesc"] = state ? state.mountDesc : undefined;
@@ -420,6 +426,7 @@ export class Application extends pulumi.CustomResource {
             resourceInputs["jdk"] = args ? args.jdk : undefined;
             resourceInputs["liveness"] = args ? args.liveness : undefined;
             resourceInputs["memory"] = args ? args.memory : undefined;
+            resourceInputs["microRegistration"] = args ? args.microRegistration : undefined;
             resourceInputs["minReadyInstanceRatio"] = args ? args.minReadyInstanceRatio : undefined;
             resourceInputs["minReadyInstances"] = args ? args.minReadyInstances : undefined;
             resourceInputs["mountDesc"] = args ? args.mountDesc : undefined;
@@ -558,6 +565,10 @@ export interface ApplicationState {
      * The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
      */
     memory?: pulumi.Input<number>;
+    /**
+     * Select the Nacos registry. Valid values: `0`, `1`, `2`.
+     */
+    microRegistration?: pulumi.Input<string>;
     /**
      * Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows: 
      * * `-1`: Initialization value, indicating that percentages are not used.
@@ -790,6 +801,10 @@ export interface ApplicationArgs {
      * The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
      */
     memory?: pulumi.Input<number>;
+    /**
+     * Select the Nacos registry. Valid values: `0`, `1`, `2`.
+     */
+    microRegistration?: pulumi.Input<string>;
     /**
      * Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows: 
      * * `-1`: Initialization value, indicating that percentages are not used.

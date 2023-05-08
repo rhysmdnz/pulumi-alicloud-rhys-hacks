@@ -11,10 +11,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// Provides a EMR Cluster resource. With this you can create, read, and release  EMR Cluster.
-//
-// > **NOTE:** Available in 1.57.0+.
-//
 // ## Example Usage
 //
 // ## Import

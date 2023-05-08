@@ -20,6 +20,7 @@ __all__ = [
     'AlertQueryList',
     'AlertSchedule',
     'AlertSeverityConfiguration',
+    'AlertTemplateConfiguration',
     'EtlEtlSink',
     'OssShipperParquetConfig',
     'StoreEncryptConf',
@@ -641,6 +642,71 @@ class AlertSeverityConfiguration(dict):
         Severity for new alert, including 2,4,6,8,10 for Report,Low,Medium,High,Critical.
         """
         return pulumi.get(self, "severity")
+
+
+@pulumi.output_type
+class AlertTemplateConfiguration(dict):
+    def __init__(__self__, *,
+                 id: str,
+                 type: str,
+                 annotations: Optional[Mapping[str, str]] = None,
+                 lang: Optional[str] = None,
+                 tokens: Optional[Mapping[str, str]] = None):
+        """
+        :param str id: Alert template id.
+        :param str type: including FixedRate,Hourly,Daily,Weekly,Cron.
+        :param Mapping[str, str] annotations: Alert template annotations.
+        :param str lang: Alert template language including `cn`, `en`.
+        :param Mapping[str, str] tokens: Alert template tokens.
+        """
+        pulumi.set(__self__, "id", id)
+        pulumi.set(__self__, "type", type)
+        if annotations is not None:
+            pulumi.set(__self__, "annotations", annotations)
+        if lang is not None:
+            pulumi.set(__self__, "lang", lang)
+        if tokens is not None:
+            pulumi.set(__self__, "tokens", tokens)
+
+    @property
+    @pulumi.getter
+    def id(self) -> str:
+        """
+        Alert template id.
+        """
+        return pulumi.get(self, "id")
+
+    @property
+    @pulumi.getter
+    def type(self) -> str:
+        """
+        including FixedRate,Hourly,Daily,Weekly,Cron.
+        """
+        return pulumi.get(self, "type")
+
+    @property
+    @pulumi.getter
+    def annotations(self) -> Optional[Mapping[str, str]]:
+        """
+        Alert template annotations.
+        """
+        return pulumi.get(self, "annotations")
+
+    @property
+    @pulumi.getter
+    def lang(self) -> Optional[str]:
+        """
+        Alert template language including `cn`, `en`.
+        """
+        return pulumi.get(self, "lang")
+
+    @property
+    @pulumi.getter
+    def tokens(self) -> Optional[Mapping[str, str]]:
+        """
+        Alert template tokens.
+        """
+        return pulumi.get(self, "tokens")
 
 
 @pulumi.output_type
@@ -1270,6 +1336,7 @@ class GetProjectsProjectResult(dict):
                  id: str,
                  last_modify_time: str,
                  owner: str,
+                 policy: str,
                  project_name: str,
                  region: str,
                  status: str):
@@ -1278,6 +1345,7 @@ class GetProjectsProjectResult(dict):
         :param str id: The ID of the project.
         :param str last_modify_time: The last modify time of project.
         :param str owner: The owner of project.
+        :param str policy: The policy of project.
         :param str project_name: The name of the project.
         :param str region: The region of project.
         :param str status: The status of project.
@@ -1286,6 +1354,7 @@ class GetProjectsProjectResult(dict):
         pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "last_modify_time", last_modify_time)
         pulumi.set(__self__, "owner", owner)
+        pulumi.set(__self__, "policy", policy)
         pulumi.set(__self__, "project_name", project_name)
         pulumi.set(__self__, "region", region)
         pulumi.set(__self__, "status", status)
@@ -1321,6 +1390,14 @@ class GetProjectsProjectResult(dict):
         The owner of project.
         """
         return pulumi.get(self, "owner")
+
+    @property
+    @pulumi.getter
+    def policy(self) -> str:
+        """
+        The policy of project.
+        """
+        return pulumi.get(self, "policy")
 
     @property
     @pulumi.getter(name="projectName")

@@ -222,6 +222,7 @@ class GetAccountsAccountDatabasePrivilegeResult(dict):
 class GetClustersClusterResult(dict):
     def __init__(__self__, *,
                  charge_type: str,
+                 connection_string: str,
                  create_time: str,
                  db_node_class: str,
                  db_node_number: int,
@@ -236,6 +237,7 @@ class GetClustersClusterResult(dict):
                  id: str,
                  lock_mode: str,
                  network_type: str,
+                 port: str,
                  region_id: str,
                  status: str,
                  storage_used: int,
@@ -243,6 +245,7 @@ class GetClustersClusterResult(dict):
                  zone_id: str):
         """
         :param str charge_type: Billing method. Value options: `PostPaid` for Pay-As-You-Go and `PrePaid` for subscription.
+        :param str connection_string: PolarDB cluster connection string.
         :param str create_time: The create_time of the db_nodes.
         :param str db_node_class: The db_node_class of the db_nodes.
         :param int db_node_number: The DBNodeNumber of the PolarDB cluster.
@@ -257,6 +260,7 @@ class GetClustersClusterResult(dict):
         :param str id: The ID of the PolarDB cluster.
         :param str lock_mode: The LockMode of the PolarDB cluster.
         :param str network_type: The DBClusterNetworkType of the PolarDB cluster.
+        :param str port: PolarDB cluster connection port.
         :param str region_id: The region_id of the db_nodes.
         :param str status: status of the cluster.
         :param int storage_used: The StorageUsed of the PolarDB cluster.
@@ -264,6 +268,7 @@ class GetClustersClusterResult(dict):
         :param str zone_id: The zone_id of the db_nodes.
         """
         pulumi.set(__self__, "charge_type", charge_type)
+        pulumi.set(__self__, "connection_string", connection_string)
         pulumi.set(__self__, "create_time", create_time)
         pulumi.set(__self__, "db_node_class", db_node_class)
         pulumi.set(__self__, "db_node_number", db_node_number)
@@ -278,6 +283,7 @@ class GetClustersClusterResult(dict):
         pulumi.set(__self__, "id", id)
         pulumi.set(__self__, "lock_mode", lock_mode)
         pulumi.set(__self__, "network_type", network_type)
+        pulumi.set(__self__, "port", port)
         pulumi.set(__self__, "region_id", region_id)
         pulumi.set(__self__, "status", status)
         pulumi.set(__self__, "storage_used", storage_used)
@@ -291,6 +297,14 @@ class GetClustersClusterResult(dict):
         Billing method. Value options: `PostPaid` for Pay-As-You-Go and `PrePaid` for subscription.
         """
         return pulumi.get(self, "charge_type")
+
+    @property
+    @pulumi.getter(name="connectionString")
+    def connection_string(self) -> str:
+        """
+        PolarDB cluster connection string.
+        """
+        return pulumi.get(self, "connection_string")
 
     @property
     @pulumi.getter(name="createTime")
@@ -403,6 +417,14 @@ class GetClustersClusterResult(dict):
         The DBClusterNetworkType of the PolarDB cluster.
         """
         return pulumi.get(self, "network_type")
+
+    @property
+    @pulumi.getter
+    def port(self) -> str:
+        """
+        PolarDB cluster connection port.
+        """
+        return pulumi.get(self, "port")
 
     @property
     @pulumi.getter(name="regionId")

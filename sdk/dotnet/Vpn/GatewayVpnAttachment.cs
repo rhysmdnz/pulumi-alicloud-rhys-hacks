@@ -115,7 +115,7 @@ namespace Pulumi.AliCloud.Vpn
         public Output<Outputs.GatewayVpnAttachmentBgpConfig> BgpConfig { get; private set; } = null!;
 
         /// <summary>
-        /// The ID of the customer gateway.
+        /// The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         /// </summary>
         [Output("customerGatewayId")]
         public Output<string> CustomerGatewayId { get; private set; } = null!;
@@ -246,7 +246,7 @@ namespace Pulumi.AliCloud.Vpn
         public Input<Inputs.GatewayVpnAttachmentBgpConfigArgs>? BgpConfig { get; set; }
 
         /// <summary>
-        /// The ID of the customer gateway.
+        /// The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         /// </summary>
         [Input("customerGatewayId", required: true)]
         public Input<string> CustomerGatewayId { get; set; } = null!;
@@ -326,7 +326,7 @@ namespace Pulumi.AliCloud.Vpn
         public Input<Inputs.GatewayVpnAttachmentBgpConfigGetArgs>? BgpConfig { get; set; }
 
         /// <summary>
-        /// The ID of the customer gateway.
+        /// The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         /// </summary>
         [Input("customerGatewayId")]
         public Input<string>? CustomerGatewayId { get; set; }

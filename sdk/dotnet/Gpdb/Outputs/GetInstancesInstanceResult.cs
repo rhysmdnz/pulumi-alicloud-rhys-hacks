@@ -19,7 +19,7 @@ namespace Pulumi.AliCloud.Gpdb.Outputs
         public readonly string AvailabilityZone;
         public readonly string ChargeType;
         /// <summary>
-        /// The endpoint of the instance.
+        /// The connection string of the instance.
         /// </summary>
         public readonly string ConnectionString;
         /// <summary>

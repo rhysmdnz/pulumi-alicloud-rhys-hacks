@@ -123,6 +123,7 @@ namespace Pulumi.AliCloud.Rds
         /// * **HighAvailability**: High availability
         /// * **AlwaysOn**: Cluster Edition
         /// * **Finance**: Three-node Enterprise Edition.
+        /// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
         /// </summary>
         [Output("category")]
         public Output<string> Category { get; private set; } = null!;
@@ -243,7 +244,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<string?> EncryptionKey { get; private set; } = null!;
 
         /// <summary>
-        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
         /// </summary>
         [Output("engine")]
         public Output<string> Engine { get; private set; } = null!;
@@ -253,7 +254,6 @@ namespace Pulumi.AliCloud.Rds
         /// * MySQL:**5.5/5.6/5.7/8.0**
         /// * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
         /// * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-        /// * PPAS:**9.3/10.0**
         /// * MariaDB:**10.3**.
         /// </summary>
         [Output("engineVersion")]
@@ -300,7 +300,7 @@ namespace Pulumi.AliCloud.Rds
         public Output<string?> Password { get; private set; } = null!;
 
         /// <summary>
-        /// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+        /// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
         /// </summary>
         [Output("paymentType")]
         public Output<string> PaymentType { get; private set; } = null!;
@@ -390,6 +390,12 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Output("serverKey")]
         public Output<string> ServerKey { get; private set; } = null!;
+
+        /// <summary>
+        /// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+        /// </summary>
+        [Output("serverlessConfigs")]
+        public Output<ImmutableArray<Outputs.RdsCloneDbInstanceServerlessConfig>> ServerlessConfigs { get; private set; } = null!;
 
         /// <summary>
         /// The source biz.
@@ -562,6 +568,7 @@ namespace Pulumi.AliCloud.Rds
         /// * **HighAvailability**: High availability
         /// * **AlwaysOn**: Cluster Edition
         /// * **Finance**: Three-node Enterprise Edition.
+        /// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
         /// </summary>
         [Input("category")]
         public Input<string>? Category { get; set; }
@@ -676,7 +683,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? EncryptionKey { get; set; }
 
         /// <summary>
-        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
         /// </summary>
         [Input("engine")]
         public Input<string>? Engine { get; set; }
@@ -686,7 +693,6 @@ namespace Pulumi.AliCloud.Rds
         /// * MySQL:**5.5/5.6/5.7/8.0**
         /// * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
         /// * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-        /// * PPAS:**9.3/10.0**
         /// * MariaDB:**10.3**.
         /// </summary>
         [Input("engineVersion")]
@@ -739,7 +745,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? Password { get; set; }
 
         /// <summary>
-        /// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+        /// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
         /// </summary>
         [Input("paymentType", required: true)]
         public Input<string> PaymentType { get; set; } = null!;
@@ -841,6 +847,18 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("serverKey")]
         public Input<string>? ServerKey { get; set; }
+
+        [Input("serverlessConfigs")]
+        private InputList<Inputs.RdsCloneDbInstanceServerlessConfigArgs>? _serverlessConfigs;
+
+        /// <summary>
+        /// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+        /// </summary>
+        public InputList<Inputs.RdsCloneDbInstanceServerlessConfigArgs> ServerlessConfigs
+        {
+            get => _serverlessConfigs ?? (_serverlessConfigs = new InputList<Inputs.RdsCloneDbInstanceServerlessConfigArgs>());
+            set => _serverlessConfigs = value;
+        }
 
         /// <summary>
         /// The source biz.
@@ -974,6 +992,7 @@ namespace Pulumi.AliCloud.Rds
         /// * **HighAvailability**: High availability
         /// * **AlwaysOn**: Cluster Edition
         /// * **Finance**: Three-node Enterprise Edition.
+        /// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
         /// </summary>
         [Input("category")]
         public Input<string>? Category { get; set; }
@@ -1094,7 +1113,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? EncryptionKey { get; set; }
 
         /// <summary>
-        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+        /// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
         /// </summary>
         [Input("engine")]
         public Input<string>? Engine { get; set; }
@@ -1104,7 +1123,6 @@ namespace Pulumi.AliCloud.Rds
         /// * MySQL:**5.5/5.6/5.7/8.0**
         /// * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
         /// * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-        /// * PPAS:**9.3/10.0**
         /// * MariaDB:**10.3**.
         /// </summary>
         [Input("engineVersion")]
@@ -1157,7 +1175,7 @@ namespace Pulumi.AliCloud.Rds
         public Input<string>? Password { get; set; }
 
         /// <summary>
-        /// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+        /// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
         /// </summary>
         [Input("paymentType")]
         public Input<string>? PaymentType { get; set; }
@@ -1259,6 +1277,18 @@ namespace Pulumi.AliCloud.Rds
         /// </summary>
         [Input("serverKey")]
         public Input<string>? ServerKey { get; set; }
+
+        [Input("serverlessConfigs")]
+        private InputList<Inputs.RdsCloneDbInstanceServerlessConfigGetArgs>? _serverlessConfigs;
+
+        /// <summary>
+        /// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+        /// </summary>
+        public InputList<Inputs.RdsCloneDbInstanceServerlessConfigGetArgs> ServerlessConfigs
+        {
+            get => _serverlessConfigs ?? (_serverlessConfigs = new InputList<Inputs.RdsCloneDbInstanceServerlessConfigGetArgs>());
+            set => _serverlessConfigs = value;
+        }
 
         /// <summary>
         /// The source biz.

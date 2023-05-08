@@ -30,7 +30,7 @@ class GatewayVpnAttachmentArgs:
                  vpn_attachment_name: Optional[pulumi.Input[str]] = None):
         """
         The set of arguments for constructing a GatewayVpnAttachment resource.
-        :param pulumi.Input[str] customer_gateway_id: The ID of the customer gateway.
+        :param pulumi.Input[str] customer_gateway_id: The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         :param pulumi.Input[str] local_subnet: The CIDR block of the virtual private cloud (VPC).
         :param pulumi.Input[str] remote_subnet: The CIDR block of the on-premises data center.
         :param pulumi.Input['GatewayVpnAttachmentBgpConfigArgs'] bgp_config: Bgp configuration information. See the following `Block bgp_config`.
@@ -69,7 +69,7 @@ class GatewayVpnAttachmentArgs:
     @pulumi.getter(name="customerGatewayId")
     def customer_gateway_id(self) -> pulumi.Input[str]:
         """
-        The ID of the customer gateway.
+        The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         """
         return pulumi.get(self, "customer_gateway_id")
 
@@ -230,7 +230,7 @@ class _GatewayVpnAttachmentState:
         """
         Input properties used for looking up and filtering GatewayVpnAttachment resources.
         :param pulumi.Input['GatewayVpnAttachmentBgpConfigArgs'] bgp_config: Bgp configuration information. See the following `Block bgp_config`.
-        :param pulumi.Input[str] customer_gateway_id: The ID of the customer gateway.
+        :param pulumi.Input[str] customer_gateway_id: The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         :param pulumi.Input[bool] effect_immediately: Indicates whether IPsec-VPN negotiations are initiated immediately. Valid values.
         :param pulumi.Input[bool] enable_dpd: Whether to enable the DPD (peer survival detection) function.
         :param pulumi.Input[bool] enable_nat_traversal: Allow NAT penetration.
@@ -289,7 +289,7 @@ class _GatewayVpnAttachmentState:
     @pulumi.getter(name="customerGatewayId")
     def customer_gateway_id(self) -> Optional[pulumi.Input[str]]:
         """
-        The ID of the customer gateway.
+        The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         """
         return pulumi.get(self, "customer_gateway_id")
 
@@ -535,7 +535,7 @@ class GatewayVpnAttachment(pulumi.CustomResource):
         :param str resource_name: The name of the resource.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['GatewayVpnAttachmentBgpConfigArgs']] bgp_config: Bgp configuration information. See the following `Block bgp_config`.
-        :param pulumi.Input[str] customer_gateway_id: The ID of the customer gateway.
+        :param pulumi.Input[str] customer_gateway_id: The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         :param pulumi.Input[bool] effect_immediately: Indicates whether IPsec-VPN negotiations are initiated immediately. Valid values.
         :param pulumi.Input[bool] enable_dpd: Whether to enable the DPD (peer survival detection) function.
         :param pulumi.Input[bool] enable_nat_traversal: Allow NAT penetration.
@@ -713,7 +713,7 @@ class GatewayVpnAttachment(pulumi.CustomResource):
         :param pulumi.Input[str] id: The unique provider ID of the resource to lookup.
         :param pulumi.ResourceOptions opts: Options for the resource.
         :param pulumi.Input[pulumi.InputType['GatewayVpnAttachmentBgpConfigArgs']] bgp_config: Bgp configuration information. See the following `Block bgp_config`.
-        :param pulumi.Input[str] customer_gateway_id: The ID of the customer gateway.
+        :param pulumi.Input[str] customer_gateway_id: The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         :param pulumi.Input[bool] effect_immediately: Indicates whether IPsec-VPN negotiations are initiated immediately. Valid values.
         :param pulumi.Input[bool] enable_dpd: Whether to enable the DPD (peer survival detection) function.
         :param pulumi.Input[bool] enable_nat_traversal: Allow NAT penetration.
@@ -759,7 +759,7 @@ class GatewayVpnAttachment(pulumi.CustomResource):
     @pulumi.getter(name="customerGatewayId")
     def customer_gateway_id(self) -> pulumi.Output[str]:
         """
-        The ID of the customer gateway.
+        The ID of the customer gateway. From version 1.196.0, `customer_gateway_id` can be modified.
         """
         return pulumi.get(self, "customer_gateway_id")
 

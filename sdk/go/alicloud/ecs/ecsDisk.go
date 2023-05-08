@@ -10,49 +10,6 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-// Provides a ECS Disk resource.
-//
-// For information about ECS Disk and how to use it, see [What is Disk](https://www.alibabacloud.com/help/en/doc-detail/25513.htm).
-//
-// > **NOTE:** Available in v1.122.0+.
-//
-// ## Example Usage
-//
-// # Basic Usage
-//
-// ```go
-// package main
-//
-// import (
-//
-//	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
-//	"github.com/rhysmdnz/pulumi-alicloud/sdk/go/alicloud/ecs"
-//
-// )
-//
-//	func main() {
-//		pulumi.Run(func(ctx *pulumi.Context) error {
-//			_, err := ecs.NewEcsDisk(ctx, "example", &ecs.EcsDiskArgs{
-//				Category:    pulumi.String("cloud_efficiency"),
-//				Description: pulumi.String("Hello ecs disk."),
-//				DiskName:    pulumi.String("tf-test"),
-//				Encrypted:   pulumi.Bool(true),
-//				KmsKeyId:    pulumi.String("2a6767f0-a16c-4679-a60f-13bf*****"),
-//				Size:        pulumi.Int(30),
-//				Tags: pulumi.AnyMap{
-//					"Name": pulumi.Any("TerraformTest"),
-//				},
-//				ZoneId: pulumi.String("cn-beijing-b"),
-//			})
-//			if err != nil {
-//				return err
-//			}
-//			return nil
-//		})
-//	}
-//
-// ```
-//
 // ## Import
 //
 // ECS Disk can be imported using the id, e.g.
@@ -70,7 +27,7 @@ type EcsDisk struct {
 	//
 	// Deprecated: Field 'availability_zone' has been deprecated from provider version 1.122.0. New field 'zone_id' instead
 	AvailabilityZone pulumi.StringOutput `pulumi:"availabilityZone"`
-	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
 	Category                       pulumi.StringPtrOutput `pulumi:"category"`
 	DedicatedBlockStorageClusterId pulumi.StringPtrOutput `pulumi:"dedicatedBlockStorageClusterId"`
 	// Indicates whether the automatic snapshot is deleted when the disk is released. Default value: `false`.
@@ -164,7 +121,7 @@ type ecsDiskState struct {
 	//
 	// Deprecated: Field 'availability_zone' has been deprecated from provider version 1.122.0. New field 'zone_id' instead
 	AvailabilityZone *string `pulumi:"availabilityZone"`
-	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
 	Category                       *string `pulumi:"category"`
 	DedicatedBlockStorageClusterId *string `pulumi:"dedicatedBlockStorageClusterId"`
 	// Indicates whether the automatic snapshot is deleted when the disk is released. Default value: `false`.
@@ -229,7 +186,7 @@ type EcsDiskState struct {
 	//
 	// Deprecated: Field 'availability_zone' has been deprecated from provider version 1.122.0. New field 'zone_id' instead
 	AvailabilityZone pulumi.StringPtrInput
-	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
 	Category                       pulumi.StringPtrInput
 	DedicatedBlockStorageClusterId pulumi.StringPtrInput
 	// Indicates whether the automatic snapshot is deleted when the disk is released. Default value: `false`.
@@ -298,7 +255,7 @@ type ecsDiskArgs struct {
 	//
 	// Deprecated: Field 'availability_zone' has been deprecated from provider version 1.122.0. New field 'zone_id' instead
 	AvailabilityZone *string `pulumi:"availabilityZone"`
-	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
 	Category                       *string `pulumi:"category"`
 	DedicatedBlockStorageClusterId *string `pulumi:"dedicatedBlockStorageClusterId"`
 	// Indicates whether the automatic snapshot is deleted when the disk is released. Default value: `false`.
@@ -362,7 +319,7 @@ type EcsDiskArgs struct {
 	//
 	// Deprecated: Field 'availability_zone' has been deprecated from provider version 1.122.0. New field 'zone_id' instead
 	AvailabilityZone pulumi.StringPtrInput
-	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+	// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
 	Category                       pulumi.StringPtrInput
 	DedicatedBlockStorageClusterId pulumi.StringPtrInput
 	// Indicates whether the automatic snapshot is deleted when the disk is released. Default value: `false`.
@@ -517,7 +474,7 @@ func (o EcsDiskOutput) AvailabilityZone() pulumi.StringOutput {
 	return o.ApplyT(func(v *EcsDisk) pulumi.StringOutput { return v.AvailabilityZone }).(pulumi.StringOutput)
 }
 
-// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`. Default is `cloudEfficiency`.
+// Category of the disk. Valid values are `cloud`, `cloudEfficiency`, `cloudSsd`, `cloudEssd`, `cloudAuto`. Default is `cloudEfficiency`.
 func (o EcsDiskOutput) Category() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *EcsDisk) pulumi.StringPtrOutput { return v.Category }).(pulumi.StringPtrOutput)
 }

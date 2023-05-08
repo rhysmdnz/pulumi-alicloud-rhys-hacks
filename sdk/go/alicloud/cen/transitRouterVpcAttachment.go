@@ -87,15 +87,15 @@ import (
 //			}
 //			_, err = cen.NewTransitRouterVpcAttachment(ctx, "defaultTransitRouterVpcAttachment", &cen.TransitRouterVpcAttachmentArgs{
 //				CenId:           defaultInstance.ID(),
-//				TransitRouterId: defaultTransitRouter.ID(),
+//				TransitRouterId: defaultTransitRouter.TransitRouterId,
 //				VpcId:           defaultNetwork.ID(),
 //				ZoneMappings: cen.TransitRouterVpcAttachmentZoneMappingArray{
 //					&cen.TransitRouterVpcAttachmentZoneMappingArgs{
-//						ZoneId:    pulumi.Any(data.Alicloud_cen_transit_router_available_resource.Default.Zones[0].Master_zones[0]),
+//						ZoneId:    pulumi.String(defaultTransitRouterAvailableResources.Resources[0].MasterZones[0]),
 //						VswitchId: defaultMaster.ID(),
 //					},
 //					&cen.TransitRouterVpcAttachmentZoneMappingArgs{
-//						ZoneId:    pulumi.Any(data.Alicloud_cen_transit_router_available_resource.Default.Zones[0].Slave_zones[0]),
+//						ZoneId:    pulumi.String(defaultTransitRouterAvailableResources.Resources[0].SlaveZones[1]),
 //						VswitchId: defaultSlave.ID(),
 //					},
 //				},
@@ -123,6 +123,10 @@ import (
 type TransitRouterVpcAttachment struct {
 	pulumi.CustomResourceState
 
+	// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+	// - `true`: Enable.
+	// - `false`: Disable.
+	AutoPublishRouteEnabled pulumi.BoolOutput `pulumi:"autoPublishRouteEnabled"`
 	// The ID of the CEN.
 	CenId pulumi.StringOutput `pulumi:"cenId"`
 	// The dry run.
@@ -195,6 +199,10 @@ func GetTransitRouterVpcAttachment(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering TransitRouterVpcAttachment resources.
 type transitRouterVpcAttachmentState struct {
+	// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+	// - `true`: Enable.
+	// - `false`: Disable.
+	AutoPublishRouteEnabled *bool `pulumi:"autoPublishRouteEnabled"`
 	// The ID of the CEN.
 	CenId *string `pulumi:"cenId"`
 	// The dry run.
@@ -229,6 +237,10 @@ type transitRouterVpcAttachmentState struct {
 }
 
 type TransitRouterVpcAttachmentState struct {
+	// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+	// - `true`: Enable.
+	// - `false`: Disable.
+	AutoPublishRouteEnabled pulumi.BoolPtrInput
 	// The ID of the CEN.
 	CenId pulumi.StringPtrInput
 	// The dry run.
@@ -267,6 +279,10 @@ func (TransitRouterVpcAttachmentState) ElementType() reflect.Type {
 }
 
 type transitRouterVpcAttachmentArgs struct {
+	// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+	// - `true`: Enable.
+	// - `false`: Disable.
+	AutoPublishRouteEnabled *bool `pulumi:"autoPublishRouteEnabled"`
 	// The ID of the CEN.
 	CenId string `pulumi:"cenId"`
 	// The dry run.
@@ -298,6 +314,10 @@ type transitRouterVpcAttachmentArgs struct {
 
 // The set of arguments for constructing a TransitRouterVpcAttachment resource.
 type TransitRouterVpcAttachmentArgs struct {
+	// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+	// - `true`: Enable.
+	// - `false`: Disable.
+	AutoPublishRouteEnabled pulumi.BoolPtrInput
 	// The ID of the CEN.
 	CenId pulumi.StringInput
 	// The dry run.
@@ -412,6 +432,13 @@ func (o TransitRouterVpcAttachmentOutput) ToTransitRouterVpcAttachmentOutput() T
 
 func (o TransitRouterVpcAttachmentOutput) ToTransitRouterVpcAttachmentOutputWithContext(ctx context.Context) TransitRouterVpcAttachmentOutput {
 	return o
+}
+
+// Whether the transit router is automatically published to the VPC instance. Default value: `false`. Valid values:
+// - `true`: Enable.
+// - `false`: Disable.
+func (o TransitRouterVpcAttachmentOutput) AutoPublishRouteEnabled() pulumi.BoolOutput {
+	return o.ApplyT(func(v *TransitRouterVpcAttachment) pulumi.BoolOutput { return v.AutoPublishRouteEnabled }).(pulumi.BoolOutput)
 }
 
 // The ID of the CEN.

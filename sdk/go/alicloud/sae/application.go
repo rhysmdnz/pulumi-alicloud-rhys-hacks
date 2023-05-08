@@ -78,6 +78,7 @@ import (
 //				NamespaceId:    defaultNamespace.ID(),
 //				ImageUrl:       pulumi.String("registry-vpc.cn-hangzhou.aliyuncs.com/lxepoo/apache-php5"),
 //				PackageType:    pulumi.String("Image"),
+//				VpcId:          vsw.VpcId,
 //				VswitchId:      vsw.ID(),
 //				Timezone:       pulumi.String("Asia/Beijing"),
 //				Replicas:       pulumi.Int(5),
@@ -153,6 +154,8 @@ type Application struct {
 	Liveness pulumi.StringPtrOutput `pulumi:"liveness"`
 	// The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
 	Memory pulumi.IntPtrOutput `pulumi:"memory"`
+	// Select the Nacos registry. Valid values: `0`, `1`, `2`.
+	MicroRegistration pulumi.StringPtrOutput `pulumi:"microRegistration"`
 	// Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows:
 	// * `-1`: Initialization value, indicating that percentages are not used.
 	// * `0~100`: The unit is percentage, rounded up. For example, if it is set to 50%, if there are currently 5 instances, the minimum number of surviving instances is 3.
@@ -308,6 +311,8 @@ type applicationState struct {
 	Liveness *string `pulumi:"liveness"`
 	// The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
 	Memory *int `pulumi:"memory"`
+	// Select the Nacos registry. Valid values: `0`, `1`, `2`.
+	MicroRegistration *string `pulumi:"microRegistration"`
 	// Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows:
 	// * `-1`: Initialization value, indicating that percentages are not used.
 	// * `0~100`: The unit is percentage, rounded up. For example, if it is set to 50%, if there are currently 5 instances, the minimum number of surviving instances is 3.
@@ -425,6 +430,8 @@ type ApplicationState struct {
 	Liveness pulumi.StringPtrInput
 	// The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
 	Memory pulumi.IntPtrInput
+	// Select the Nacos registry. Valid values: `0`, `1`, `2`.
+	MicroRegistration pulumi.StringPtrInput
 	// Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows:
 	// * `-1`: Initialization value, indicating that percentages are not used.
 	// * `0~100`: The unit is percentage, rounded up. For example, if it is set to 50%, if there are currently 5 instances, the minimum number of surviving instances is 3.
@@ -546,6 +553,8 @@ type applicationArgs struct {
 	Liveness *string `pulumi:"liveness"`
 	// The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
 	Memory *int `pulumi:"memory"`
+	// Select the Nacos registry. Valid values: `0`, `1`, `2`.
+	MicroRegistration *string `pulumi:"microRegistration"`
 	// Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows:
 	// * `-1`: Initialization value, indicating that percentages are not used.
 	// * `0~100`: The unit is percentage, rounded up. For example, if it is set to 50%, if there are currently 5 instances, the minimum number of surviving instances is 3.
@@ -664,6 +673,8 @@ type ApplicationArgs struct {
 	Liveness pulumi.StringPtrInput
 	// The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
 	Memory pulumi.IntPtrInput
+	// Select the Nacos registry. Valid values: `0`, `1`, `2`.
+	MicroRegistration pulumi.StringPtrInput
 	// Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows:
 	// * `-1`: Initialization value, indicating that percentages are not used.
 	// * `0~100`: The unit is percentage, rounded up. For example, if it is set to 50%, if there are currently 5 instances, the minimum number of surviving instances is 3.
@@ -937,6 +948,11 @@ func (o ApplicationOutput) Liveness() pulumi.StringPtrOutput {
 // The memory required for each instance, in MB, cannot be 0. One-to-one correspondence with CPU. Valid values: `1024`, `131072`, `16384`, `2048`, `32768`, `4096`, `65536`, `8192`.
 func (o ApplicationOutput) Memory() pulumi.IntPtrOutput {
 	return o.ApplyT(func(v *Application) pulumi.IntPtrOutput { return v.Memory }).(pulumi.IntPtrOutput)
+}
+
+// Select the Nacos registry. Valid values: `0`, `1`, `2`.
+func (o ApplicationOutput) MicroRegistration() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Application) pulumi.StringPtrOutput { return v.MicroRegistration }).(pulumi.StringPtrOutput)
 }
 
 // Minimum Survival Instance Percentage. **NOTE:** When `minReadyInstances` and `minReadyInstanceRatio` are passed at the same time, and the value of `minReadyInstanceRatio` is not -1, the `minReadyInstanceRatio` parameter shall prevail. Assuming that `minReadyInstances` is 5 and `minReadyInstanceRatio` is 50, 50 is used to calculate the minimum number of surviving instances.The value description is as follows:

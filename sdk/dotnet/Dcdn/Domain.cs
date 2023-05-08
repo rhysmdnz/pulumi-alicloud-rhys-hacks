@@ -82,6 +82,9 @@ namespace Pulumi.AliCloud.Dcdn
         [Output("checkUrl")]
         public Output<string?> CheckUrl { get; private set; } = null!;
 
+        [Output("cname")]
+        public Output<string> Cname { get; private set; } = null!;
+
         /// <summary>
         /// The name of the accelerated domain.
         /// </summary>
@@ -316,6 +319,9 @@ namespace Pulumi.AliCloud.Dcdn
         /// </summary>
         [Input("checkUrl")]
         public Input<string>? CheckUrl { get; set; }
+
+        [Input("cname")]
+        public Input<string>? Cname { get; set; }
 
         /// <summary>
         /// The name of the accelerated domain.

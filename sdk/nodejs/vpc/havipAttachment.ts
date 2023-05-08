@@ -97,6 +97,10 @@ export class HAVipAttachment extends pulumi.CustomResource {
     }
 
     /**
+     * Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+     */
+    public readonly force!: pulumi.Output<string | undefined>;
+    /**
      * The havipId of the havip attachment, the field can't be changed.
      */
     public readonly havipId!: pulumi.Output<string>;
@@ -104,6 +108,14 @@ export class HAVipAttachment extends pulumi.CustomResource {
      * The instanceId of the havip attachment, the field can't be changed.
      */
     public readonly instanceId!: pulumi.Output<string>;
+    /**
+     * The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+     */
+    public readonly instanceType!: pulumi.Output<string>;
+    /**
+     * (Available in v1.201.0+) The status of the HaVip instance.
+     */
+    public /*out*/ readonly status!: pulumi.Output<string>;
 
     /**
      * Create a HAVipAttachment resource with the given unique name, arguments, and options.
@@ -118,8 +130,11 @@ export class HAVipAttachment extends pulumi.CustomResource {
         opts = opts || {};
         if (opts.id) {
             const state = argsOrState as HAVipAttachmentState | undefined;
+            resourceInputs["force"] = state ? state.force : undefined;
             resourceInputs["havipId"] = state ? state.havipId : undefined;
             resourceInputs["instanceId"] = state ? state.instanceId : undefined;
+            resourceInputs["instanceType"] = state ? state.instanceType : undefined;
+            resourceInputs["status"] = state ? state.status : undefined;
         } else {
             const args = argsOrState as HAVipAttachmentArgs | undefined;
             if ((!args || args.havipId === undefined) && !opts.urn) {
@@ -128,8 +143,11 @@ export class HAVipAttachment extends pulumi.CustomResource {
             if ((!args || args.instanceId === undefined) && !opts.urn) {
                 throw new Error("Missing required property 'instanceId'");
             }
+            resourceInputs["force"] = args ? args.force : undefined;
             resourceInputs["havipId"] = args ? args.havipId : undefined;
             resourceInputs["instanceId"] = args ? args.instanceId : undefined;
+            resourceInputs["instanceType"] = args ? args.instanceType : undefined;
+            resourceInputs["status"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
         super(HAVipAttachment.__pulumiType, name, resourceInputs, opts);
@@ -141,6 +159,10 @@ export class HAVipAttachment extends pulumi.CustomResource {
  */
 export interface HAVipAttachmentState {
     /**
+     * Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+     */
+    force?: pulumi.Input<string>;
+    /**
      * The havipId of the havip attachment, the field can't be changed.
      */
     havipId?: pulumi.Input<string>;
@@ -148,12 +170,24 @@ export interface HAVipAttachmentState {
      * The instanceId of the havip attachment, the field can't be changed.
      */
     instanceId?: pulumi.Input<string>;
+    /**
+     * The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+     */
+    instanceType?: pulumi.Input<string>;
+    /**
+     * (Available in v1.201.0+) The status of the HaVip instance.
+     */
+    status?: pulumi.Input<string>;
 }
 
 /**
  * The set of arguments for constructing a HAVipAttachment resource.
  */
 export interface HAVipAttachmentArgs {
+    /**
+     * Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+     */
+    force?: pulumi.Input<string>;
     /**
      * The havipId of the havip attachment, the field can't be changed.
      */
@@ -162,4 +196,8 @@ export interface HAVipAttachmentArgs {
      * The instanceId of the havip attachment, the field can't be changed.
      */
     instanceId: pulumi.Input<string>;
+    /**
+     * The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+     */
+    instanceType?: pulumi.Input<string>;
 }

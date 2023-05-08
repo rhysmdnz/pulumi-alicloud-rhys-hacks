@@ -19,7 +19,7 @@ namespace Pulumi.AliCloud.Cms.Inputs
         public Input<string>? ComparisonOperator { get; set; }
 
         /// <summary>
-        /// Critical level alarm statistics method. It must be consistent with that defined for metrics. Valid values: ["Availability","Average", "Minimum", "Maximum", "Value", "ErrorCodeMaximum", "Sum", "Count"]. Default to "Average".
+        /// Critical level alarm statistics method. It must be consistent with that defined for metrics. For more information, see [How to use it](https://cms.console.aliyun.com/metric-meta/acs_ecs_dashboard/ecs).
         /// </summary>
         [Input("statistics")]
         public Input<string>? Statistics { get; set; }

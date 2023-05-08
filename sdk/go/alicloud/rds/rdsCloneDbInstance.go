@@ -127,6 +127,7 @@ type RdsCloneDbInstance struct {
 	// * **HighAvailability**: High availability
 	// * **AlwaysOn**: Cluster Edition
 	// * **Finance**: Three-node Enterprise Edition.
+	// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
 	Category pulumi.StringOutput `pulumi:"category"`
 	// The file that contains the certificate used for TDE.
 	Certificate pulumi.StringPtrOutput `pulumi:"certificate"`
@@ -171,13 +172,12 @@ type RdsCloneDbInstance struct {
 	EffectiveTime pulumi.StringPtrOutput `pulumi:"effectiveTime"`
 	// The ID of the private key.
 	EncryptionKey pulumi.StringPtrOutput `pulumi:"encryptionKey"`
-	// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+	// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
 	Engine pulumi.StringOutput `pulumi:"engine"`
 	// Database version. Value:
 	// * MySQL:**5.5/5.6/5.7/8.0**
 	// * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
 	// * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-	// * PPAS:**9.3/10.0**
 	// * MariaDB:**10.3**.
 	EngineVersion pulumi.StringOutput `pulumi:"engineVersion"`
 	// Set it to true to make some parameter efficient when modifying them. Default to false.
@@ -196,7 +196,7 @@ type RdsCloneDbInstance struct {
 	Parameters RdsCloneDbInstanceParameterArrayOutput `pulumi:"parameters"`
 	// The password of the certificate.
 	Password pulumi.StringPtrOutput `pulumi:"password"`
-	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
 	PaymentType pulumi.StringOutput `pulumi:"paymentType"`
 	// The period. Valid values: `Month`, `Year`.
 	Period pulumi.StringPtrOutput `pulumi:"period"`
@@ -228,6 +228,8 @@ type RdsCloneDbInstance struct {
 	ServerCert pulumi.StringOutput `pulumi:"serverCert"`
 	// This parameter is only supported by the RDS PostgreSQL cloud disk version. It indicates the private key of the server certificate. If the value of CAType is custom, this parameter must be configured.
 	ServerKey pulumi.StringOutput `pulumi:"serverKey"`
+	// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+	ServerlessConfigs RdsCloneDbInstanceServerlessConfigArrayOutput `pulumi:"serverlessConfigs"`
 	// The source biz.
 	SourceBiz pulumi.StringPtrOutput `pulumi:"sourceBiz"`
 	// The source db instance id.
@@ -324,6 +326,7 @@ type rdsCloneDbInstanceState struct {
 	// * **HighAvailability**: High availability
 	// * **AlwaysOn**: Cluster Edition
 	// * **Finance**: Three-node Enterprise Edition.
+	// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
 	Category *string `pulumi:"category"`
 	// The file that contains the certificate used for TDE.
 	Certificate *string `pulumi:"certificate"`
@@ -368,13 +371,12 @@ type rdsCloneDbInstanceState struct {
 	EffectiveTime *string `pulumi:"effectiveTime"`
 	// The ID of the private key.
 	EncryptionKey *string `pulumi:"encryptionKey"`
-	// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+	// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
 	Engine *string `pulumi:"engine"`
 	// Database version. Value:
 	// * MySQL:**5.5/5.6/5.7/8.0**
 	// * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
 	// * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-	// * PPAS:**9.3/10.0**
 	// * MariaDB:**10.3**.
 	EngineVersion *string `pulumi:"engineVersion"`
 	// Set it to true to make some parameter efficient when modifying them. Default to false.
@@ -393,7 +395,7 @@ type rdsCloneDbInstanceState struct {
 	Parameters []RdsCloneDbInstanceParameter `pulumi:"parameters"`
 	// The password of the certificate.
 	Password *string `pulumi:"password"`
-	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
 	PaymentType *string `pulumi:"paymentType"`
 	// The period. Valid values: `Month`, `Year`.
 	Period *string `pulumi:"period"`
@@ -425,6 +427,8 @@ type rdsCloneDbInstanceState struct {
 	ServerCert *string `pulumi:"serverCert"`
 	// This parameter is only supported by the RDS PostgreSQL cloud disk version. It indicates the private key of the server certificate. If the value of CAType is custom, this parameter must be configured.
 	ServerKey *string `pulumi:"serverKey"`
+	// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+	ServerlessConfigs []RdsCloneDbInstanceServerlessConfig `pulumi:"serverlessConfigs"`
 	// The source biz.
 	SourceBiz *string `pulumi:"sourceBiz"`
 	// The source db instance id.
@@ -483,6 +487,7 @@ type RdsCloneDbInstanceState struct {
 	// * **HighAvailability**: High availability
 	// * **AlwaysOn**: Cluster Edition
 	// * **Finance**: Three-node Enterprise Edition.
+	// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
 	Category pulumi.StringPtrInput
 	// The file that contains the certificate used for TDE.
 	Certificate pulumi.StringPtrInput
@@ -527,13 +532,12 @@ type RdsCloneDbInstanceState struct {
 	EffectiveTime pulumi.StringPtrInput
 	// The ID of the private key.
 	EncryptionKey pulumi.StringPtrInput
-	// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+	// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
 	Engine pulumi.StringPtrInput
 	// Database version. Value:
 	// * MySQL:**5.5/5.6/5.7/8.0**
 	// * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
 	// * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-	// * PPAS:**9.3/10.0**
 	// * MariaDB:**10.3**.
 	EngineVersion pulumi.StringPtrInput
 	// Set it to true to make some parameter efficient when modifying them. Default to false.
@@ -552,7 +556,7 @@ type RdsCloneDbInstanceState struct {
 	Parameters RdsCloneDbInstanceParameterArrayInput
 	// The password of the certificate.
 	Password pulumi.StringPtrInput
-	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
 	PaymentType pulumi.StringPtrInput
 	// The period. Valid values: `Month`, `Year`.
 	Period pulumi.StringPtrInput
@@ -584,6 +588,8 @@ type RdsCloneDbInstanceState struct {
 	ServerCert pulumi.StringPtrInput
 	// This parameter is only supported by the RDS PostgreSQL cloud disk version. It indicates the private key of the server certificate. If the value of CAType is custom, this parameter must be configured.
 	ServerKey pulumi.StringPtrInput
+	// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+	ServerlessConfigs RdsCloneDbInstanceServerlessConfigArrayInput
 	// The source biz.
 	SourceBiz pulumi.StringPtrInput
 	// The source db instance id.
@@ -646,6 +652,7 @@ type rdsCloneDbInstanceArgs struct {
 	// * **HighAvailability**: High availability
 	// * **AlwaysOn**: Cluster Edition
 	// * **Finance**: Three-node Enterprise Edition.
+	// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
 	Category *string `pulumi:"category"`
 	// The file that contains the certificate used for TDE.
 	Certificate *string `pulumi:"certificate"`
@@ -688,13 +695,12 @@ type rdsCloneDbInstanceArgs struct {
 	EffectiveTime *string `pulumi:"effectiveTime"`
 	// The ID of the private key.
 	EncryptionKey *string `pulumi:"encryptionKey"`
-	// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+	// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
 	Engine *string `pulumi:"engine"`
 	// Database version. Value:
 	// * MySQL:**5.5/5.6/5.7/8.0**
 	// * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
 	// * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-	// * PPAS:**9.3/10.0**
 	// * MariaDB:**10.3**.
 	EngineVersion *string `pulumi:"engineVersion"`
 	// Set it to true to make some parameter efficient when modifying them. Default to false.
@@ -713,7 +719,7 @@ type rdsCloneDbInstanceArgs struct {
 	Parameters []RdsCloneDbInstanceParameter `pulumi:"parameters"`
 	// The password of the certificate.
 	Password *string `pulumi:"password"`
-	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
 	PaymentType string `pulumi:"paymentType"`
 	// The period. Valid values: `Month`, `Year`.
 	Period *string `pulumi:"period"`
@@ -745,6 +751,8 @@ type rdsCloneDbInstanceArgs struct {
 	ServerCert *string `pulumi:"serverCert"`
 	// This parameter is only supported by the RDS PostgreSQL cloud disk version. It indicates the private key of the server certificate. If the value of CAType is custom, this parameter must be configured.
 	ServerKey *string `pulumi:"serverKey"`
+	// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+	ServerlessConfigs []RdsCloneDbInstanceServerlessConfig `pulumi:"serverlessConfigs"`
 	// The source biz.
 	SourceBiz *string `pulumi:"sourceBiz"`
 	// The source db instance id.
@@ -804,6 +812,7 @@ type RdsCloneDbInstanceArgs struct {
 	// * **HighAvailability**: High availability
 	// * **AlwaysOn**: Cluster Edition
 	// * **Finance**: Three-node Enterprise Edition.
+	// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
 	Category pulumi.StringPtrInput
 	// The file that contains the certificate used for TDE.
 	Certificate pulumi.StringPtrInput
@@ -846,13 +855,12 @@ type RdsCloneDbInstanceArgs struct {
 	EffectiveTime pulumi.StringPtrInput
 	// The ID of the private key.
 	EncryptionKey pulumi.StringPtrInput
-	// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+	// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
 	Engine pulumi.StringPtrInput
 	// Database version. Value:
 	// * MySQL:**5.5/5.6/5.7/8.0**
 	// * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
 	// * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-	// * PPAS:**9.3/10.0**
 	// * MariaDB:**10.3**.
 	EngineVersion pulumi.StringPtrInput
 	// Set it to true to make some parameter efficient when modifying them. Default to false.
@@ -871,7 +879,7 @@ type RdsCloneDbInstanceArgs struct {
 	Parameters RdsCloneDbInstanceParameterArrayInput
 	// The password of the certificate.
 	Password pulumi.StringPtrInput
-	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+	// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
 	PaymentType pulumi.StringInput
 	// The period. Valid values: `Month`, `Year`.
 	Period pulumi.StringPtrInput
@@ -903,6 +911,8 @@ type RdsCloneDbInstanceArgs struct {
 	ServerCert pulumi.StringPtrInput
 	// This parameter is only supported by the RDS PostgreSQL cloud disk version. It indicates the private key of the server certificate. If the value of CAType is custom, this parameter must be configured.
 	ServerKey pulumi.StringPtrInput
+	// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+	ServerlessConfigs RdsCloneDbInstanceServerlessConfigArrayInput
 	// The source biz.
 	SourceBiz pulumi.StringPtrInput
 	// The source db instance id.
@@ -1062,6 +1072,7 @@ func (o RdsCloneDbInstanceOutput) CaType() pulumi.StringOutput {
 // * **HighAvailability**: High availability
 // * **AlwaysOn**: Cluster Edition
 // * **Finance**: Three-node Enterprise Edition.
+// * **serverless_basic**: Serverless Basic Edition. (Available in 1.200.0+)
 func (o RdsCloneDbInstanceOutput) Category() pulumi.StringOutput {
 	return o.ApplyT(func(v *RdsCloneDbInstance) pulumi.StringOutput { return v.Category }).(pulumi.StringOutput)
 }
@@ -1163,7 +1174,7 @@ func (o RdsCloneDbInstanceOutput) EncryptionKey() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *RdsCloneDbInstance) pulumi.StringPtrOutput { return v.EncryptionKey }).(pulumi.StringPtrOutput)
 }
 
-// Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS.
+// Database type. Value options: MySQL, SQLServer, PostgreSQL, MariaDB.
 func (o RdsCloneDbInstanceOutput) Engine() pulumi.StringOutput {
 	return o.ApplyT(func(v *RdsCloneDbInstance) pulumi.StringOutput { return v.Engine }).(pulumi.StringOutput)
 }
@@ -1172,7 +1183,6 @@ func (o RdsCloneDbInstanceOutput) Engine() pulumi.StringOutput {
 // * MySQL:**5.5/5.6/5.7/8.0**
 // * SQL Server:**2008r2/08r2_ent_ha/2012/2012_ent_ha/2012_std_ha/2012_web/2014_std_ha/2016_ent_ha/2016_std_ha/2016_web/2017_std_ha/2017_ent/2019_std_ha/2019_ent**
 // * PostgreSQL:**9.4/10.0/11.0/12.0/13.0**
-// * PPAS:**9.3/10.0**
 // * MariaDB:**10.3**.
 func (o RdsCloneDbInstanceOutput) EngineVersion() pulumi.StringOutput {
 	return o.ApplyT(func(v *RdsCloneDbInstance) pulumi.StringOutput { return v.EngineVersion }).(pulumi.StringOutput)
@@ -1212,7 +1222,7 @@ func (o RdsCloneDbInstanceOutput) Password() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *RdsCloneDbInstance) pulumi.StringPtrOutput { return v.Password }).(pulumi.StringPtrOutput)
 }
 
-// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription`.
+// The billing method of the new instance. Valid values: `PayAsYouGo` and `Subscription` and `Serverless`.
 func (o RdsCloneDbInstanceOutput) PaymentType() pulumi.StringOutput {
 	return o.ApplyT(func(v *RdsCloneDbInstance) pulumi.StringOutput { return v.PaymentType }).(pulumi.StringOutput)
 }
@@ -1287,6 +1297,11 @@ func (o RdsCloneDbInstanceOutput) ServerCert() pulumi.StringOutput {
 // This parameter is only supported by the RDS PostgreSQL cloud disk version. It indicates the private key of the server certificate. If the value of CAType is custom, this parameter must be configured.
 func (o RdsCloneDbInstanceOutput) ServerKey() pulumi.StringOutput {
 	return o.ApplyT(func(v *RdsCloneDbInstance) pulumi.StringOutput { return v.ServerKey }).(pulumi.StringOutput)
+}
+
+// The settings of the serverless instance. This parameter is required when you create a serverless instance. This parameter takes effect only when you create an ApsaraDB RDS for MySQL instance.
+func (o RdsCloneDbInstanceOutput) ServerlessConfigs() RdsCloneDbInstanceServerlessConfigArrayOutput {
+	return o.ApplyT(func(v *RdsCloneDbInstance) RdsCloneDbInstanceServerlessConfigArrayOutput { return v.ServerlessConfigs }).(RdsCloneDbInstanceServerlessConfigArrayOutput)
 }
 
 // The source biz.

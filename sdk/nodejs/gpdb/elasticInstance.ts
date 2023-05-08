@@ -5,11 +5,6 @@ import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "../utilities";
 
 /**
- * Provides a AnalyticDB for PostgreSQL instance resource which storage type is flexible. Compared to the reserved storage ADB PG instance, you can scale up each disk and smoothly scale out nodes online.\
- * For more detail product introduction, see [here](https://www.alibabacloud.com/help/doc-detail/141368.htm).
- *
- * > **NOTE:**  Available in 1.127.0+
- *
  * ## Example Usage
  * ### Create a AnalyticDB for PostgreSQL instance
  *
@@ -130,6 +125,10 @@ export class ElasticInstance extends pulumi.CustomResource {
      */
     public readonly paymentType!: pulumi.Output<string | undefined>;
     /**
+     * (Available in 1.196.0+) The connection port of the instance.
+     */
+    public /*out*/ readonly port!: pulumi.Output<string>;
+    /**
      * List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
      */
     public readonly securityIpLists!: pulumi.Output<string[]>;
@@ -187,6 +186,7 @@ export class ElasticInstance extends pulumi.CustomResource {
             resourceInputs["paymentDuration"] = state ? state.paymentDuration : undefined;
             resourceInputs["paymentDurationUnit"] = state ? state.paymentDurationUnit : undefined;
             resourceInputs["paymentType"] = state ? state.paymentType : undefined;
+            resourceInputs["port"] = state ? state.port : undefined;
             resourceInputs["securityIpLists"] = state ? state.securityIpLists : undefined;
             resourceInputs["segNodeNum"] = state ? state.segNodeNum : undefined;
             resourceInputs["segStorageType"] = state ? state.segStorageType : undefined;
@@ -237,6 +237,7 @@ export class ElasticInstance extends pulumi.CustomResource {
             resourceInputs["vswitchId"] = args ? args.vswitchId : undefined;
             resourceInputs["zoneId"] = args ? args.zoneId : undefined;
             resourceInputs["connectionString"] = undefined /*out*/;
+            resourceInputs["port"] = undefined /*out*/;
             resourceInputs["status"] = undefined /*out*/;
         }
         opts = pulumi.mergeOptions(utilities.resourceOptsDefaults(), opts);
@@ -300,6 +301,10 @@ export interface ElasticInstanceState {
      * Valid values are `PayAsYouGo`, `Subscription`. Default to `PayAsYouGo`.
      */
     paymentType?: pulumi.Input<string>;
+    /**
+     * (Available in 1.196.0+) The connection port of the instance.
+     */
+    port?: pulumi.Input<string>;
     /**
      * List of IP addresses allowed to access all databases of an instance. The list contains up to 1,000 IP addresses, separated by commas. Supported formats include 0.0.0.0/0, 10.23.12.24 (IP), and 10.23.12.24/24 (Classless Inter-Domain Routing (CIDR) mode. /24 represents the length of the prefix in an IP address. The range of the prefix length is [1,32]).
      */

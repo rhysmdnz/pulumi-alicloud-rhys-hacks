@@ -28,104 +28,104 @@ namespace Pulumi.AliCloud.Slb
     /// return await Deployment.RunAsync(() =&gt; 
     /// {
     ///     var config = new Config();
-    ///     var name = config.Get("name") ?? "slbservergroupvpc";
-    ///     var num = config.GetNumber("num") ?? 5;
-    ///     var defaultZones = AliCloud.GetZones.Invoke(new()
+    ///     var slbServerGroupServerAttachment = config.Get("slbServerGroupServerAttachment") ?? "forSlbServerGroupServerAttachment";
+    ///     var slbServerGroupServerAttachmentCount = config.GetNumber("slbServerGroupServerAttachmentCount") ?? 5;
+    ///     var serverAttachmentZones = AliCloud.GetZones.Invoke(new()
     ///     {
     ///         AvailableDiskCategory = "cloud_efficiency",
     ///         AvailableResourceCreation = "VSwitch",
     ///     });
     /// 
-    ///     var defaultInstanceTypes = AliCloud.Ecs.GetInstanceTypes.Invoke(new()
+    ///     var serverAttachmentInstanceTypes = AliCloud.Ecs.GetInstanceTypes.Invoke(new()
     ///     {
-    ///         AvailabilityZone = defaultZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
+    ///         AvailabilityZone = serverAttachmentZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
     ///         CpuCoreCount = 1,
     ///         MemorySize = 2,
     ///     });
     /// 
-    ///     var defaultImages = AliCloud.Ecs.GetImages.Invoke(new()
+    ///     var serverAttachmentImages = AliCloud.Ecs.GetImages.Invoke(new()
     ///     {
     ///         NameRegex = "^ubuntu_[0-9]+_[0-9]+_x64*",
     ///         MostRecent = true,
     ///         Owners = "system",
     ///     });
     /// 
-    ///     var defaultNetworks = AliCloud.Vpc.GetNetworks.Invoke(new()
+    ///     var serverAttachmentNetworks = AliCloud.Vpc.GetNetworks.Invoke(new()
     ///     {
     ///         NameRegex = "default-NODELETING",
     ///     });
     /// 
-    ///     var defaultSwitches = AliCloud.Vpc.GetSwitches.Invoke(new()
+    ///     var serverAttachmentSwitches = AliCloud.Vpc.GetSwitches.Invoke(new()
     ///     {
-    ///         VpcId = defaultNetworks.Apply(getNetworksResult =&gt; getNetworksResult.Ids[0]),
-    ///         ZoneId = defaultZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
+    ///         VpcId = serverAttachmentNetworks.Apply(getNetworksResult =&gt; getNetworksResult.Ids[0]),
+    ///         ZoneId = serverAttachmentZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
     ///     });
     /// 
-    ///     var defaultSecurityGroup = new AliCloud.Ecs.SecurityGroup("defaultSecurityGroup", new()
+    ///     var serverAttachmentSecurityGroup = new AliCloud.Ecs.SecurityGroup("serverAttachmentSecurityGroup", new()
     ///     {
-    ///         VpcId = defaultNetworks.Apply(getNetworksResult =&gt; getNetworksResult.Ids[0]),
+    ///         VpcId = serverAttachmentNetworks.Apply(getNetworksResult =&gt; getNetworksResult.Ids[0]),
     ///     });
     /// 
-    ///     var defaultInstance = new List&lt;AliCloud.Ecs.Instance&gt;();
-    ///     for (var rangeIndex = 0; rangeIndex &lt; num; rangeIndex++)
+    ///     var serverAttachmentInstance = new List&lt;AliCloud.Ecs.Instance&gt;();
+    ///     for (var rangeIndex = 0; rangeIndex &lt; slbServerGroupServerAttachmentCount; rangeIndex++)
     ///     {
     ///         var range = new { Value = rangeIndex };
-    ///         defaultInstance.Add(new AliCloud.Ecs.Instance($"defaultInstance-{range.Value}", new()
+    ///         serverAttachmentInstance.Add(new AliCloud.Ecs.Instance($"serverAttachmentInstance-{range.Value}", new()
     ///         {
-    ///             ImageId = defaultImages.Apply(getImagesResult =&gt; getImagesResult.Images[0]?.Id),
-    ///             InstanceType = defaultInstanceTypes.Apply(getInstanceTypesResult =&gt; getInstanceTypesResult.InstanceTypes[0]?.Id),
-    ///             InstanceName = name,
+    ///             ImageId = serverAttachmentImages.Apply(getImagesResult =&gt; getImagesResult.Images[0]?.Id),
+    ///             InstanceType = serverAttachmentInstanceTypes.Apply(getInstanceTypesResult =&gt; getInstanceTypesResult.InstanceTypes[0]?.Id),
+    ///             InstanceName = slbServerGroupServerAttachment,
     ///             SecurityGroups = new[]
     ///             {
-    ///                 defaultSecurityGroup,
+    ///                 serverAttachmentSecurityGroup,
     ///             }.Select(__item =&gt; __item.Id).ToList(),
     ///             InternetChargeType = "PayByTraffic",
     ///             InternetMaxBandwidthOut = 10,
-    ///             AvailabilityZone = defaultZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
+    ///             AvailabilityZone = serverAttachmentZones.Apply(getZonesResult =&gt; getZonesResult.Zones[0]?.Id),
     ///             InstanceChargeType = "PostPaid",
     ///             SystemDiskCategory = "cloud_efficiency",
-    ///             VswitchId = defaultSwitches.Apply(getSwitchesResult =&gt; getSwitchesResult.Ids[0]),
+    ///             VswitchId = serverAttachmentSwitches.Apply(getSwitchesResult =&gt; getSwitchesResult.Ids[0]),
     ///         }));
     ///     }
-    ///     var defaultApplicationLoadBalancer = new AliCloud.Slb.ApplicationLoadBalancer("defaultApplicationLoadBalancer", new()
+    ///     var serverAttachmentApplicationLoadBalancer = new AliCloud.Slb.ApplicationLoadBalancer("serverAttachmentApplicationLoadBalancer", new()
     ///     {
-    ///         LoadBalancerName = name,
-    ///         VswitchId = defaultSwitches.Apply(getSwitchesResult =&gt; getSwitchesResult.Vswitches[0]?.Id),
+    ///         LoadBalancerName = slbServerGroupServerAttachment,
+    ///         VswitchId = serverAttachmentSwitches.Apply(getSwitchesResult =&gt; getSwitchesResult.Vswitches[0]?.Id),
     ///         LoadBalancerSpec = "slb.s2.small",
     ///         AddressType = "intranet",
     ///     });
     /// 
-    ///     var defaultServerGroup = new AliCloud.Slb.ServerGroup("defaultServerGroup", new()
+    ///     var serverAttachmentServerGroup = new AliCloud.Slb.ServerGroup("serverAttachmentServerGroup", new()
     ///     {
-    ///         LoadBalancerId = defaultApplicationLoadBalancer.Id,
+    ///         LoadBalancerId = serverAttachmentApplicationLoadBalancer.Id,
     ///     });
     /// 
-    ///     var defaultServerGroupServerAttachment = new List&lt;AliCloud.Slb.ServerGroupServerAttachment&gt;();
-    ///     for (var rangeIndex = 0; rangeIndex &lt; num; rangeIndex++)
+    ///     var serverAttachmentServerGroupServerAttachment = new List&lt;AliCloud.Slb.ServerGroupServerAttachment&gt;();
+    ///     for (var rangeIndex = 0; rangeIndex &lt; slbServerGroupServerAttachmentCount; rangeIndex++)
     ///     {
     ///         var range = new { Value = rangeIndex };
-    ///         defaultServerGroupServerAttachment.Add(new AliCloud.Slb.ServerGroupServerAttachment($"defaultServerGroupServerAttachment-{range.Value}", new()
+    ///         serverAttachmentServerGroupServerAttachment.Add(new AliCloud.Slb.ServerGroupServerAttachment($"serverAttachmentServerGroupServerAttachment-{range.Value}", new()
     ///         {
-    ///             ServerGroupId = defaultServerGroup.Id,
-    ///             ServerId = defaultInstance[range.Index].Id,
+    ///             ServerGroupId = serverAttachmentServerGroup.Id,
+    ///             ServerId = serverAttachmentInstance[range.Index].Id,
     ///             Port = 8080,
     ///             Weight = 0,
     ///         }));
     ///     }
-    ///     var defaultListener = new AliCloud.Slb.Listener("defaultListener", new()
+    ///     var serverAttachmentListener = new AliCloud.Slb.Listener("serverAttachmentListener", new()
     ///     {
-    ///         LoadBalancerId = defaultApplicationLoadBalancer.Id,
+    ///         LoadBalancerId = serverAttachmentApplicationLoadBalancer.Id,
     ///         BackendPort = 80,
     ///         FrontendPort = 80,
     ///         Protocol = "tcp",
     ///         Bandwidth = 10,
     ///         Scheduler = "rr",
-    ///         ServerGroupId = defaultServerGroup.Id,
+    ///         ServerGroupId = serverAttachmentServerGroup.Id,
     ///     }, new CustomResourceOptions
     ///     {
     ///         DependsOn = new[]
     ///         {
-    ///             defaultServerGroupServerAttachment,
+    ///             serverAttachmentServerGroupServerAttachment,
     ///         },
     ///     });
     /// 

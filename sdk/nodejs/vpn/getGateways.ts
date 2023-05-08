@@ -23,7 +23,7 @@ import * as utilities from "../utilities";
  *     includeReservationData: true,
  *     nameRegex: "testAcc*",
  *     outputFile: "/tmp/vpns",
- *     status: "active",
+ *     status: "Active",
  *     vpcId: "fake-vpc-id",
  * }));
  * ```

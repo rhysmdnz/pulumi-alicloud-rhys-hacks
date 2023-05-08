@@ -37,10 +37,14 @@ type Instance struct {
 	AutoRenewPeriod pulumi.IntPtrOutput `pulumi:"autoRenewPeriod"`
 	// The Zone to start the instance in. It is ignored and will be computed when set `vswitchId`.
 	AvailabilityZone pulumi.StringOutput `pulumi:"availabilityZone"`
+	// The number of vCPUs.
+	Cpu pulumi.IntOutput `pulumi:"cpu"`
 	// Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
 	CreditSpecification pulumi.StringOutput `pulumi:"creditSpecification"`
 	// The list of data disks created with instance.
 	DataDisks InstanceDataDiskArrayOutput `pulumi:"dataDisks"`
+	// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spotStrategy` and `spotPriceLimit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+	DedicatedHostId pulumi.StringPtrOutput `pulumi:"dedicatedHostId"`
 	// Whether enable the deletion protection or not. Default value: `false`.
 	// - true: Enable deletion protection.
 	// - false: Disable deletion protection.
@@ -110,13 +114,21 @@ type Instance struct {
 	MaintenanceNotify pulumi.BoolPtrOutput `pulumi:"maintenanceNotify"`
 	// The time of maintenance. See the following `Block maintenanceTime`.
 	MaintenanceTime InstanceMaintenanceTimePtrOutput `pulumi:"maintenanceTime"`
+	// The memory size of the instance. Unit: MiB.
+	Memory pulumi.IntOutput `pulumi:"memory"`
 	// The operation type. It is valid when `instanceChargeType` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instanceType` parameter has lower specifications than the current instance type, you must set `operatorType` to `downgrade`.
 	OperatorType pulumi.StringPtrOutput `pulumi:"operatorType"`
+	// The name of the operating system of the instance.
+	OsName pulumi.StringOutput `pulumi:"osName"`
+	// The type of the operating system of the instance.
+	OsType pulumi.StringOutput `pulumi:"osType"`
 	// Password to an instance is a string of 8 to 30 characters. It must contain uppercase/lowercase letters and numerals, but cannot contain special symbols. When it is changed, the instance will reboot to make the change take effect.
 	Password pulumi.StringPtrOutput `pulumi:"password"`
 	Period   pulumi.IntPtrOutput    `pulumi:"period"`
 	// The duration unit that you will buy the resource. It is valid when `instanceChargeType` is 'PrePaid'. Valid value: ["Week", "Month"]. Default to "Month".
 	PeriodUnit pulumi.StringPtrOutput `pulumi:"periodUnit"`
+	// The primary private IP address of the ENI.
+	PrimaryIpAddress pulumi.StringOutput `pulumi:"primaryIpAddress"`
 	// Instance private IP address can be specified when you creating new instance. It is valid when `vswitchId` is specified. When it is changed, the instance will reboot to make the change take effect.
 	PrivateIp pulumi.StringOutput `pulumi:"privateIp"`
 	// The instance public ip.
@@ -148,10 +160,12 @@ type Instance struct {
 	// - NoSpot: A regular Pay-As-You-Go instance.
 	// - SpotWithPriceLimit: A price threshold for a spot instance
 	// - SpotAsPriceGo: A price that is based on the highest Pay-As-You-Go instance
-	SpotStrategy pulumi.StringPtrOutput `pulumi:"spotStrategy"`
+	SpotStrategy pulumi.StringOutput `pulumi:"spotStrategy"`
 	// The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
 	Status pulumi.StringOutput `pulumi:"status"`
-	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+	// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
 	StoppedMode pulumi.StringOutput `pulumi:"stoppedMode"`
 	// Deprecated: Field 'subnet_id' has been deprecated from version 1.177.0, and use field 'vswitch_id' to replace.
 	SubnetId pulumi.StringOutput `pulumi:"subnetId"`
@@ -181,7 +195,10 @@ type Instance struct {
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
 	// - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
 	Tags pulumi.StringMapOutput `pulumi:"tags"`
-	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+	// It supports to setting a base64-encoded value, and it is the recommended usage.
+	// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+	// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
 	UserData pulumi.StringPtrOutput `pulumi:"userData"`
 	// A mapping of tags to assign to the devices created by the instance at launch time.
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
@@ -244,10 +261,14 @@ type instanceState struct {
 	AutoRenewPeriod *int `pulumi:"autoRenewPeriod"`
 	// The Zone to start the instance in. It is ignored and will be computed when set `vswitchId`.
 	AvailabilityZone *string `pulumi:"availabilityZone"`
+	// The number of vCPUs.
+	Cpu *int `pulumi:"cpu"`
 	// Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
 	CreditSpecification *string `pulumi:"creditSpecification"`
 	// The list of data disks created with instance.
 	DataDisks []InstanceDataDisk `pulumi:"dataDisks"`
+	// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spotStrategy` and `spotPriceLimit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+	DedicatedHostId *string `pulumi:"dedicatedHostId"`
 	// Whether enable the deletion protection or not. Default value: `false`.
 	// - true: Enable deletion protection.
 	// - false: Disable deletion protection.
@@ -317,13 +338,21 @@ type instanceState struct {
 	MaintenanceNotify *bool `pulumi:"maintenanceNotify"`
 	// The time of maintenance. See the following `Block maintenanceTime`.
 	MaintenanceTime *InstanceMaintenanceTime `pulumi:"maintenanceTime"`
+	// The memory size of the instance. Unit: MiB.
+	Memory *int `pulumi:"memory"`
 	// The operation type. It is valid when `instanceChargeType` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instanceType` parameter has lower specifications than the current instance type, you must set `operatorType` to `downgrade`.
 	OperatorType *string `pulumi:"operatorType"`
+	// The name of the operating system of the instance.
+	OsName *string `pulumi:"osName"`
+	// The type of the operating system of the instance.
+	OsType *string `pulumi:"osType"`
 	// Password to an instance is a string of 8 to 30 characters. It must contain uppercase/lowercase letters and numerals, but cannot contain special symbols. When it is changed, the instance will reboot to make the change take effect.
 	Password *string `pulumi:"password"`
 	Period   *int    `pulumi:"period"`
 	// The duration unit that you will buy the resource. It is valid when `instanceChargeType` is 'PrePaid'. Valid value: ["Week", "Month"]. Default to "Month".
 	PeriodUnit *string `pulumi:"periodUnit"`
+	// The primary private IP address of the ENI.
+	PrimaryIpAddress *string `pulumi:"primaryIpAddress"`
 	// Instance private IP address can be specified when you creating new instance. It is valid when `vswitchId` is specified. When it is changed, the instance will reboot to make the change take effect.
 	PrivateIp *string `pulumi:"privateIp"`
 	// The instance public ip.
@@ -358,7 +387,9 @@ type instanceState struct {
 	SpotStrategy *string `pulumi:"spotStrategy"`
 	// The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
 	Status *string `pulumi:"status"`
-	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+	// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
 	StoppedMode *string `pulumi:"stoppedMode"`
 	// Deprecated: Field 'subnet_id' has been deprecated from version 1.177.0, and use field 'vswitch_id' to replace.
 	SubnetId *string `pulumi:"subnetId"`
@@ -388,7 +419,10 @@ type instanceState struct {
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
 	// - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
 	Tags map[string]string `pulumi:"tags"`
-	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+	// It supports to setting a base64-encoded value, and it is the recommended usage.
+	// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+	// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
 	UserData *string `pulumi:"userData"`
 	// A mapping of tags to assign to the devices created by the instance at launch time.
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
@@ -413,10 +447,14 @@ type InstanceState struct {
 	AutoRenewPeriod pulumi.IntPtrInput
 	// The Zone to start the instance in. It is ignored and will be computed when set `vswitchId`.
 	AvailabilityZone pulumi.StringPtrInput
+	// The number of vCPUs.
+	Cpu pulumi.IntPtrInput
 	// Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
 	CreditSpecification pulumi.StringPtrInput
 	// The list of data disks created with instance.
 	DataDisks InstanceDataDiskArrayInput
+	// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spotStrategy` and `spotPriceLimit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+	DedicatedHostId pulumi.StringPtrInput
 	// Whether enable the deletion protection or not. Default value: `false`.
 	// - true: Enable deletion protection.
 	// - false: Disable deletion protection.
@@ -486,13 +524,21 @@ type InstanceState struct {
 	MaintenanceNotify pulumi.BoolPtrInput
 	// The time of maintenance. See the following `Block maintenanceTime`.
 	MaintenanceTime InstanceMaintenanceTimePtrInput
+	// The memory size of the instance. Unit: MiB.
+	Memory pulumi.IntPtrInput
 	// The operation type. It is valid when `instanceChargeType` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instanceType` parameter has lower specifications than the current instance type, you must set `operatorType` to `downgrade`.
 	OperatorType pulumi.StringPtrInput
+	// The name of the operating system of the instance.
+	OsName pulumi.StringPtrInput
+	// The type of the operating system of the instance.
+	OsType pulumi.StringPtrInput
 	// Password to an instance is a string of 8 to 30 characters. It must contain uppercase/lowercase letters and numerals, but cannot contain special symbols. When it is changed, the instance will reboot to make the change take effect.
 	Password pulumi.StringPtrInput
 	Period   pulumi.IntPtrInput
 	// The duration unit that you will buy the resource. It is valid when `instanceChargeType` is 'PrePaid'. Valid value: ["Week", "Month"]. Default to "Month".
 	PeriodUnit pulumi.StringPtrInput
+	// The primary private IP address of the ENI.
+	PrimaryIpAddress pulumi.StringPtrInput
 	// Instance private IP address can be specified when you creating new instance. It is valid when `vswitchId` is specified. When it is changed, the instance will reboot to make the change take effect.
 	PrivateIp pulumi.StringPtrInput
 	// The instance public ip.
@@ -527,7 +573,9 @@ type InstanceState struct {
 	SpotStrategy pulumi.StringPtrInput
 	// The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
 	Status pulumi.StringPtrInput
-	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+	// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
 	StoppedMode pulumi.StringPtrInput
 	// Deprecated: Field 'subnet_id' has been deprecated from version 1.177.0, and use field 'vswitch_id' to replace.
 	SubnetId pulumi.StringPtrInput
@@ -557,7 +605,10 @@ type InstanceState struct {
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
 	// - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
 	Tags pulumi.StringMapInput
-	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+	// It supports to setting a base64-encoded value, and it is the recommended usage.
+	// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+	// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
 	UserData pulumi.StringPtrInput
 	// A mapping of tags to assign to the devices created by the instance at launch time.
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
@@ -590,6 +641,8 @@ type instanceArgs struct {
 	CreditSpecification *string `pulumi:"creditSpecification"`
 	// The list of data disks created with instance.
 	DataDisks []InstanceDataDisk `pulumi:"dataDisks"`
+	// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spotStrategy` and `spotPriceLimit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+	DedicatedHostId *string `pulumi:"dedicatedHostId"`
 	// Whether enable the deletion protection or not. Default value: `false`.
 	// - true: Enable deletion protection.
 	// - false: Disable deletion protection.
@@ -696,7 +749,9 @@ type instanceArgs struct {
 	SpotStrategy *string `pulumi:"spotStrategy"`
 	// The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
 	Status *string `pulumi:"status"`
-	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+	// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
 	StoppedMode *string `pulumi:"stoppedMode"`
 	// Deprecated: Field 'subnet_id' has been deprecated from version 1.177.0, and use field 'vswitch_id' to replace.
 	SubnetId *string `pulumi:"subnetId"`
@@ -726,7 +781,10 @@ type instanceArgs struct {
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
 	// - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
 	Tags map[string]string `pulumi:"tags"`
-	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+	// It supports to setting a base64-encoded value, and it is the recommended usage.
+	// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+	// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
 	UserData *string `pulumi:"userData"`
 	// A mapping of tags to assign to the devices created by the instance at launch time.
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
@@ -756,6 +814,8 @@ type InstanceArgs struct {
 	CreditSpecification pulumi.StringPtrInput
 	// The list of data disks created with instance.
 	DataDisks InstanceDataDiskArrayInput
+	// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spotStrategy` and `spotPriceLimit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+	DedicatedHostId pulumi.StringPtrInput
 	// Whether enable the deletion protection or not. Default value: `false`.
 	// - true: Enable deletion protection.
 	// - false: Disable deletion protection.
@@ -862,7 +922,9 @@ type InstanceArgs struct {
 	SpotStrategy pulumi.StringPtrInput
 	// The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
 	Status pulumi.StringPtrInput
-	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+	// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+	// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
 	StoppedMode pulumi.StringPtrInput
 	// Deprecated: Field 'subnet_id' has been deprecated from version 1.177.0, and use field 'vswitch_id' to replace.
 	SubnetId pulumi.StringPtrInput
@@ -892,7 +954,10 @@ type InstanceArgs struct {
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
 	// - Value: It can be up to 128 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It can be a null string.
 	Tags pulumi.StringMapInput
-	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+	// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+	// It supports to setting a base64-encoded value, and it is the recommended usage.
+	// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+	// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
 	UserData pulumi.StringPtrInput
 	// A mapping of tags to assign to the devices created by the instance at launch time.
 	// - Key: It can be up to 64 characters in length. It cannot begin with "aliyun", "acs:", "http://", or "https://". It cannot be a null string.
@@ -1015,6 +1080,11 @@ func (o InstanceOutput) AvailabilityZone() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.AvailabilityZone }).(pulumi.StringOutput)
 }
 
+// The number of vCPUs.
+func (o InstanceOutput) Cpu() pulumi.IntOutput {
+	return o.ApplyT(func(v *Instance) pulumi.IntOutput { return v.Cpu }).(pulumi.IntOutput)
+}
+
 // Performance mode of the t5 burstable instance. Valid values: 'Standard', 'Unlimited'.
 func (o InstanceOutput) CreditSpecification() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.CreditSpecification }).(pulumi.StringOutput)
@@ -1023,6 +1093,11 @@ func (o InstanceOutput) CreditSpecification() pulumi.StringOutput {
 // The list of data disks created with instance.
 func (o InstanceOutput) DataDisks() InstanceDataDiskArrayOutput {
 	return o.ApplyT(func(v *Instance) InstanceDataDiskArrayOutput { return v.DataDisks }).(InstanceDataDiskArrayOutput)
+}
+
+// The ID of the dedicated host on which to create the instance. If you set the DedicatedHostId parameter, the `spotStrategy` and `spotPriceLimit` parameters cannot be set. This is because preemptible instances cannot be created on dedicated hosts.
+func (o InstanceOutput) DedicatedHostId() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.DedicatedHostId }).(pulumi.StringPtrOutput)
 }
 
 // Whether enable the deletion protection or not. Default value: `false`.
@@ -1181,9 +1256,24 @@ func (o InstanceOutput) MaintenanceTime() InstanceMaintenanceTimePtrOutput {
 	return o.ApplyT(func(v *Instance) InstanceMaintenanceTimePtrOutput { return v.MaintenanceTime }).(InstanceMaintenanceTimePtrOutput)
 }
 
+// The memory size of the instance. Unit: MiB.
+func (o InstanceOutput) Memory() pulumi.IntOutput {
+	return o.ApplyT(func(v *Instance) pulumi.IntOutput { return v.Memory }).(pulumi.IntOutput)
+}
+
 // The operation type. It is valid when `instanceChargeType` is `PrePaid`. Default value: `upgrade`. Valid values: `upgrade`, `downgrade`. **NOTE:**  When the new instance type specified by the `instanceType` parameter has lower specifications than the current instance type, you must set `operatorType` to `downgrade`.
 func (o InstanceOutput) OperatorType() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.OperatorType }).(pulumi.StringPtrOutput)
+}
+
+// The name of the operating system of the instance.
+func (o InstanceOutput) OsName() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.OsName }).(pulumi.StringOutput)
+}
+
+// The type of the operating system of the instance.
+func (o InstanceOutput) OsType() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.OsType }).(pulumi.StringOutput)
 }
 
 // Password to an instance is a string of 8 to 30 characters. It must contain uppercase/lowercase letters and numerals, but cannot contain special symbols. When it is changed, the instance will reboot to make the change take effect.
@@ -1198,6 +1288,11 @@ func (o InstanceOutput) Period() pulumi.IntPtrOutput {
 // The duration unit that you will buy the resource. It is valid when `instanceChargeType` is 'PrePaid'. Valid value: ["Week", "Month"]. Default to "Month".
 func (o InstanceOutput) PeriodUnit() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.PeriodUnit }).(pulumi.StringPtrOutput)
+}
+
+// The primary private IP address of the ENI.
+func (o InstanceOutput) PrimaryIpAddress() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.PrimaryIpAddress }).(pulumi.StringOutput)
 }
 
 // Instance private IP address can be specified when you creating new instance. It is valid when `vswitchId` is specified. When it is changed, the instance will reboot to make the change take effect.
@@ -1264,8 +1359,8 @@ func (o InstanceOutput) SpotPriceLimit() pulumi.Float64PtrOutput {
 // - NoSpot: A regular Pay-As-You-Go instance.
 // - SpotWithPriceLimit: A price threshold for a spot instance
 // - SpotAsPriceGo: A price that is based on the highest Pay-As-You-Go instance
-func (o InstanceOutput) SpotStrategy() pulumi.StringPtrOutput {
-	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.SpotStrategy }).(pulumi.StringPtrOutput)
+func (o InstanceOutput) SpotStrategy() pulumi.StringOutput {
+	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.SpotStrategy }).(pulumi.StringOutput)
 }
 
 // The instance status. Valid values: ["Running", "Stopped"]. You can control the instance start and stop through this parameter. Default to `Running`.
@@ -1273,7 +1368,9 @@ func (o InstanceOutput) Status() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
-// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+// The stop mode of the pay-as-you-go instance. Valid values: `StopCharging`,`KeepCharging`, `Not-applicable`. Default value: If the prerequisites required for enabling the economical mode are met, and you have enabled this mode in the ECS console, the default value is `StopCharging`. For more information, see "Enable the economical mode" in [Economical mode](https://www.alibabacloud.com/help/en/elastic-compute-service/latest/economical-mode). Otherwise, the default value is `KeepCharging`. **Note:** `Not-applicable`: Economical mode is not applicable to the instance.`
+// * `KeepCharging`: standard mode. Billing of the instance continues after the instance is stopped, and resources are retained for the instance.
+// * `StopCharging`: economical mode. Billing of some resources of the instance stops after the instance is stopped. When the instance is stopped, its resources such as vCPUs, memory, and public IP address are released. You may be unable to restart the instance if some types of resources are out of stock in the current region.
 func (o InstanceOutput) StoppedMode() pulumi.StringOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringOutput { return v.StoppedMode }).(pulumi.StringOutput)
 }
@@ -1342,7 +1439,10 @@ func (o InstanceOutput) Tags() pulumi.StringMapOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringMapOutput { return v.Tags }).(pulumi.StringMapOutput)
 }
 
-// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance. From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect. Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
+// User-defined data to customize the startup behaviors of an ECS instance and to pass data into an ECS instance.
+// It supports to setting a base64-encoded value, and it is the recommended usage.
+// From version 1.60.0, it can be update in-place. If updated, the instance will reboot to make the change take effect.
+// Note: Not all of changes will take effect and it depends on [cloud-init module type](https://cloudinit.readthedocs.io/en/latest/topics/modules.html).
 func (o InstanceOutput) UserData() pulumi.StringPtrOutput {
 	return o.ApplyT(func(v *Instance) pulumi.StringPtrOutput { return v.UserData }).(pulumi.StringPtrOutput)
 }

@@ -129,10 +129,16 @@ import (
 type HAVipAttachment struct {
 	pulumi.CustomResourceState
 
+	// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+	Force pulumi.StringPtrOutput `pulumi:"force"`
 	// The havipId of the havip attachment, the field can't be changed.
 	HavipId pulumi.StringOutput `pulumi:"havipId"`
 	// The instanceId of the havip attachment, the field can't be changed.
 	InstanceId pulumi.StringOutput `pulumi:"instanceId"`
+	// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+	InstanceType pulumi.StringOutput `pulumi:"instanceType"`
+	// (Available in v1.201.0+) The status of the HaVip instance.
+	Status pulumi.StringOutput `pulumi:"status"`
 }
 
 // NewHAVipAttachment registers a new resource with the given unique name, arguments, and options.
@@ -171,17 +177,29 @@ func GetHAVipAttachment(ctx *pulumi.Context,
 
 // Input properties used for looking up and filtering HAVipAttachment resources.
 type havipAttachmentState struct {
+	// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+	Force *string `pulumi:"force"`
 	// The havipId of the havip attachment, the field can't be changed.
 	HavipId *string `pulumi:"havipId"`
 	// The instanceId of the havip attachment, the field can't be changed.
 	InstanceId *string `pulumi:"instanceId"`
+	// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+	InstanceType *string `pulumi:"instanceType"`
+	// (Available in v1.201.0+) The status of the HaVip instance.
+	Status *string `pulumi:"status"`
 }
 
 type HAVipAttachmentState struct {
+	// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+	Force pulumi.StringPtrInput
 	// The havipId of the havip attachment, the field can't be changed.
 	HavipId pulumi.StringPtrInput
 	// The instanceId of the havip attachment, the field can't be changed.
 	InstanceId pulumi.StringPtrInput
+	// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+	InstanceType pulumi.StringPtrInput
+	// (Available in v1.201.0+) The status of the HaVip instance.
+	Status pulumi.StringPtrInput
 }
 
 func (HAVipAttachmentState) ElementType() reflect.Type {
@@ -189,18 +207,26 @@ func (HAVipAttachmentState) ElementType() reflect.Type {
 }
 
 type havipAttachmentArgs struct {
+	// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+	Force *string `pulumi:"force"`
 	// The havipId of the havip attachment, the field can't be changed.
 	HavipId string `pulumi:"havipId"`
 	// The instanceId of the havip attachment, the field can't be changed.
 	InstanceId string `pulumi:"instanceId"`
+	// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+	InstanceType *string `pulumi:"instanceType"`
 }
 
 // The set of arguments for constructing a HAVipAttachment resource.
 type HAVipAttachmentArgs struct {
+	// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+	Force pulumi.StringPtrInput
 	// The havipId of the havip attachment, the field can't be changed.
 	HavipId pulumi.StringInput
 	// The instanceId of the havip attachment, the field can't be changed.
 	InstanceId pulumi.StringInput
+	// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+	InstanceType pulumi.StringPtrInput
 }
 
 func (HAVipAttachmentArgs) ElementType() reflect.Type {
@@ -290,6 +316,11 @@ func (o HAVipAttachmentOutput) ToHAVipAttachmentOutputWithContext(ctx context.Co
 	return o
 }
 
+// Specifies whether to forcefully disassociate the HAVIP from the ECS instance or ENI. Default value: `False`. Valid values: `True` and `False`.
+func (o HAVipAttachmentOutput) Force() pulumi.StringPtrOutput {
+	return o.ApplyT(func(v *HAVipAttachment) pulumi.StringPtrOutput { return v.Force }).(pulumi.StringPtrOutput)
+}
+
 // The havipId of the havip attachment, the field can't be changed.
 func (o HAVipAttachmentOutput) HavipId() pulumi.StringOutput {
 	return o.ApplyT(func(v *HAVipAttachment) pulumi.StringOutput { return v.HavipId }).(pulumi.StringOutput)
@@ -298,6 +329,16 @@ func (o HAVipAttachmentOutput) HavipId() pulumi.StringOutput {
 // The instanceId of the havip attachment, the field can't be changed.
 func (o HAVipAttachmentOutput) InstanceId() pulumi.StringOutput {
 	return o.ApplyT(func(v *HAVipAttachment) pulumi.StringOutput { return v.InstanceId }).(pulumi.StringOutput)
+}
+
+// The Type of instance to bind HaVip to. Valid values: `EcsInstance` and `NetworkInterface`. When the HaVip instance is bound to a resilient NIC, the resilient NIC instance must be filled in.
+func (o HAVipAttachmentOutput) InstanceType() pulumi.StringOutput {
+	return o.ApplyT(func(v *HAVipAttachment) pulumi.StringOutput { return v.InstanceType }).(pulumi.StringOutput)
+}
+
+// (Available in v1.201.0+) The status of the HaVip instance.
+func (o HAVipAttachmentOutput) Status() pulumi.StringOutput {
+	return o.ApplyT(func(v *HAVipAttachment) pulumi.StringOutput { return v.Status }).(pulumi.StringOutput)
 }
 
 type HAVipAttachmentArrayOutput struct{ *pulumi.OutputState }

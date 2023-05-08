@@ -19,7 +19,7 @@ namespace Pulumi.AliCloud.Oss.Inputs
         public Input<int> Days { get; set; } = null!;
 
         /// <summary>
-        /// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`.
+        /// Specifies the storage class that objects that conform to the rule are converted into. The storage class of the objects in a bucket of the IA storage class can be converted into Archive but cannot be converted into Standard. Values: `IA`, `Archive`, `CodeArchive`. ColdArchive is available in 1.203.0+.
         /// </summary>
         [Input("storageClass", required: true)]
         public Input<string> StorageClass { get; set; } = null!;
