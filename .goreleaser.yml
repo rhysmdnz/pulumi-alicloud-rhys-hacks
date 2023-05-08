@@ -5,7 +5,7 @@ before:
   hooks:
     - make tfgen
 builds:
-  - binary: pulumi-resource-alicloud
+  - binary: pulumi-resource-alicloud-rhys-hacks
     dir: provider
     env:
       - CGO_ENABLED=0
@@ -18,8 +18,8 @@ builds:
       - linux
     ldflags:
       # The line below MUST align with the module in current provider/go.mod
-      - -X github.com/rhysmdnz/pulumi-alicloud/provider/pkg/version.Version={{.Tag }}
-    main: ./cmd/pulumi-resource-alicloud/
+      - -X github.com/rhysmdnz/pulumi-alicloud-rhys-hacks/provider/pkg/version.Version={{.Tag }}
+    main: ./cmd/pulumi-resource-alicloud-rhys-hacks/
 changelog:
   skip: true
 release:
